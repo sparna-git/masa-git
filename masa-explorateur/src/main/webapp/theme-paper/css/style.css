@@ -1,0 +1,26 @@
+.card{
+	width:20%;
+	margin:auto;
+	margin-top:100px;
+}
+.card-body{
+	width:50%;
+	margin:auto;
+	text-align: center;
+}
+.btn-group-vertical{
+	margin:auto;
+	text-align: center;
+	
+}
+
+.thing{
+	margin-bottom: 50px;
+	width:100%;
+	margin:auto;
+	text-align: center;
+}
+
+
+
+

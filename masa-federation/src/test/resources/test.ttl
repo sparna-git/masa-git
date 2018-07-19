@@ -1,0 +1,37 @@
+@prefix schema: <http://schema.org/> .
+@prefix mo: <http://purl.org/ontology/mo/> .
+@prefix ore: <http://www.openarchives.org/ore/terms/> .
+@prefix role: <http://id.loc.gov/vocabulary/relators/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix edm: <http://www.europeana.eu/schemas/edm/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ebucore: <http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix cld: <http://purl.org/cld/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix skos: <http://www.w3.org/2008/05/skos#>.
+
+<http://archives.crem-cnrs.fr/archives/items/CHO-dans-une-Collection/> a <http://exemple.com/type/Type1>;
+		<http://exemple.com/link/created_by> <http://sources-ethnomusicologie.huma-num.fr/pub/cb11922804b>;
+		skos:prefLabel "cho dans une collection";
+		<http://ex.fr1> <http://ex.event1>.
+	
+
+<http://ex.event1> <http://ex.fr2> <http://sources-ethnomusicologie.huma-num.fr/pub/cb11922804b>.
+
+
+<http://archives.crem-cnrs.fr/archives/items/CHO-dans-une-Collecn/> a <http://exemple.com/type/Type2>;
+		<http://exemple.com/link/created_by> <http://sources-ethnomusicologie.huma-num.fr/pub/cb11922804>;
+		skos:prefLabel "cho dans une collection 2";
+		<http://ex.fr3> <http://ex.event2>.
+
+<http://ex.event2> <http://ex.fr4> <http://sources-ethnomusicologie.huma-num.fr/pub/cb11922804>.
+
+<http://sources-ethnomusicologie.huma-num.fr/pub/cb11922804b> a <http://exemple.com/type/actor1>;
+		skos:prefLabel "me".
+
+<http://sources-ethnomusicologie.huma-num.fr/pub/cb11922804> a <http://exemple.com/type/actor2>;
+		skos:prefLabel "me 2".
+

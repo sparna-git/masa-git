@@ -1,0 +1,70 @@
+.list-group.list-group-root {
+    padding: 0;
+}
+.list-group-item-heading{
+	display: inline;
+}
+
+.member-text{
+	font-size:90%;	
+}
+.member-title{
+	font-style: italic;
+    color:gray;	
+}
+.list-group.list-group-root .list-group {
+    margin-bottom: 0;
+    /* font-size:10px; */
+}
+
+.list-group.list-group-root .list-group-item {
+    border-radius: 0;
+    border-width: 0px;
+}
+
+.list-group.list-group-root > .list-group-item:first-child {
+    border-top-width: 0;
+}
+.list-group{
+	padding-left: 30px;
+}
+
+
+.list-group.list-group-root font{
+    /* pas de modif de police */
+}
+.list-group.list-group-root > .list-group > .list-group-item font{
+    font-size:92%;
+    font-style: oblique;
+}
+.list-group.list-group-root > .list-group > .list-group > .list-group-item font{
+    font-size:85%;
+    font-style: italic;
+    color:black;
+}
+#title{
+	font-style: italic;
+}
+
+.titre{
+	display:inline;
+}
+.list-group.list-group-root > .list-group > .list-group-item {
+    padding-left: 40px;    
+}
+.list-group.list-group-root > .list-group > .list-group > .list-group-item {
+    padding-left: 75px;
+}
+.list-group.list-group-root > .list-group > .list-group > .list-group >.list-group-item {
+    padding-left: 85px;
+}
+
+.list-group-item .glyphicon {
+    margin-right: 5px;
+    /* font-size:10px; */
+}
+.membre{
+	font-size:85%;
+    font-style: italic;
+    color:gray;	
+}

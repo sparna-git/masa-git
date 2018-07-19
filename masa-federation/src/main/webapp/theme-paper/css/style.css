@@ -1,0 +1,256 @@
+.dropdown-menu.show{
+	min-width: 100%;
+}
+/* Main form wizard */
+
+
+/* Set background image */
+.with-background {
+	background-image: url("../img/background.jpg");
+	background-position: 50% 50%;
+	background-position-x: 50%;
+	background-position-y: 50%;
+	background-size:cover;
+}
+
+/* Text color in navbar */
+.navbar-default .navbar-brand, .navbar-default .navbar-nav > li > a {
+	color: rgb(60, 72, 88);
+}
+
+/* transparent navbar, with no borders */
+.navbar {
+	background-image: none;
+	border: none;
+}
+.navbar-default {
+	background-color: transparent;
+}
+
+/* pad the main wizard */
+#wizard-container {
+	padding-top: 70px;
+}
+
+/* Smaller help block fonts */
+.help-block {
+	font-size: 90%;
+}
+
+/* Wizard-title */
+#wizard-title {
+	text-align:center;
+	padding-bottom: 30px;
+}
+
+/* wizard type : center, top margin */
+#wizard-type-choice {
+	text-align: center;
+	margin-top: 3em;
+}
+
+/* Center footer **/
+#footer {
+	font-size: 85%;
+	text-align:center;
+	color: rgb(60, 72, 88);
+	text-shadow:none;
+}
+/* Lien sparna dans le footer */
+#footer a {
+	color: #a91d2e;
+	text-shadow:none;
+}
+#in{
+  width: 100%;
+}
+
+/* Wizard pills */
+#wizard-pills {
+	
+	text-align:center;
+	background-color: rgba(200, 200, 200, 0.2);
+}
+#wizard-pills > .active {
+	box-shadow: 0 16px 26px -10px rgba(68, 110, 155, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(68, 110, 155, 0.2);
+}
+/* Le premier à gauche est décalé vers la gauche */
+#wizard-pills > .active:first-of-type {
+	transform: translate3d(-10px, -5px, 0px);
+}
+#wizard-pills > .active:not(:first-of-type):not(:last-of-type) {
+	transform: translate3d(0px, -5px, 0px);
+}
+/* Le dernier à droite est décalé vers la droite */
+#wizard-pills > .active:last-of-type {
+	transform: translate3d(10px, -5px, 0px);
+}
+
+
+#wizard-panel > .panel-body {
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-bottom: 30px;
+}
+
+/* Language selection */
+#header-pill-lang {
+	background-color: rgba(255, 255, 255, 0.2);
+	color: white;
+	text-shadow:none;
+}
+
+
+/* Info text */
+.info-text {
+	text-align: center;
+	font-weight: 300;
+	margin: 10px 0 30px;
+	font-style: italic;
+}
+
+.card-body{
+	font-size: 85%;
+}
+
+/* wizard main panel */
+#wizard-panel {
+	padding: 30px 0 0 0;
+	margin:auto;
+	width:50%;
+}
+.type{
+	margin-top:30px;
+	width:100%;
+	margin:auto;
+	text-align: center;
+}
+/* Type icons */
+.type-icon {
+	
+	text-align: center;
+	height: auto;
+	width: 12.8em;
+	padding-top:39px;
+	padding-bottom:39px;
+	border-radius: 50%;
+	color: #999999;
+	margin:auto;
+	border: 5px solid #CCCCCC;
+}
+
+
+
+.type-icon > img {
+	filter: opacity(.2);
+}
+.type-icon-selected {
+	border-color: rgb(68, 110, 155);
+	filter: none;
+}
+.type-icon-selected > img {
+	filter: none;
+}
+.type-icon-hovered {
+	border-color: rgb(68, 110, 155);
+	width:
+}
+.type-icon-hovered > img {
+	filter: none;
+}
+
+/* Liaison icons */
+.liaison-icon {
+	color: #999999;
+	border: 3px solid #CCCCCC;
+}
+.liaison-icon-selected {
+	border-color: rgb(68, 110, 155);
+}
+.liaison-icon-hovered {
+	border-color: rgb(68, 110, 155);
+}
+
+.alert {
+	padding: 10px;
+}
+ 
+#url,#file,#type,#lang{
+	border:1px solid #f5f5ef;
+}
+#type {
+	width:50%;
+}
+.list-group.list-group-root {
+    padding: 0;
+}
+
+/* :not(.btn) to avoid applying style on "select a file" button */
+.input-group-addon:not(.btn) {
+	background-color: rgb(245, 245, 245);
+}
+
+.btn-circle {
+  width: 20%;
+ 
+}
+
+.btn-file{
+	text-align: center;
+	width:20%;
+}
+
+/* Affichage du permalink */
+#permalink-container {
+	margin-top:15px;
+}
+#permalink-container > input {
+	margin-top:5px;
+	background-color: rgba(200, 200, 200, 0.2);
+	line-height:0.9em;
+	font-family: monospace;
+}
+#permalink-help {
+	font-size: 90%;
+	font-style: italic;
+}
+
+@media only screen and ( max-width: 64em ) {
+
+#wizard-panel {
+	padding: 30px 0 0 0;
+	margin:auto;
+	width:90%;
+}
+.type{
+	margin-top:30px;
+	width:100%;
+	margin:auto;
+	text-align: center;
+}
+.type-icon {
+	
+	text-align: center;
+	height: auto;
+	width: 12em;
+	padding-top:37px;
+	padding-bottom:37px;
+	border-radius: 50%;
+	color: #999999;
+	margin:auto;
+	border: 5px solid #CCCCCC;
+}
+
+.liaison-icon {
+	width:40%;
+	margin:auto;
+	text-align: center;
+}
+
+
+}
+
+
+
+
+
