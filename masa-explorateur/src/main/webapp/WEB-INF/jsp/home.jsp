@@ -56,7 +56,7 @@ WHERE  {
 		  <label for="collapseExample">REQUÊTE ETENDUE :</label>
 		  <textarea class="form-control " rows="15"   readonly="readonly" name="query" id="collapseExample">${queryExpand}</textarea>
 				<br>
-			<label for="yasr">RESULT SPARQL :</label>
+			<label for="yasr">RESULTAT SPARQL :</label>
 		<div id="yasr"></div>
 	</div> 
 	</c:if>

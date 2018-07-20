@@ -55,12 +55,11 @@ public class FederationController {
 
 		try {
 			
-			log.debug(query);
+			log.debug("Requête SPARQL à exécuter : "+query);
 			federationService.initializeRepositoryWithFederation(new FederationSourcePropertiesSupplier(this.properties).get());
 			response.setContentType(TupleQueryResultFormat.SPARQL.getDefaultMIMEType());
-			//query example : SELECT+%2A+WHERE+%7B%0D%0A++%3Fsub+%3Fpred+%3Fobj+.%0D%0A%7D+%0D%0ALIMIT+10
 			federationService.getResultToXml(query,federationService.getRepository(),response.getOutputStream());
-			log.debug("end");
+			log.debug("Fin d'exécution de la requête");
 
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block

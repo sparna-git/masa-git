@@ -13,7 +13,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <!-- Bootstrap core CSS -->
-<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet" />
 <link href="resources/css/jasny-bootstrap.min.css" rel="stylesheet" />
 <script src="resources/js/jquery-1.11.3.js"></script>
 <script src="resources/bootstrap/js/popper.min.js"></script>
