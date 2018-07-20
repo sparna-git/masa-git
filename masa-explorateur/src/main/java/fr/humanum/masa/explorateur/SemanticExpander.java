@@ -62,13 +62,12 @@ public class SemanticExpander {
 
 
 								if(t.getObject().isURI() && property.getConfigType().containsKey(t.getObject().getURI())) {
-									System.out.println("yes");
-
-									//creation du triplet en prenantle sujet d'origine, le path et la creation d'une nouvelle variable "type"
+									
+									//creation du triplet en prenant le sujet d'origine, le path et la creation d'une nouvelle variable "type"
 
 									ElementPathBlock newEpb= new ElementPathBlock();
 									
-									String var=UUID.randomUUID().toString();
+									String var="type_"+UUID.randomUUID().toString().substring(0, 4);
 									
 									
 									newEpb.addTriple(new TriplePath(t.getSubject(), t.getPath(),NodeFactory.createVariable(var.replaceAll("-", "a"))));
@@ -79,8 +78,7 @@ public class SemanticExpander {
 
 									ElementData valuesClause = new ElementData();
 
-									//valuesClause.add(((Var)t.getSubject()));
-
+						
 									valuesClause.add(Var.alloc(newEpb.patternElts().next().getObject()));
 
 									
@@ -145,17 +143,5 @@ public class SemanticExpander {
 		return query.toString(Syntax.syntaxSPARQL_11);
 
 	}
-
-//	public static void main(String...strings) throws Exception {
-//		SemanticExpander me = new SemanticExpander(new SparqlProperty());
-//		String TESTA = "SELECT ?this ?label WHERE { ?this a <http://exemple.com/type/Thing>. ?this <http://exemple.fr/label> ?label.}";
-//		String TESTB = "SELECT ?this WHERE { "
-//				+ "?this a <http://exemple.com/type/Thing> . "
-//				+ "?this <http://exemple.com/link/created_by> ?actor . "
-//				+ "?actor a <http://exemple.com/type/Actor>. "
-//				+ "}";
-//		
-//		System.out.println(me.expand(TESTB));
-//	}
 
 }

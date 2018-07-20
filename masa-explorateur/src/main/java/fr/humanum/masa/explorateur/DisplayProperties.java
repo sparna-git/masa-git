@@ -181,13 +181,5 @@ public class DisplayProperties {
 
 	}
 
-	//	public static void main(String...strings) throws Exception {
-	//		DisplayProperties me = new DisplayProperties(new SparqlProperty(), ModelFactory.createDefaultModel());
-	//		String TESTB = "SELECT ?this WHERE { "
-	//				+ "?this a <http://exemple.com/type/Thing> . "
-	//				+ "}";
-	//
-	//		System.out.println(me.getDatesQuery(TESTB,"rdf:date","rdf:date").toString(Syntax.syntaxSPARQL_11));
-	//	}
 
 }
