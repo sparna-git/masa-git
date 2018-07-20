@@ -53,10 +53,8 @@ WHERE  {
 	<c:if test="${queryExpand!=null}">
 		
 		<div class="form-group" style="width: 80%; margin:auto;">
-		   <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-		    Voir la requête étendue
-		  </button><br>
-		  <textarea class="form-control collapse" rows="15"   readonly="readonly" name="query" id="collapseExample">${queryExpand}</textarea>
+		  <label for="collapseExample">REQUÊTE ETENDUE :</label>
+		  <textarea class="form-control " rows="15"   readonly="readonly" name="query" id="collapseExample">${queryExpand}</textarea>
 				<br>
 			<label for="yasr">RESULT SPARQL :</label>
 		<div id="yasr"></div>
@@ -67,7 +65,7 @@ WHERE  {
 	<script type="text/javascript">
 		
 	 $( document ).ready(function() {
-
+		
 		 var yasr = YASR(document.getElementById("yasr"));
 		 if('${getResult}'){
 			 var query= '${queryExpandReplace}';
