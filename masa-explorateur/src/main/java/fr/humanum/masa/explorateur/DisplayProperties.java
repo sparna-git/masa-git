@@ -99,7 +99,7 @@ public class DisplayProperties {
 								newEpb2.addTriple(new TriplePath(t.getSubject(), PathParser.parse(endDateProperty, property.pmap),NodeFactory.createVariable("end")));
 								elementsToAdd.add(newEpb2);
 
-								//Ajout des variables supplémentaires au select                    
+								//Ajout des variables supplementaires au select                    
 								query.setQuerySelectType();                               
 								query.addResultVar("start");
 								query.addResultVar("end");
@@ -157,7 +157,7 @@ public class DisplayProperties {
 								newEpb2.addTriple(new TriplePath(t.getSubject(), PathParser.parse(label, property.pmap),NodeFactory.createVariable(variable)));
 								elementsToAdd.add(newEpb2);
 
-								//Ajout des variables supplémentaires au select                    
+								//Ajout des variables supplementaires au select                    
 								query.setQuerySelectType();                               
 								query.addResultVar(variable);
 
