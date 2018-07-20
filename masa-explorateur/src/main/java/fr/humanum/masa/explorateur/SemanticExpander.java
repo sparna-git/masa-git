@@ -95,7 +95,7 @@ public class SemanticExpander {
 								}
 							}
 
-							// propriétés
+							// properties
 							if(t.getPredicate().isURI() && property.getConfigProperty().containsKey(t.getPredicate().getURI())) {
 
 									//retire le triplet de la clause where
