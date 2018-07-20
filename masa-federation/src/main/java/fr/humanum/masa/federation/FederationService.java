@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -16,6 +17,8 @@ import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
 import org.eclipse.rdf4j.sail.federation.Federation;
 import org.springframework.stereotype.Service;
+
+import fr.humanum.masa.federation.source.FederationSource;
 
 @Service
 public class FederationService {
@@ -43,34 +46,28 @@ public class FederationService {
 		
 	}
 	
-	public Properties getProperties(String fileName) throws FileNotFoundException, IOException{
-		return extConfigService.getProperties(fileName);
-	}
-	
-	public void initializeRepositoryWithFederation(String endpointUrl){
+	public void initializeRepositoryWithFederation(Set<FederationSource> sources){
 		
 		if(federation==null){
 			this.federation=new Federation();
-		}
-		//get end point url property and foreach we create a repository and save it in a federation object
-		System.out.println("Init repository with federation Get endpoint url...");
-		String [] listEndPointUrl=endpointUrl.trim().split("[,]");
+			
+			//add repositories in a federation object
+			System.out.println("Create federation");
+			for (FederationSource aSource : sources) {
+				System.out.println("Adding endpoint URL in federation : "+aSource.getEndpointUrl());
+				RepositorySupplier rs=new RepositorySupplier(aSource.getEndpointUrl());
+				federation.addMember(rs.getRepository());
+			}
 
-		//add repositories in a federation object
-		System.out.println("Create federation");
-		for (String url : listEndPointUrl) {
-			RepositorySupplier rs=new RepositorySupplier(url);
-			federation.addMember(rs.getRepository());
+			//create new repository with federation
+			System.out.println("Create repository");
+			this.repository=new SailRepository(federation);
+			System.out.println("Initialize repository");
+			this.repository.initialize();	
+			System.out.println("End Initialization of repository with federation");
 		}
-		System.out.println("Initialize federation");
-		federation.initialize();
 
-		//create new repository with federation
-		System.out.println("Create repository");
-		this.repository=new SailRepository(federation);
-		System.out.println("Initialize repository");
-		this.repository.initialize();	
-		System.out.println("End Initialization of repository with federation");
+
 	}
 	
 	public Repository getRepository(){

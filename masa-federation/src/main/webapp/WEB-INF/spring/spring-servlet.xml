@@ -34,7 +34,6 @@
 		<property name="order" value="1" />
 	</bean>
 	
-
 	<!-- / Basic application bootstraping -->
 
 	<!-- Maps the resources URL to a physical directory so that we can easily 
@@ -42,7 +41,4 @@
 	<mvc:resources mapping="/resources/**" location="/theme-paper/" />
 	
 	<!-- ***** Application Config ***** -->
-	
-
-	
 </beans>
