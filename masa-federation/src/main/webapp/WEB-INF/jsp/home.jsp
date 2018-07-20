@@ -17,7 +17,7 @@
 <link href="resources/css/jasny-bootstrap.min.css" rel="stylesheet" />
 <script src="resources/js/jquery-1.11.3.js"></script>
 <script src="resources/bootstrap/js/popper.min.js"></script>
-<script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="resources/bootstrap/js/bootstrap.js"></script>
 <script src="resources/js/jasny-bootstrap.min.js"></script>
 <script defer
 	src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
@@ -27,6 +27,7 @@
 	rel='stylesheet' type='text/css' />
 </head>
 <body class="with-background">
+<jsp:include page="header.jsp"></jsp:include>
 	<br>
 	<br>
 
