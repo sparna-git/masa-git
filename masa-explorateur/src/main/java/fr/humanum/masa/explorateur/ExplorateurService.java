@@ -30,18 +30,10 @@ public class ExplorateurService {
 			this.repository.initialize();
 		}
 		try(RepositoryConnection conn = repository.getConnection()) {
-			
 			   TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryExpand);
 			   SPARQLResultsXMLWriter sparqlWriter = new SPARQLResultsXMLWriter(out);
 			   tupleQuery.evaluate(sparqlWriter);
 			}
-//		HttpClient client = HttpClientBuilder.create().build();
-//		HttpPost post = new HttpPost(url);
-//		List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-//		urlParameters.add(new BasicNameValuePair("query", queryExpand));
-//		post.setEntity(new UrlEncodedFormEntity(urlParameters));
-//		HttpResponse response=client.execute(post);
-//		return response.getEntity().getContent();
 	}
 	
 	

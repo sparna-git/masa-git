@@ -1,41 +1,26 @@
 package fr.humanum.masa.explorateur;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.query.Query;
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QueryFactory;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
-import org.apache.jena.query.Syntax;
-import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.shared.PrefixMapping;
-import org.apache.jena.shared.impl.PrefixMappingImpl;
 import org.apache.jena.sparql.core.TriplePath;
-import org.apache.jena.sparql.core.Var;
-import org.apache.jena.sparql.engine.binding.BindingHashMap;
-import org.apache.jena.sparql.path.Path;
 import org.apache.jena.sparql.path.PathParser;
 import org.apache.jena.sparql.syntax.Element;
-import org.apache.jena.sparql.syntax.ElementData;
 import org.apache.jena.sparql.syntax.ElementGroup;
 import org.apache.jena.sparql.syntax.ElementPathBlock;
 import org.apache.jena.sparql.syntax.ElementVisitorBase;
-import org.apache.jena.vocabulary.RDF;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DisplayProperties {
 
+	private Logger log= LoggerFactory.getLogger(this.getClass().getName());
+	
 	private SparqlProperty property;
 
 	protected Model model;
@@ -47,21 +32,23 @@ public class DisplayProperties {
 
 
 	public Query getLatitude(String request,String labelProperty){
+		log.debug("- Lecture de la latitude");
 		return getQuery(request,labelProperty,"latitude");
 	}
 
 	public Query getLabelOfType(String request,String labelProperty){
+		log.debug("- Lecture des libellés");
 		return getQuery(request,labelProperty,"label");
 	}
 	
 
 	public Query getLongitude(String request,String labelProperty){
-
+		log.debug("- Lecture de la longitude");
 		return getQuery(request,labelProperty,"longitude");
 	}
 
 	public Query getStartAndEndDate(String request,String startDateProperty, String endDateProperty){
-		
+		log.debug("- Lecture des dates de débuts et fins");
 		return getDatesQuery(request,startDateProperty,endDateProperty);
 	}
 

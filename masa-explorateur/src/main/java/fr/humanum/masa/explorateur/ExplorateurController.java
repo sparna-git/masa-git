@@ -18,6 +18,8 @@ import org.eclipse.rdf4j.query.TupleQueryResultHandler;
 import org.eclipse.rdf4j.query.resultio.QueryResultIO;
 import org.eclipse.rdf4j.query.resultio.TupleQueryResultFormat;
 import org.eclipse.rdf4j.query.resultio.TupleQueryResultParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class ExplorateurController {
 
+	private Logger log= LoggerFactory.getLogger(this.getClass().getName());
 	private Properties properties;
 	private final ExtConfigService extConfigService;
 	private final ExplorateurService explorateurService;
@@ -59,6 +62,7 @@ public class ExplorateurController {
 			@RequestParam(value="query",required=true) String query) throws IOException{
 		
 		///Expand query
+		log.debug("Extension de la requête simple");
 		SparqlProperty sparqlProperty=new SparqlProperty(properties);
 		SemanticExpander se = new SemanticExpander(sparqlProperty);
 		String queryExpand=se.expand(query);
@@ -68,6 +72,7 @@ public class ExplorateurController {
 		model.addObject("queryExpand", queryExpand);
 		model.addObject("queryExpandReplace",queryExpandReplace);
 		model.addObject("getResult",true);
+		log.debug("Fin d'extension de la requête simple");
 		return model;
 	}
 	
@@ -77,9 +82,10 @@ public class ExplorateurController {
 			HttpServletResponse response,
 			@RequestParam(value="query",required=true) String query) throws IOException, ClassNotFoundException{
 		
-	
+		log.debug("Récupération du résultat de la requête étendue");
 		String federationServiceUrl=properties.getProperty("federation.service.url");
         explorateurService.getResult(federationServiceUrl, query, response.getOutputStream());
+        log.debug("Récupération du résultat terminée");
 	}
 
 }

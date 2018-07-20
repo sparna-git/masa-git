@@ -16,20 +16,20 @@
 
 <link rel="icon" type="image/png" href="resources/favicon.png" />
 <!-- Bootstrap core CSS -->
-<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-<link href="resources/css/jasny-bootstrap.min.css" rel="stylesheet" />
-<link href="resources/css/style.css" rel="stylesheet" />
-<script src="resources/js/jquery-1.11.3.js"></script>
-<script src="resources/bootstrap/js/popper.min.js"></script>
-<script src="resources/bootstrap/js/bootstrap.min.js"></script>
-<script src="resources/js/jasny-bootstrap.min.js"></script>
-<script defer
-	src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet" />
 <link
 	href='http://cdn.jsdelivr.net/g/yasqe@2.2(yasqe.min.css),yasr@2.4(yasr.min.css)'
 	rel='stylesheet' type='text/css' />
+<link href="resources/css/style.css" rel="stylesheet" />
+<script src="resources/js/jquery-1.11.3.js"></script>
+
+<script src="resources/bootstrap/js/bootstrap.js"></script>
+<script defer
+	src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
 </head>
 <body class="with-background">
+<jsp:include page="header.jsp"></jsp:include>
 <br><br>
 	<form method="post" action="expand" style="margin:auto;">
 	 <div class="form-group" style="width: 80%; margin:auto;">
@@ -49,12 +49,14 @@ WHERE  {
 	 
 	</form>
 	<br>
+	
 	<c:if test="${queryExpand!=null}">
+		
 		<div class="form-group" style="width: 80%; margin:auto;">
-		    <label for="sparql">EXTENSION SPARQL :</label>
-				<textarea class="form-control" rows="15" readonly="readonly" name="query" id="sparql">${queryExpand}</textarea>
+		  <label for="collapseExample">REQUÊTE ETENDUE :</label>
+		  <textarea class="form-control " rows="15"   readonly="readonly" name="query" id="collapseExample">${queryExpand}</textarea>
 				<br>
-			<label for="yasr">RESULT SPARQL :</label>
+			<label for="yasr">RESULTAT SPARQL :</label>
 		<div id="yasr"></div>
 	</div> 
 	</c:if>
@@ -63,7 +65,7 @@ WHERE  {
 	<script type="text/javascript">
 		
 	 $( document ).ready(function() {
-
+		
 		 var yasr = YASR(document.getElementById("yasr"));
 		 if('${getResult}'){
 			 var query= '${queryExpandReplace}';

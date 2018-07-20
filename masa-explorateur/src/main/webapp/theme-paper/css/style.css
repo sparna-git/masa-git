@@ -20,7 +20,9 @@
 	margin:auto;
 	text-align: center;
 }
-
+.collapse:(.show) {
+    display: block;
+}
 
 
 

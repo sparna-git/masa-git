@@ -41,7 +41,4 @@
 	<mvc:resources mapping="/resources/**" location="/theme-paper/" />
 	
 	<!-- ***** Application Config ***** -->
-	
-
-	
 </beans>

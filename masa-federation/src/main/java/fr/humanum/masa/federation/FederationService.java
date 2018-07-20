@@ -13,6 +13,8 @@ import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
 import org.eclipse.rdf4j.sail.federation.Federation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import fr.humanum.masa.federation.source.FederationSource;
@@ -20,14 +22,14 @@ import fr.humanum.masa.federation.source.FederationSource;
 @Service
 public class FederationService {
 
+	private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 	private Federation federation;
 	private Repository repository;
-	private ExtConfigService extConfigService;
 
 
 	@Inject
-	public FederationService(ExtConfigService extConfigService) {
-		this.extConfigService=extConfigService;
+	public FederationService() {
+
 	}
 	
 	public void getResultToXml(String queryString,Repository repository, OutputStream out) throws IOException {
@@ -49,19 +51,19 @@ public class FederationService {
 			this.federation=new Federation();
 			
 			//add repositories in a federation object
-			System.out.println("Create federation");
+			log.debug("Création de la  féderation");
 			for (FederationSource aSource : sources) {
-				System.out.println("Adding endpoint URL in federation : "+aSource.getEndpoint());
+				log.debug("Ajout de l' endpoint URL à la féderation : "+aSource.getEndpoint());
 				RepositorySupplier rs=new RepositorySupplier(aSource.getEndpoint().stringValue());
 				federation.addMember(rs.getRepository());
 			}
 
 			//create new repository with federation
-			System.out.println("Create repository");
+			log.debug("Création du  repository");
 			this.repository=new SailRepository(federation);
-			System.out.println("Initialize repository");
+			log.debug("Initialisation du repository");
 			this.repository.initialize();	
-			System.out.println("End Initialization of repository with federation");
+			log.debug("Initialisation du repository avec la fédération terminée");
 		}
 
 
