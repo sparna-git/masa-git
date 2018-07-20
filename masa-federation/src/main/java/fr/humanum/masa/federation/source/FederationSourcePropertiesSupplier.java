@@ -5,6 +5,10 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.function.Supplier;
 
+import org.eclipse.rdf4j.model.IRI;
+import org.eclipse.rdf4j.model.ValueFactory;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
+
 public class FederationSourcePropertiesSupplier implements Supplier<Set<FederationSource>> {
 
 	private Properties properties;
@@ -24,7 +28,8 @@ public class FederationSourcePropertiesSupplier implements Supplier<Set<Federati
 		
 		Set<FederationSource> result = new HashSet<FederationSource>();
 		for (String aEndpointUrl : listEndPointUrl) {
-			result.add(new SimpleFederationSource(aEndpointUrl, null, aEndpointUrl));
+			IRI endpointIri = SimpleValueFactory.getInstance().createIRI(aEndpointUrl);
+			result.add(new SimpleFederationSource(endpointIri, endpointIri, null, aEndpointUrl));
 		}
 		
 		return result;

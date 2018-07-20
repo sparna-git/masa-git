@@ -2,19 +2,24 @@ package fr.humanum.masa.federation.source;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+
+import org.eclipse.rdf4j.model.IRI;
 
 public class SimpleFederationSource implements FederationSource {
 
-	protected String endpointUrl;
-	protected String defaultGraphUri;
+	protected IRI sourceIri;
+	protected IRI endpoint;
+	protected IRI defaultGraph;
 	protected Map<String, String> labels;
 	
 	
 	
-	public SimpleFederationSource(String endpointUrl, String defaultGraphUri, Map<String, String> labels) {
+	public SimpleFederationSource(IRI sourceIri, IRI endpoint, IRI defaultGraph, Map<String, String> labels) {
 		super();
-		this.endpointUrl = endpointUrl;
-		this.defaultGraphUri = defaultGraphUri;
+		this.sourceIri = sourceIri;
+		this.endpoint = endpoint;
+		this.defaultGraph = defaultGraph;
 		this.labels = labels;
 	}
 	
@@ -24,22 +29,25 @@ public class SimpleFederationSource implements FederationSource {
 	 * @param defaultGraphUri
 	 * @param noLangLabel
 	 */
-	public SimpleFederationSource(String endpointUrl, String defaultGraphUri, String noLangLabel) {
-		super();
-		this.endpointUrl = endpointUrl;
-		this.defaultGraphUri = defaultGraphUri;
+	public SimpleFederationSource(IRI sourceIri, IRI endpoint, IRI defaultGraph, String noLangLabel) {
+		this(sourceIri, endpoint, defaultGraph, (Map<String, String>)null);
 		this.labels = new HashMap<String, String>();
 		labels.put(null, noLangLabel);
 	}
 
 	@Override
-	public String getEndpointUrl() {
-		return this.endpointUrl;
+	public IRI getSourceIri() {
+		return this.sourceIri;
 	}
 
 	@Override
-	public String getDefaultGraphUri() {
-		return this.defaultGraphUri;
+	public IRI getEndpoint() {
+		return this.endpoint;
+	}
+
+	@Override
+	public Optional<IRI> getDefaultGraph() {
+		return Optional.ofNullable(this.defaultGraph);
 	}
 
 	@Override
@@ -47,12 +55,12 @@ public class SimpleFederationSource implements FederationSource {
 		return this.labels;
 	}
 
-	public void setEndpointUrl(String endpointUrl) {
-		this.endpointUrl = endpointUrl;
+	public void setEndpoint(IRI endpoint) {
+		this.endpoint = endpoint;
 	}
 
-	public void setDefaultGraphUri(String defaultGraphUri) {
-		this.defaultGraphUri = defaultGraphUri;
+	public void setDefaultGraph(IRI defaultGraph) {
+		this.defaultGraph = defaultGraph;
 	}
 
 	public void setLabels(Map<String, String> labels) {

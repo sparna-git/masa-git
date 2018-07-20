@@ -1,16 +1,13 @@
 package fr.humanum.masa.federation;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Properties;
 import java.util.Set;
 
 import javax.inject.Inject;
 
 import org.eclipse.rdf4j.query.QueryLanguage;
 import org.eclipse.rdf4j.query.TupleQuery;
-import org.eclipse.rdf4j.query.resultio.TupleQueryResultFormat;
 import org.eclipse.rdf4j.query.resultio.sparqlxml.SPARQLResultsXMLWriter;
 import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
@@ -54,8 +51,8 @@ public class FederationService {
 			//add repositories in a federation object
 			System.out.println("Create federation");
 			for (FederationSource aSource : sources) {
-				System.out.println("Adding endpoint URL in federation : "+aSource.getEndpointUrl());
-				RepositorySupplier rs=new RepositorySupplier(aSource.getEndpointUrl());
+				System.out.println("Adding endpoint URL in federation : "+aSource.getEndpoint());
+				RepositorySupplier rs=new RepositorySupplier(aSource.getEndpoint().stringValue());
 				federation.addMember(rs.getRepository());
 			}
 
