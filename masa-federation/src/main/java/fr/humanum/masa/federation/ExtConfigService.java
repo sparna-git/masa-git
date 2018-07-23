@@ -32,5 +32,11 @@ public class ExtConfigService {
 	  }
 	  return properties;
   }
+  
+  public File getSourceFile(){
+		return new File(extPath+"/source.ttl");
+  }
+  
+  
  
 }
