@@ -25,12 +25,11 @@ public class FederationService {
 	private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 	private Federation federation;
 	private Repository repository;
-	private ExtConfigService extConfigService;
 
 
 	@Inject
-	public FederationService(ExtConfigService extConfigService) {
-		this.extConfigService=extConfigService;
+	public FederationService() {
+
 	}
 	
 	public void getResultToXml(String queryString,Repository repository, OutputStream out) throws IOException {
@@ -54,8 +53,8 @@ public class FederationService {
 			//add repositories in a federation object
 			log.debug("Création de la  féderation");
 			for (FederationSource aSource : sources) {
-				log.debug("Ajout de l' endpoint URL à la féderation : "+aSource.getEndpointUrl());
-				RepositorySupplier rs=new RepositorySupplier(aSource.getEndpointUrl());
+				log.debug("Ajout de l' endpoint URL à la féderation : "+aSource.getEndpoint());
+				RepositorySupplier rs=new RepositorySupplier(aSource.getEndpoint().stringValue());
 				federation.addMember(rs.getRepository());
 			}
 

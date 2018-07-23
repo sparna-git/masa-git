@@ -15,7 +15,7 @@
             rdfs:label "La Source 1"@fr;
             rdfs:label "The Source 1"@en;
             # FederationSource.getEndpoint
-            void:sparqlEndpoint <http://localhost:7200/repositories/repo1> ;
+            void:sparqlEndpoint <http://localhost:7200/repositories/testA> ;
             # optionnel : FederationSource.getDefaultGraph
             fed-config:sparqlGraph <http://www.exemple.fr/monGraphe> ;
         ] ;
@@ -27,7 +27,7 @@
             rdfs:label "La Source 222"@fr;
             rdfs:label "The Source 222"@en;
             # FederationSource.getEndpoint
-            void:sparqlEndpoint <http://localhost:7200/repositories/repo222> ;
+            void:sparqlEndpoint <http://localhost:7200/repositories/testB> ;
             # par exemple ici, pas de graphe
         ] ;
     ] .

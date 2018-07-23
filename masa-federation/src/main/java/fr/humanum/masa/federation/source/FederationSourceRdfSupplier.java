@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
+import org.apache.jena.iri.IRIFactory;
+import org.apache.jena.iri.impl.IRIFactoryImpl;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -27,8 +29,11 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFFormat;
+import org.apache.jena.riot.system.IRIResolver;
 import org.apache.jena.util.FileUtils;
 import org.apache.jena.vocabulary.RDFS;
+import org.eclipse.rdf4j.model.IRI;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 
 import fr.humanum.masa.federation.ExtConfigService;
 
@@ -63,7 +68,7 @@ public class FederationSourceRdfSupplier implements Supplier<Set<FederationSourc
 									" ?graphname a sd:NamedGraph ;"+
 									" sd:name ?sourceURI;"+
 									" void:sparqlEndpoint ?endpoint;"+
-									" fed-config:sparqlGraph ?defaultGraph."+
+									" OPTIONAL{?graphname fed-config:sparqlGraph ?defaultGraph.} "+
 											
 								" } group by ?sourceURI ?endpoint ?defaultGraph";
 										
@@ -84,16 +89,16 @@ public class FederationSourceRdfSupplier implements Supplier<Set<FederationSourc
 			for ( ; results.hasNext() ; )
 			{
 				QuerySolution soln = results.nextSolution() ;       
-				Resource source = soln.getResource("sourceIRI") ; 
-				Resource defaultGraph = soln.getResource("defaultGraph") ; 
-				StmtIterator iter =m.listLiteralStatements(source, RDFS.label, true);
+				IRI source = SimpleValueFactory.getInstance().createIRI(soln.getResource("sourceIRI").getURI()); 
+				IRI defaultGraph = SimpleValueFactory.getInstance().createIRI(soln.getResource("defaultGraph").getURI()) ; 
+				StmtIterator iter =m.listLiteralStatements(soln.getResource("sourceIRI"), RDFS.label, true);
 				while(iter.hasNext()){
 					Statement st=iter.next();
 					Literal literal=st.getObject().asLiteral();
 					labels.put(literal.getLanguage(), literal.getLexicalForm());
 				}
-				Literal endpoint = soln.getLiteral("endpoint") ;
-				SimpleFederationSource sfs=new SimpleFederationSource(endpoint.getString(), defaultGraph.getURI(),labels);
+				IRI endpoint = SimpleValueFactory.getInstance().createIRI(soln.getResource("endpoint").getURI()) ;
+				SimpleFederationSource sfs=new SimpleFederationSource(source, endpoint, defaultGraph, labels);
 				result.add(sfs);
 			}
 		} catch (FileNotFoundException e) {

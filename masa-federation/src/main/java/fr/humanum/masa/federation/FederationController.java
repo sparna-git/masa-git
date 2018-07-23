@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.query.resultio.TupleQueryResultFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,7 +76,7 @@ public class FederationController {
 				List<String> sourcesList=q.getNamedGraphURIs();
 				for (String source : sourcesList) {
 					federationSource.forEach(fs->{
-						if(fs.getDefaultGraphUri().equals(source)){
+						if(fs.getSourceIri().equals(SimpleValueFactory.getInstance().createIRI(source))){
 							filteredFederationSource.add(fs);
 						}
 					});
