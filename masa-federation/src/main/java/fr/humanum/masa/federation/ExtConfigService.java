@@ -13,6 +13,7 @@ public class ExtConfigService {
 
   private String EXT_DIRECTORY_PROPERTY = "ext.directory";
   private String APPLICATION_PROPERTIES_FILE = "config.properties";
+  private String APPLICATION_SOURCES_FILE="source.ttl";
   
   private String extPath;
   private Properties properties;
@@ -24,17 +25,17 @@ public class ExtConfigService {
 	  this.extPath = System.getProperty(EXT_DIRECTORY_PROPERTY);
   }
 
-  public Properties getApplicationProperties() throws FileNotFoundException, IOException {
+  /*public Properties getApplicationProperties() throws FileNotFoundException, IOException {
 	  if(properties==null){
 		  File f=new File(extPath+"/"+APPLICATION_PROPERTIES_FILE);
 		  this.properties = new Properties();
 		  this.properties.load(new FileInputStream(f));
 	  }
 	  return properties;
-  }
+  }*/
   
   public File getSourceFile(){
-		return new File(extPath+"/source.ttl");
+		return new File(extPath+"/"+APPLICATION_SOURCES_FILE);
   }
   
   

@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 
 @Controller
 public class ExplorateurController {
@@ -43,25 +47,29 @@ public class ExplorateurController {
 		return model;
 	}
 	
-	@RequestMapping(value = {"expand"},method=RequestMethod.POST)
-	public ModelAndView expand(
+	@RequestMapping(value = {"expand"},method={RequestMethod.GET, RequestMethod.POST})
+	public void expand(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value="query",required=true) String query) throws IOException{
 		
+		response.addHeader("Content-Encoding", "UTF-8");	
+		response.setContentType("application/json"); 
+		ObjectMapper mapper = new ObjectMapper();
 		///Expand query
 		log.debug("Extension de la requête simple");
 		SparqlProperty sparqlProperty=new SparqlProperty(properties);
 		SemanticExpander se = new SemanticExpander(sparqlProperty);
 		String queryExpand=se.expand(query);
-		ModelAndView model=new ModelAndView("home");
-		String queryExpandReplace=queryExpand.replace("\n", " \\\n");
-		model.addObject("query", query);
-		model.addObject("queryExpand", queryExpand);
-		model.addObject("queryExpandReplace",queryExpandReplace);
-		model.addObject("getResult",true);
+		//String queryExpandReplace=queryExpand.replace("\n", " \\\n");
+		ExplorateurData data= new ExplorateurData();
+		data.setQuery(query);
+		data.setExpandQuery(queryExpand);
+		mapper.setSerializationInclusion(Include.NON_NULL);
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
+		mapper.writeValue(response.getOutputStream(), data);
 		log.debug("Fin d'extension de la requête simple");
-		return model;
+		
 	}
 	
 	@RequestMapping(value = {"result"},method=RequestMethod.POST)

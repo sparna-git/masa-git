@@ -49,9 +49,13 @@ public class FederationService {
 		
 		if(federation==null){
 			this.federation=new Federation();
-			
+			for (FederationSource federationSource : sources) {
+				System.out.println(sources.size());
+				System.out.println(federationSource.getEndpoint());
+			}
 			//add repositories in a federation object
 			log.debug("Création de la  féderation");
+			System.out.println("size sources : "+sources.size());
 			for (FederationSource aSource : sources) {
 				log.debug("Ajout de l' endpoint URL à la féderation : "+aSource.getEndpoint());
 				RepositorySupplier rs=new RepositorySupplier(aSource.getEndpoint().stringValue());

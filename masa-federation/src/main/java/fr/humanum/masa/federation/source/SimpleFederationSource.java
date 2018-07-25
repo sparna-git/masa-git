@@ -6,6 +6,9 @@ import java.util.Optional;
 
 import org.eclipse.rdf4j.model.IRI;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+
+
 public class SimpleFederationSource implements FederationSource {
 
 	protected IRI sourceIri;
