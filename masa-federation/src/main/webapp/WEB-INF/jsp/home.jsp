@@ -14,11 +14,10 @@
 <meta name="author" content="">
 <!-- Bootstrap core CSS -->
 <link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet" />
-<link href="resources/css/jasny-bootstrap.min.css" rel="stylesheet" />
+<link href="resources/css/masa-federation.css" rel="stylesheet" />
 <script src="resources/js/jquery-1.11.3.js"></script>
 <script src="resources/bootstrap/js/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.js"></script>
-<script src="resources/js/jasny-bootstrap.min.js"></script>
 <script defer
 	src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <link rel="icon" type="image/png" href="resources/favicon.png" />
@@ -28,12 +27,12 @@
 </head>
 <body class="with-background">
 <jsp:include page="header.jsp"></jsp:include>
-	<br>
-	<br>
-
-	<textarea id="yasqe"></textarea>
-
-	<div id="yasr"></div>
+	
+	<div class="container-fluid" id="main-container">
+		<textarea id="yasqe"></textarea>
+	
+		<div id="yasr"></div>
+	</div>
 
 	<script src='http://cdn.jsdelivr.net/yasr/2.4/yasr.bundled.min.js'></script>
 	<script src='http://cdn.jsdelivr.net/yasqe/2.2/yasqe.bundled.min.js'></script>
