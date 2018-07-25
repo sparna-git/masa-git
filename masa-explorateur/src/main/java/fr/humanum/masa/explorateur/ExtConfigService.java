@@ -12,22 +12,27 @@ import org.springframework.stereotype.Service;
 public class ExtConfigService {
 
   
-  private Properties properties;
-
-  private String extPath ;
-  
-  public ExtConfigService() {
-	  this.extPath = System.getProperty("ext.directory");
-  }
-
-  public Properties getProperties(String fileName) throws FileNotFoundException, IOException{
-	  if(properties==null){
-		  File f=new File(extPath+"/"+fileName);
-		  Properties p=new Properties();
-		  p.load(new FileInputStream(f));
-		  properties=p;
+	private String EXT_DIRECTORY_PROPERTY = "ext.directory";
+	  private String APPLICATION_PROPERTIES_FILE = "config_explorateur.properties";
+	  
+	  private String extPath;
+	  private Properties properties;
+	  
+	  public ExtConfigService() {
+		  if(System.getProperty(EXT_DIRECTORY_PROPERTY) == null) {
+			  throw new RuntimeException("System Property '"+EXT_DIRECTORY_PROPERTY+"' was not found. Please set this system property to point to the ext folder containing configuration files (java -D"+EXT_DIRECTORY_PROPERTY+"=/path/to/ext/folder ...).");
+		  }
+		  this.extPath = System.getProperty(EXT_DIRECTORY_PROPERTY);
 	  }
-	  return properties;
-  }
+
+	  public Properties getApplicationProperties() throws FileNotFoundException, IOException {
+		  if(properties==null){
+			  File f=new File(extPath+"/"+APPLICATION_PROPERTIES_FILE);
+			  this.properties = new Properties();
+			  this.properties.load(new FileInputStream(f));
+		  }
+		  return properties;
+	  }
+	  
  
 }

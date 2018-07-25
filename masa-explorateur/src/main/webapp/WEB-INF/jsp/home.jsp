@@ -5,7 +5,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-
+<c:set var="data"
+	value="${requestScope['fr.humanum.masa.explorateur.ExplorateurData']}" />
 <html>
 <head>
 <title></title>
@@ -29,12 +30,13 @@
 
 </head>
 <body class="with-background">
-<jsp:include page="header.jsp"></jsp:include>
-<br><br>
-	<form method="post" action="expand" style="margin:auto;">
-	 <div class="form-group" style="width: 80%; margin:auto;">
-	  <label for="sparql">SPARQL :</label>
-	  <textarea class="form-control" rows="10" name="query" id="sparql">${query!=null?query:'PREFIX edm: <http://www.europeana.eu/schemas/edm/>
+	<jsp:include page="header.jsp"></jsp:include>
+	<br>
+	<br>
+
+	<div class="form-group" style="width: 80%; margin: auto;">
+		<label for="sparql">SPARQL :</label>
+		<textarea class="form-control" rows="10" name="query" id="sparql">${query!=null?query:'PREFIX edm: <http://www.europeana.eu/schemas/edm/>
 PREFIX ore: <http://www.openarchives.org/ore/terms/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX dc: <http://purl.org/dc/elements/1.1/>
@@ -43,42 +45,64 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 SELECT  ?this  
 WHERE  {
 ?this a <http://exemple.com/type/Thing>.
-}'}</textarea><br>
-	   <button type="submit" class="btn btn-primary btn-lg">Run</button>
-	</div> 
-	 
-	</form>
+}'}</textarea>
+		<br>
+		<button type="button" id="run" class="btn btn-primary btn-lg">Run</button>
+	</div>
+
+
 	<br>
-	
-	<c:if test="${queryExpand!=null}">
-		
-		<div class="form-group" style="width: 80%; margin:auto;">
-		  <label for="collapseExample">REQUÊTE ETENDUE :</label>
-		  <textarea class="form-control " rows="15"   readonly="readonly" name="query" id="collapseExample">${queryExpand}</textarea>
-				<br>
-			<label for="yasr">RESULTAT SPARQL :</label>
+
+
+	<div class="form-group" id="expand" style="width: 80%; margin: auto;">
+
+	</div>
+	<div class="form-group" style="width: 80%; margin: auto;">
+		<label for="yasr" id="labResult"></label>
 		<div id="yasr"></div>
-	</div> 
-	</c:if>
+	</div>
+
 	<script src='http://cdn.jsdelivr.net/yasr/2.4/yasr.bundled.min.js'></script>
 	<script src='http://cdn.jsdelivr.net/yasqe/2.2/yasqe.bundled.min.js'></script>
 	<script type="text/javascript">
 		
 	 $( document ).ready(function() {
+		 $( "#run" ).click(function() {
+			 var sparql = document.getElementById("sparql").value;
+			 console.log(sparql);
+				 $.ajax({
+			         url : 'expand',
+			         type : 'POST', 
+			         data : 'query=' + sparql , 
+			         success: function(response) {
+			        	 
+			            $('#expand').html('<label for="collapseExample">REQUÊTE ETENDUE :</label>'+
+						            		'<textarea class="form-control " rows="15" readonly="readonly"'+
+						            			'name="query" id="collapseExample">'+response.expandQuery+'</textarea>'+
+						            		'<br>'
+						           		);
+			            var yasr = YASR(document.getElementById("yasr"));
+			   			var query= response.expandQuery;
+			   			 $.ajax({
+			   		         url : 'result',
+			   		         type : 'POST', 
+			   		         data : 'query=' + query , 
+			   		         success: function(response) {
+			   		        	$('#labResult').html('RESULTAT SPARQL :');
+			   		            yasr.setResponse(response);
+			   		          }
+			   		      });
+				   		 
+				   		 yasr.draw();
+			            
+			          }
+			      });
 		
-		 var yasr = YASR(document.getElementById("yasr"));
-		 if('${getResult}'){
-			 var query= '${queryExpandReplace}';
-			 $.ajax({
-		         url : 'result',
-		         type : 'POST', 
-		         data : 'query=' + query , 
-		         success: function(response) {
-		            yasr.setResponse(response);
-		          }
-		      });
-		 }
-		 yasr.draw();
+			});
+		
+		
+		 
+		 
 	 });
 	  
 	</script>
