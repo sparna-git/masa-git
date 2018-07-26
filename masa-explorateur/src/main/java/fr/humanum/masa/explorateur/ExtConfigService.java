@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class ExtConfigService {
 
   
-	private String EXT_DIRECTORY_PROPERTY = "ext.directory";
+	  private String EXT_DIRECTORY_PROPERTY = "ext.directory";
 	  private String APPLICATION_PROPERTIES_FILE = "config_explorateur.properties";
 	  
 	  private String extPath;
@@ -33,6 +33,5 @@ public class ExtConfigService {
 		  }
 		  return properties;
 	  }
-	  
  
 }

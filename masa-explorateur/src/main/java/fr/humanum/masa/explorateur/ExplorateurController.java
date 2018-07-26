@@ -2,17 +2,11 @@ package fr.humanum.masa.explorateur;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.PrintWriter;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.io.CopyUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -21,13 +15,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
-import org.apache.jena.query.ResultSetFactory;
-import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.query.Syntax;
-import org.eclipse.rdf4j.query.TupleQueryResultHandler;
-import org.eclipse.rdf4j.query.resultio.QueryResultIO;
-import org.eclipse.rdf4j.query.resultio.TupleQueryResultFormat;
-import org.eclipse.rdf4j.query.resultio.TupleQueryResultParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

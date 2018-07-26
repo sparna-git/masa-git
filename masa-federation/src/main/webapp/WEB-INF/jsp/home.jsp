@@ -16,32 +16,27 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <!-- Bootstrap core CSS -->
-<link href="resources/css/style.css" rel="stylesheet" />
-<link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet" />
 
+<link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet" />
 <link href="resources/css/jasny-bootstrap.min.css" rel="stylesheet" />
+<link href="resources/css/masa-federation.css" rel="stylesheet" />
 <script src="resources/js/jquery-1.11.3.js"></script>
 <script src="resources/bootstrap/js/popper.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.js"></script>
-<script src="resources/js/jasny-bootstrap.min.js"></script>
 <script defer
 	src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <link rel="icon" type="image/png" href="resources/favicon.png" />
 <link
 	href='http://cdn.jsdelivr.net/g/yasqe@2.2(yasqe.min.css),yasr@2.4(yasr.min.css)'
 	rel='stylesheet' type='text/css' />
-<style type="text/css">
-.card {
-	
-}
-</style>
+
 </head>
 <body class="with-background">
+
 	<jsp:include page="header.jsp"></jsp:include>
-	<br>
-	<br><br>
-	<br>
-	<div class="form-group" style="width: 20%; position: fixed; float: left;">
+	
+	<div class="form-group"
+		style="width: 20%; position: fixed; float: left;">
 		<nav>
 			<div class="nav nav-tabs" id="nav-tab" role="tablist">
 				<a class="nav-item nav-link " id="nav-source-tab" data-toggle="tab"
@@ -56,22 +51,21 @@
 			<div class="tab-pane fade show" id="nav-source" role="tabpanel"
 				aria-labelledby="nav-source-tab">
 				<c:forEach items="${data.federationSources}" var="source">
-					
+
 					<div class="card"
 						style="width: 90%; margin-top: 10px; margin-bottom: 10px;">
 						<div class="card-body">
-							<a  href="#">${source.sourceIri}</a>
+							<a href="#">${source.sourceIri}</a>
 						</div>
 					</div>
 
 
 				</c:forEach>
-				</div>
+			</div>
 			<div class="tab-pane fade show active" id="nav-query" role="tabpanel"
 				aria-labelledby="nav-query-tab">
-
 				<c:forEach items="${data.queries}" var="query">
-					
+
 					<div class="card"
 						style="width: 90%; margin-top: 10px; margin-bottom: 10px;">
 						<div class="card-body">
@@ -85,10 +79,11 @@
 			</div>
 
 		</div>
-	
+
 	</div>
-	<div class="form-group" style="width: 70%; margin-left:20%;">
-		
+	
+	<div  class="container-fluid" id="main-container" style="width: 70%; margin-left: 20%;">
+
 		<textarea id="yasqe"></textarea>
 		<br> <br>
 
@@ -101,16 +96,16 @@
 		$("#query").click(function() {
 			$('#collapseExample').toggle();
 		});
-		$("#nav-source-tab").click(function(){
+		$("#nav-source-tab").click(function() {
 			$("#nav-query-tab").removeClass("active");
-		    $("#nav-source-tab").addClass("active");
+			$("#nav-source-tab").addClass("active");
 		});
-		
-		$("#nav-query-tab").click(function(){
+
+		$("#nav-query-tab").click(function() {
 			$("#nav-source-tab").removeClass("active");
-		    $("#nav-query-tab").addClass("active");
+			$("#nav-query-tab").addClass("active");
 		});
-		
+
 		var yasqe = YASQE.fromTextArea(document.getElementById("yasqe"), {
 			sparql : {
 				showQueryButton : true,

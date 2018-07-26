@@ -19,5 +19,15 @@
             # optionnel : FederationSource.getDefaultGraph
             fed-config:sparqlGraph <http://www.exemple.fr/monGraphe> ;
         ] ;
-        
+        sd:namedGraph [
+            a sd:NamedGraph ;
+            # FederationSource.getSourceIri
+            sd:name <http://masa.humanum.fr/source222> ;
+            # FederationSource.getLabels
+            rdfs:label "La Source 222"@fr;
+            rdfs:label "The Source 222"@en;
+            # FederationSource.getEndpoint
+            void:sparqlEndpoint <http://localhost:7200/repositories/testB> ;
+            # par exemple ici, pas de graphe
+        ] ;
     ] .

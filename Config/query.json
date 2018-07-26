@@ -1,0 +1,33 @@
+[
+	{
+		"title":"Affichage des types",
+
+		"query": [
+				 "PREFIX  skos: <http://www.w3.org/2004/02/skos/core#>",
+			 	 "PREFIX  dcterms: <http://purl.org/dc/terms>", 
+			 	 "PREFIX  ore:  <http://www.openarchives.org/ore/terms>",
+			 	 "PREFIX  edm:  <http://www.europeana.eu/schemas/edm>",
+			 	 "PREFIX  dc:   <http://purl.org/dc/elements/1.1>",
+			 	 "SELECT  ?this  WHERE { ?this  a  ?type VALUES ?type{ <http://exemple.com/type/Type1> <http://exemple.com/type/Type2> }}"
+			 ]
+				
+	},
+
+	{
+		"title":"Affichage des types et des labels",
+
+		"query": [
+				  "PREFIX  skos: <http://www.w3.org/2004/02/skos/core#>",
+				  "PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+				  "PREFIX  dcterms: <http://purl.org/dc/terms>",
+				  "PREFIX  ore:  <http://www.openarchives.org/ore/terms>",
+				  "PREFIX  edm:  <http://www.europeana.eu/schemas/edm>",
+				  "PREFIX  dc:   <http://purl.org/dc/elements/1.1>",
+				  "SELECT  ?this ?label ",
+				  "WHERE { ?this  a  ?type VALUES ?type{ <http://exemple.com/type/Type1> <http://exemple.com/type/Type2> } ?this rdfs:label ?label.}"
+				  ]
+				
+	}
+
+
+]
