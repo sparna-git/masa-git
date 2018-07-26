@@ -12,9 +12,18 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.CopyUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.ResultSetFactory;
 import org.apache.jena.query.ResultSetFormatter;
+import org.apache.jena.query.Syntax;
 import org.eclipse.rdf4j.query.TupleQueryResultHandler;
 import org.eclipse.rdf4j.query.resultio.QueryResultIO;
 import org.eclipse.rdf4j.query.resultio.TupleQueryResultFormat;
@@ -39,7 +48,7 @@ public class ExplorateurController {
 	private Properties properties;
 	private final ExtConfigService extConfigService;
 	private final ExplorateurService explorateurService;
-	
+
 
 	@Inject
 	public ExplorateurController(ExtConfigService extConfigService, ExplorateurService explorateurService) throws FileNotFoundException, IOException {
@@ -49,7 +58,7 @@ public class ExplorateurController {
 	}
 
 	@RequestMapping(value = {"home","/"},method=RequestMethod.GET)
-	public ModelAndView sparql(
+	public ModelAndView home(
 			HttpServletRequest request,
 			HttpServletResponse response
 			){
@@ -57,42 +66,84 @@ public class ExplorateurController {
 		ModelAndView model=new ModelAndView("home");
 		return model;
 	}
-	
+
+	@RequestMapping(value = {"sparql"},method=RequestMethod.POST)
+	public ModelAndView sparql(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="source",required=true) String source
+			){
+
+		ModelAndView model=new ModelAndView("sparql");
+		model.addObject("source", source);
+		return model;
+	}
+
 	@RequestMapping(value = {"expand"},method={RequestMethod.GET, RequestMethod.POST})
 	public void expand(
 			HttpServletRequest request,
 			HttpServletResponse response,
-			@RequestParam(value="query",required=true) String query) throws IOException{
-		
-		response.addHeader("Content-Encoding", "UTF-8");	
-		response.setContentType("application/json"); 
-		ObjectMapper mapper = new ObjectMapper();
-		///Expand query
-		log.debug("Extension de la requête simple");
-		SparqlProperty sparqlProperty=new SparqlProperty(properties);
-		SemanticExpander se = new SemanticExpander(sparqlProperty);
-		String queryExpand=se.expand(query);
-		//String queryExpandReplace=queryExpand.replace("\n", " \\\n");
-		ExplorateurData data= new ExplorateurData();
-		data.setQuery(query);
-		data.setExpandQuery(queryExpand);
-		mapper.setSerializationInclusion(Include.NON_NULL);
-		mapper.enable(SerializationFeature.INDENT_OUTPUT);
-		mapper.writeValue(response.getOutputStream(), data);
-		log.debug("Fin d'extension de la requête simple");
-		
-	}
-	
-	@RequestMapping(value = {"result"},method=RequestMethod.POST)
-	public void getResult(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			@RequestParam(value="query",required=true) String query) throws IOException, ClassNotFoundException{
-		
-		log.debug("Récupération du résultat de la requête étendue");
-		String federationServiceUrl=properties.getProperty("federation.service.url");
-        explorateurService.getResult(federationServiceUrl, query, response.getOutputStream());
-        log.debug("Récupération du résultat terminée");
-	}
+			@RequestParam(value="query",required=true) String query,
+			@RequestParam(value="source",required=false) String source
+			) throws IOException{
+
+						response.addHeader("Content-Encoding", "UTF-8");	
+						response.setContentType("application/json"); 
+						ObjectMapper mapper = new ObjectMapper();
+						///Expand query
+						log.debug("Extension de la requête simple");
+						SparqlProperty sparqlProperty=new SparqlProperty(properties);
+						SemanticExpander se = new SemanticExpander(sparqlProperty);
+						
+						//ajout dee la source à la requete si source !=null
+						if(source!=null){
+							query=addSourceToQuery(query,source);
+						}
+						
+						String queryExpand=se.expand(query);
+						ExplorateurData data= new ExplorateurData();
+						data.setQuery(query);
+						data.setExpandQuery(queryExpand);
+						mapper.setSerializationInclusion(Include.NON_NULL);
+						mapper.enable(SerializationFeature.INDENT_OUTPUT);
+						mapper.writeValue(response.getOutputStream(), data);
+						log.debug("Fin d'extension de la requête simple");
+
+					}
+
+					@RequestMapping(value = {"result"},method=RequestMethod.POST)
+					public void getResult(
+							HttpServletRequest request,
+							HttpServletResponse response,
+							@RequestParam(value="query",required=true) String query) throws IOException, ClassNotFoundException{
+
+						log.debug("Récupération du résultat de la requête étendue");
+						String federationServiceUrl=properties.getProperty("federation.service.url");
+						explorateurService.getResult(federationServiceUrl, query, response.getOutputStream());
+						log.debug("Récupération du résultat terminée");
+					}
+
+					@RequestMapping(value = {"sources"},method=RequestMethod.GET)
+					public void getSources(HttpServletRequest request,HttpServletResponse response) throws ClientProtocolException, IOException
+					{
+						response.addHeader("Content-Encoding", "UTF-8");	
+						response.setContentType("application/json"); 
+						log.debug("Récupération des sources");
+						String federationApiSourcesUrl=properties.getProperty("federation.service.api.sources");
+						HttpClient client = HttpClientBuilder.create().build();
+						HttpGet req = new HttpGet(federationApiSourcesUrl);
+						HttpResponse resp = client.execute(req);
+						IOUtils.copy(resp.getEntity().getContent(),response.getOutputStream());
+						log.debug("Récupération des sources terminée");
+					}
+
+					public String addSourceToQuery(String query, String source) throws ClientProtocolException, IOException
+					{
+						log.debug("ajout de la source à la requête");
+						Query q=QueryFactory.create(query);
+						q.getNamedGraphURIs().add(source);
+						log.debug("ajout de la source à la requête terminé");
+						return q.toString(Syntax.syntaxSPARQL_11);
+					}
 
 }

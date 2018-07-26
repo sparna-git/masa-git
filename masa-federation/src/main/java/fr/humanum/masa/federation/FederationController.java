@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -15,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
-import org.apache.jena.query.Syntax;
-import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.query.resultio.TupleQueryResultFormat;
 import org.slf4j.Logger;
@@ -35,7 +32,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import fr.humanum.masa.federation.source.FederationSource;
 import fr.humanum.masa.federation.source.FederationSourceRdfSupplier;
-import fr.humanum.masa.federation.source.SimpleFederationSource;
 import fr.humanum.masa.federation.source.SimpleFederationSourceJsonOutput;
 
 @Controller
@@ -60,9 +56,17 @@ public class FederationController {
 	public ModelAndView sparqlHome(
 			HttpServletRequest request,
 			HttpServletResponse response
-			){
-		ModelAndView model=new ModelAndView("home");
-		return model;
+			) throws FileNotFoundException, IOException{
+		
+		//create a list with all queries
+		FederationData data=new FederationData();
+		data.setQueries(extConfigService.getApplicationQueries());
+		
+		//get all sources
+		FederationSourceRdfSupplier frs=new FederationSourceRdfSupplier(extConfigService);
+		Set<FederationSource> federationSources=frs.get();
+		data.setFederationSources(federationSources);
+		return new ModelAndView("home",FederationData.KEY,data);
 	}
 
 
