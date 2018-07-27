@@ -17,6 +17,9 @@ public class ExtConfigService {
 	public static String QUERY_EXPANSION_CONFIG_FILE = "query_expansion.ttl";
 
 
+	public static String FEDERATION_SERVICE_URL = "federation.service.url";
+	public static String FEDERATION_SERVICE_API_SOURCES = "federation.service.api.sources";
+	
 	private File extFolder;
 	private Properties properties;
 

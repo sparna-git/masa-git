@@ -20,7 +20,6 @@
 
 	<!-- ***** Basic application bootstraping ***** -->
 
-	
 	<context:component-scan base-package="fr.humanum.masa" />
 
 	<!-- Maps /** to the DefaultServletHandler -->
@@ -38,7 +37,7 @@
 
 	<!-- Maps the resources URL to a physical directory so that we can easily 
 		change 'themes' -->
-	<mvc:resources mapping="/resources/**" location="/theme-paper/" />
+	<mvc:resources mapping="/resources/**" location="/theme-default/" />
 	
 	<!-- ***** Application Config ***** -->
 </beans>

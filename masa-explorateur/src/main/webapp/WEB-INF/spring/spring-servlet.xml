@@ -38,7 +38,7 @@
 
 	<!-- Maps the resources URL to a physical directory so that we can easily 
 		change 'themes' -->
-	<mvc:resources mapping="/resources/**" location="/theme-paper/" />
+	<mvc:resources mapping="/resources/**" location="/theme-default/" />
 	
 	<!-- ***** Application Config ***** -->
 	

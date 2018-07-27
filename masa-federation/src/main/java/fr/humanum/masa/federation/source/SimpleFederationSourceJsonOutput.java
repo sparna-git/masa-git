@@ -1,8 +1,6 @@
 package fr.humanum.masa.federation.source;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 
 public class SimpleFederationSourceJsonOutput  {
@@ -12,7 +10,15 @@ public class SimpleFederationSourceJsonOutput  {
 	protected String defaultGraph;
 	protected Map<String, String> labels;
 	
-	
+	public static SimpleFederationSourceJsonOutput fromFederationSource(FederationSource originalSource) {
+		SimpleFederationSourceJsonOutput fedJsonOut=new SimpleFederationSourceJsonOutput(
+				originalSource.getSourceIri().toString(),
+				originalSource.getEndpoint().toString(), 
+				(originalSource.getDefaultGraph().isPresent())?originalSource.getDefaultGraph().get().stringValue():null,
+				originalSource.getLabels()
+		);
+		return fedJsonOut;
+	}
 	
 	public SimpleFederationSourceJsonOutput(String sourceString, String endpoint, String defaultGraph, Map<String, String> labels) {
 		super();
@@ -21,19 +27,6 @@ public class SimpleFederationSourceJsonOutput  {
 		this.defaultGraph = defaultGraph;
 		this.labels = labels;
 	}
-	
-	/**
-	 * Constructor with a single label without language
-	 * @param endpointUrl
-	 * @param defaultGraphUri
-	 * @param noLangLabel
-	 */
-	public SimpleFederationSourceJsonOutput(String sourceString, String endpoint, String defaultGraph, String noLangLabel) {
-		this(sourceString, endpoint, defaultGraph, (Map<String, String>)null);
-		this.labels = new HashMap<String, String>();
-		labels.put(null, noLangLabel);
-	}
-
 	
 	public String getSourceString() {
 		return this.sourceString;

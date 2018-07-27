@@ -1,13 +1,17 @@
 package fr.humanum.masa.explorateur;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.OutputStream;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.Syntax;
@@ -17,12 +21,7 @@ import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.sparql.algebra.walker.ElementWalker_New;
 import org.apache.jena.sparql.expr.ExprVisitorBase;
-import org.eclipse.rdf4j.query.QueryLanguage;
-import org.eclipse.rdf4j.query.TupleQuery;
 import org.eclipse.rdf4j.query.resultio.sparqlxml.SPARQLResultsXMLWriter;
-import org.eclipse.rdf4j.repository.Repository;
-import org.eclipse.rdf4j.repository.RepositoryConnection;
-import org.eclipse.rdf4j.repository.sparql.SPARQLRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -37,20 +36,18 @@ public class ExplorateurService {
 	private Logger log= LoggerFactory.getLogger(this.getClass().getName());
 	
 	private ExtConfigService extConfigService;
-	
-	private String endpointUrl;
 	private SparqlExpansionConfig expansionConfig;
+	private FederationService federationService;
 	
 	@Inject
-	public ExplorateurService(ExtConfigService extConfigService) {
+	public ExplorateurService(ExtConfigService extConfigService, FederationService federationService) {
 		super();
 		this.extConfigService = extConfigService;
+		this.federationService = federationService;
 	}
 	
 	@PostConstruct
 	public void init() {
-		this.endpointUrl = extConfigService.getApplicationProperties().getProperty("federation.service.url");
-		
 		try {
 			File expansionConfigFile = extConfigService.findMandatoryFile(ExtConfigService.QUERY_EXPANSION_CONFIG_FILE);
 			Model m = ModelFactory.createDefaultModel();
@@ -65,15 +62,8 @@ public class ExplorateurService {
 	
 	
 	public void getResult(String queryExpand, OutputStream out) {
-
-		Repository repository = new SPARQLRepository(this.endpointUrl);
-		repository.initialize();
-			
-		try(RepositoryConnection conn = repository.getConnection()) {
-			TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryExpand);
-			SPARQLResultsXMLWriter sparqlWriter = new SPARQLResultsXMLWriter(out);
-			tupleQuery.evaluate(sparqlWriter);
-		}
+		SPARQLResultsXMLWriter sparqlWriter = new SPARQLResultsXMLWriter(out);
+		this.federationService.query(queryExpand, sparqlWriter);
 	}
 	
 	public String expandQuery(String query) {
@@ -86,5 +76,21 @@ public class ExplorateurService {
 		return result;
 	}
 	
+	public String addSourceToQuery(String query, String source) {
+		if(source == null) {
+			return query;
+		}
+		
+		log.debug("ajout de la source à la requête");
+		Query q=QueryFactory.create(query);
+		q.getNamedGraphURIs().add(source);
+		log.debug("ajout de la source à la requête terminé");
+		return q.toString(Syntax.syntaxSPARQL_11);		
+	}
+	
+	public void getSources(OutputStream out) throws ClientProtocolException, IOException {
+		String sources = federationService.getSources();
+		IOUtils.copy(new ByteArrayInputStream(sources.getBytes()), out);
+	}	
 	
 }
