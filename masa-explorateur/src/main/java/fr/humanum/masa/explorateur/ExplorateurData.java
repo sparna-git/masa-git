@@ -2,7 +2,7 @@ package fr.humanum.masa.explorateur;
 
 public class ExplorateurData {
 
-	public String KEY= this.getClass().getCanonicalName();
+	public static final String KEY= ExplorateurData.class.getCanonicalName();
 	
 	protected String expandQuery;
 	
