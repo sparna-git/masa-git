@@ -71,45 +71,34 @@ public class FederationController {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value="query",required=true) String query
-			){
+			)
+	throws Exception {
+		log.debug("Requête SPARQL à exécuter : "+query);
 
-		try {
+		Query q=  QueryFactory.create(query) ; 
 
-			log.debug("Requête SPARQL à exécuter : "+query);
+		FederationSourceRdfSupplier frs=new FederationSourceRdfSupplier(extConfigService);
+		Set<FederationSource> federationSource=frs.get();
 
-			Query q=  QueryFactory.create(query) ; 
-
-			FederationSourceRdfSupplier frs=new FederationSourceRdfSupplier(extConfigService);
-			Set<FederationSource> federationSource=frs.get();
-
-			if(q.getNamedGraphURIs()!=null && !q.getNamedGraphURIs().isEmpty()){
-				log.debug("Clause from trouvée");
-				Set<FederationSource> filteredFederationSource=new HashSet<FederationSource>();
-				List<String> sourcesList=q.getNamedGraphURIs();
-				for (String source : sourcesList) {
-					federationSource.forEach(fs->{
-						if(fs.getSourceIri().equals(SimpleValueFactory.getInstance().createIRI(source))){
-							log.debug("source found :"+ source);
-							filteredFederationSource.add(fs);
-						}
-					});
-				}
-				federationSource=filteredFederationSource;
+		if(q.getNamedGraphURIs()!=null && !q.getNamedGraphURIs().isEmpty()){
+			log.debug("Clause from trouvée");
+			Set<FederationSource> filteredFederationSource=new HashSet<FederationSource>();
+			List<String> sourcesList=q.getNamedGraphURIs();
+			for (String source : sourcesList) {
+				federationSource.forEach(fs->{
+					if(fs.getSourceIri().equals(SimpleValueFactory.getInstance().createIRI(source))){
+						log.debug("source found :"+ source);
+						filteredFederationSource.add(fs);
+					}
+				});
 			}
+			federationSource=filteredFederationSource;
+		}
 
-			federationService.initializeRepositoryWithFederation(federationSource);		
-			response.setContentType(TupleQueryResultFormat.SPARQL.getDefaultMIMEType());
-			federationService.getResultToXml(query,federationService.getRepository(),response.getOutputStream());
-			log.debug("Fin d'exécution de la requête");
-
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-
+		federationService.initializeRepositoryWithFederation(federationSource);		
+		response.setContentType(TupleQueryResultFormat.SPARQL.getDefaultMIMEType());
+		federationService.getResultToXml(query,federationService.getRepository(),response.getOutputStream());
+		log.debug("Fin d'exécution de la requête");
 	}
 
 

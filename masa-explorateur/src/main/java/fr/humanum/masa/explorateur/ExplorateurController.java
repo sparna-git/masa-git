@@ -2,7 +2,6 @@ package fr.humanum.masa.explorateur;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Properties;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -25,16 +24,13 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public class ExplorateurController {
 
 	private Logger log= LoggerFactory.getLogger(this.getClass().getName());
-	private Properties properties;
-	private final ExtConfigService extConfigService;
+
 	private final ExplorateurService explorateurService;
 	
 
 	@Inject
-	public ExplorateurController(ExtConfigService extConfigService, ExplorateurService explorateurService) throws FileNotFoundException, IOException {
-		this.extConfigService=extConfigService;
+	public ExplorateurController(ExplorateurService explorateurService) throws FileNotFoundException, IOException {
 		this.explorateurService=explorateurService;
-		this.properties=this.extConfigService.getApplicationProperties();
 	}
 
 	@RequestMapping(value = {"home","/"},method=RequestMethod.GET)
@@ -58,9 +54,7 @@ public class ExplorateurController {
 		ObjectMapper mapper = new ObjectMapper();
 		///Expand query
 		log.debug("Extension de la requête simple");
-		SparqlProperty sparqlProperty=new SparqlProperty(properties);
-		SemanticExpander se = new SemanticExpander(sparqlProperty);
-		String queryExpand=se.expand(query);
+		String queryExpand=explorateurService.expandQuery(query);
 		//String queryExpandReplace=queryExpand.replace("\n", " \\\n");
 		ExplorateurData data= new ExplorateurData();
 		data.setQuery(query);
@@ -79,8 +73,7 @@ public class ExplorateurController {
 			@RequestParam(value="query",required=true) String query) throws IOException, ClassNotFoundException{
 		
 		log.debug("Récupération du résultat de la requête étendue");
-		String federationServiceUrl=properties.getProperty("federation.service.url");
-        explorateurService.getResult(federationServiceUrl, query, response.getOutputStream());
+        explorateurService.getResult(query, response.getOutputStream());
         log.debug("Récupération du résultat terminée");
 	}
 

@@ -68,5 +68,5 @@
 			<artifactId>javax.inject</artifactId>
 		</dependency>
 
-		</dependencies>
+	</dependencies>
 </project>

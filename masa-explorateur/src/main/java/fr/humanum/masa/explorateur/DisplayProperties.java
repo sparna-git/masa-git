@@ -8,6 +8,7 @@ import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.sparql.core.TriplePath;
 import org.apache.jena.sparql.path.PathParser;
 import org.apache.jena.sparql.syntax.Element;
@@ -20,13 +21,10 @@ import org.slf4j.LoggerFactory;
 public class DisplayProperties {
 
 	private Logger log= LoggerFactory.getLogger(this.getClass().getName());
-	
-	private SparqlProperty property;
 
 	protected Model model;
 
-	public DisplayProperties(SparqlProperty property, Model model) {
-		this.property = property;
+	public DisplayProperties(Model model) {
 		this.model=model;
 	}
 
@@ -77,13 +75,12 @@ public class DisplayProperties {
 							TriplePath t = triples.next();
 
 							if(t.getSubject().getName().equals("this"))  {
-
 								ElementPathBlock newEpb1= new ElementPathBlock();
-								newEpb1.addTriple(new TriplePath(t.getSubject(), PathParser.parse(startDateProperty, property.pmap),NodeFactory.createVariable("start")));						
+								newEpb1.addTriple(new TriplePath(t.getSubject(), PathParser.parse(startDateProperty, ModelFactory.createDefaultModel()),NodeFactory.createVariable("start")));						
 								elementsToAdd.add(newEpb1);
 
 								ElementPathBlock newEpb2= new ElementPathBlock();
-								newEpb2.addTriple(new TriplePath(t.getSubject(), PathParser.parse(endDateProperty, property.pmap),NodeFactory.createVariable("end")));
+								newEpb2.addTriple(new TriplePath(t.getSubject(), PathParser.parse(endDateProperty, ModelFactory.createDefaultModel()),NodeFactory.createVariable("end")));
 								elementsToAdd.add(newEpb2);
 
 								//Ajout des variables supplementaires au select                    
@@ -141,7 +138,7 @@ public class DisplayProperties {
 							if(t.getSubject().getName().equals("this")) {
 
 								ElementPathBlock newEpb2= new ElementPathBlock();
-								newEpb2.addTriple(new TriplePath(t.getSubject(), PathParser.parse(label, property.pmap),NodeFactory.createVariable(variable)));
+								newEpb2.addTriple(new TriplePath(t.getSubject(), PathParser.parse(label, ModelFactory.createDefaultModel()),NodeFactory.createVariable(variable)));
 								elementsToAdd.add(newEpb2);
 
 								//Ajout des variables supplementaires au select                    
