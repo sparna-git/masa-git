@@ -74,6 +74,7 @@ public class FederationController {
 		log.debug("Requête après suppression des clauses FROM : \n"+queryWithoutFromClauses);
 		
 		Repository federationRepository = federationService.createFederationRepositoryFromSources(sourcesToQuery);		
+		log.debug("MimeType : "+TupleQueryResultFormat.SPARQL.getDefaultMIMEType());
 		response.setContentType(TupleQueryResultFormat.SPARQL.getDefaultMIMEType());
 		federationService.getResultToXml(queryWithoutFromClauses,federationRepository,response.getOutputStream());
 		log.debug("Fin d'exécution de la requête");

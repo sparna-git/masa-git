@@ -53,7 +53,7 @@ WHERE  {
 
 
 	<div class="form-group" id="expand" style="width: 80%; margin: auto;">
-		<a href="#" id="label" class="btn btn-primary"><label for="collapseExample">Cliquez ici pour voir ou cacher la reqête étendue</label></a><br><br>
+		<a href="#" id="label" class="btn btn-primary"><label for="collapseExample">Cliquez ici pour voir ou cacher la requête étendue</label></a><br><br>
 		<textarea class="form-control " rows="15" readonly="readonly" name="query" id="collapseExample"></textarea>
 		<br>
 	</div>

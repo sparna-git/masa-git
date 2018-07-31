@@ -31,9 +31,17 @@ $.ajax({
        url : 'sources',
        type : 'GET', 
        success: function(response) {
+    	   
     	   for(var i=0;i<response.length;i++){
-    		   $('#nav').append('<button class="btn btn-default" name="source" value="'+response[i].sourceString+'" style="width:20%; margin:auto;" type="submit">'+response[i].sourceString+'</button><br><br>');    
+    		   var label="";
+    		   for(key in response[i].labels){
+    			   label+=response[i].labels[key]+ ' <em>@'+key+'</em> ';
+    			  
+    		   }
+    		   label=label.substring(0, label.length-1);
+    		   $('#nav').append('<button class="btn btn-default" name="source" value="'+response[i].sourceString+'" style="width:20%; margin:auto;" type="submit">'+label+'<br>(<em class="source">'+response[i].sourceString+'</em>)</button><br><br>');     
     	   }
+    	   
        }
       	
     });
