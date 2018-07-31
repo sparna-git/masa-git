@@ -31,6 +31,7 @@ var timelinePlugin = function(yasr) {
                     label=binding[bindingVar].value;
                   }
 
+                //check if value is a xsd date
                 if(binding[bindingVar].datatype=='http://www.w3.org/2001/XMLSchema#date'){
                 
                       if(bindingVar=='naissance'){
@@ -67,7 +68,6 @@ var timelinePlugin = function(yasr) {
       
     }
 
-    console.log(itemsList);
     var items = new vis.DataSet(itemsList);
     var options = {limitSize : false};
 
