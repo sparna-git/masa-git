@@ -125,11 +125,12 @@
 		
 		YASR.registerOutput("Timeline",timelinePlugin);
 		
-		var yasr = YASR(document.getElementById("yasr"), {
+		 var yasr = YASR(document.getElementById("yasr"), {
 			//this way, the URLs in the results are prettified using the defined prefixes in the query
 			getUsedPrefixes : yasqe.getPrefixesFromQuery,
-			outputPlugins : ["Timeline","error", "rawResponse", "table", "pivot", "leaflet"]
-		});
+			outputPlugins : ["Timeline"]
+		}); 
+		
 		
 		yasqe.options.sparql.callbacks.complete = yasr.setResponse;
 

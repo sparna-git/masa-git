@@ -5,7 +5,7 @@ var timelinePlugin = function(yasr) {
   var cm = null;
   var draw = function() {
      console.log('run draw');
-     var container = $("<div id='timeResult'></div>");
+     var container = $("<div id='timeResult' style='margin-top:1em;'></div>");
      container.empty().appendTo(yasr.resultsContainer);
      var element = document.getElementById('timeResult');
      var itemsList=[];
@@ -15,7 +15,7 @@ var timelinePlugin = function(yasr) {
     if (!bindings || bindings.length === 0) {
       return [];
     }
- var count=0;
+    
      for (var i = 0; i < bindings.length; i++) {
       
           var binding = bindings[i];
@@ -25,23 +25,25 @@ var timelinePlugin = function(yasr) {
           var countTypeDate=0;
           var start=null;
           var end=null;
+          var uri=null;
           for (var bindingVar in binding) {
                   
-                  if(bindingVar=='nom'){
-                    label=binding[bindingVar].value;
-                  }
-
                 //check if value is a xsd date
                 if(binding[bindingVar].datatype=='http://www.w3.org/2001/XMLSchema#date'){
                 
-                      if(bindingVar=='naissance'){
-                        stringFirstDate=binding[bindingVar].value.substring(0,10);
-                        start=new Date(stringFirstDate);
-                      }
-                    if(bindingVar=='deces'){
+                     countTypeDate=countTypeDate+1;
+                     if(countTypeDate==1){
+                      stringFirstDate=binding[bindingVar].value.substring(0,10);
+                      start=new Date(stringFirstDate);
+                    }else{
                       stringSecondDate=binding[bindingVar].value.substring(0,10);
                       end=new Date(stringSecondDate);
-                    }  
+                    }    
+                   
+              }else if (binding[bindingVar].type=='literal') {
+                  label=binding[bindingVar].value;
+              }else if(binding[bindingVar].type=='uri') {
+                uri=binding[bindingVar].value;
               }
                     
           }
@@ -50,26 +52,37 @@ var timelinePlugin = function(yasr) {
 
           if(stringFirstDate!=null && stringSecondDate!=null){
                 if(start.getTime()<end.getTime()){
-                  itemsList.push({id: i+1, content: label, start: stringFirstDate, end: stringSecondDate});
+                  itemsList.push({
+                    id: i+1, content: '<a href="'+uri+'" target="_blank" style="text-decoration:none; cursor:pointer;" title="'+uri+'">'+label+'</a>', 
+                    start: stringFirstDate, 
+                    end: stringSecondDate, 
+                    title:stringFirstDate+' / '+stringSecondDate
+                  });
                 }else{
-                  itemsList.push({id: i+1, content: label, start: stringSecondDate, end: stringFirstDate});
+                  itemsList.push({
+                    id: i+1, 
+                    content: '<a href="'+uri+'" style="text-decoration:none; cursor:pointer;" target="_blank" title="'+uri+'">'+label+'</a>', 
+                    start: stringSecondDate, 
+                    end: stringFirstDate, 
+                    title:stringSecondDate+' / '+stringFirstDate});
                 }
           }
 
           //check if one of dates is null
 
           if(stringFirstDate!=null && stringSecondDate==null){  
-            itemsList.push({id: i+1, content: label, start: stringFirstDate});
-          }
-
-          if(stringFirstDate==null && stringSecondDate!=null){  
-            itemsList.push({id: i+1, content: label, start: stringSecondDate});
+            itemsList.push({
+              id: i+1, 
+              content: '<a href="'+uri+'" style="text-decoration:none; cursor:pointer;" target="_blank" title="'+uri+'">'+label+'</a>', 
+              start: stringFirstDate,
+              title:stringFirstDate
+            });
           }
       
     }
 
     var items = new vis.DataSet(itemsList);
-    var options = {limitSize : false};
+    var options = {limitSize : false, showTooltips: true};
 
     // Create a Timeline
     var timeline = new vis.Timeline(element, items, options);
@@ -77,33 +90,50 @@ var timelinePlugin = function(yasr) {
   };
 
   var canHandleResults = function() {
-    if (!yasr.results) return false;
-    if (!yasr.results.getOriginalResponseAsString) return false;
-    var response = yasr.results.getOriginalResponseAsString();
-    if ((!response || response.length == 0) && yasr.results.getException()) return false; //in this case, show exception instead, as we have nothing to show anyway
-    return true;
+
+   return getDateVariables().length > 0 && getDateVariables().length <= 2;
   };
 
-  var getDownloadInfo = function() {
-    if (!yasr.results) return null;
-    var contentType = yasr.results.getOriginalContentType();
-    var type = yasr.results.getType();
-    return {
-      getContent: function() {
-        return yasr.results.getOriginalResponse();
-      },
-      filename: "queryResults" + (type ? "." + type : ""),
-      contentType: contentType ? contentType : "text/plain",
-      buttonTitle: "Download response"
-    };
+
+   var valueIsXsdDate = function(val) {
+    if(val=='http://www.w3.org/2001/XMLSchema#date'){
+      return true;
+    }else{
+      return false;
+    }
   };
 
+
+  var getDateVariables = function() {
+    if (!yasr.results) return [];
+    var bindings = yasr.results.getBindings();
+    if (!bindings || bindings.length === 0) {
+      return [];
+    }
+    var dateVars = [];
+    var checkedVars = [];
+    for (var i = 0; i < bindings.length; i++) {
+      var binding = bindings[i];
+      for (var bindingVar in binding) {
+        if (checkedVars.indexOf(bindingVar) === -1 && binding[bindingVar].value) {
+          checkedVars.push(bindingVar);
+          if (valueIsXsdDate(binding[bindingVar].datatype)) dateVars.push(bindingVar);
+        }
+      }
+      if (checkedVars.length === yasr.results.getVariables().length) {
+        //checked all vars. can break now
+        break;
+      }
+    }
+    return dateVars;
+  };
+
+  
   return {
     draw: draw,
     name: "Timeline",
     canHandleResults: canHandleResults,
-    getPriority: 1,
-    getDownloadInfo: getDownloadInfo
+    getPriority: 1
   };
 };
 
