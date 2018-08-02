@@ -15,38 +15,13 @@
 
 <link rel="icon" type="image/png" href="resources/favicon.png" />
 <!-- Bootstrap core CSS -->
-<link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet" />
-<link
-	href='http://cdn.jsdelivr.net/g/yasqe@2.2(yasqe.min.css),yasr@2.4(yasr.min.css)'
-	rel='stylesheet' type='text/css' />
-<link href="resources/css/style.css" rel="stylesheet" />
-<script src="resources/js/jquery-1.11.3.js"></script>
+<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
-<script src="resources/bootstrap/js/bootstrap.js"></script>
+<link href="resources/css/style.css" rel="stylesheet" />
+
 <script defer
 	src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-<script type="text/javascript">
 
-$.ajax({
-       url : 'sources',
-       type : 'GET', 
-       success: function(response) {
-    	   
-    	   for(var i=0;i<response.length;i++){
-    		   var label="";
-    		   for(key in response[i].labels){
-    			   label+=response[i].labels[key]+ ' <em>@'+key+'</em> ';
-    			  
-    		   }
-    		   label=label.substring(0, label.length-1);
-    		   $('#nav').append('<button class="btn btn-default" name="source" value="'+response[i].sourceString+'" style="width:20%; margin:auto;" type="submit">'+label+'<br>(<em class="source">'+response[i].sourceString+'</em>)</button><br><br>');     
-    	   }
-    	   
-       }
-      	
-    });
-
-</script>
 </head>
 <body class="with-background">
 	<jsp:include page="header.jsp"></jsp:include>
@@ -59,5 +34,28 @@ $.ajax({
 	
 	</form>
 
+
+	<script src="resources/js/jquery-1.11.3.js"></script>
+	<script src="resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+
+	$.ajax({
+       url : 'sources',
+       type : 'GET', 
+       success: function(response) {
+    	   
+    	   for(var i=0;i<response.length;i++){
+    		   var label="";
+    		   for(key in response[i].labels){
+    			   label+=response[i].labels[key]+ ' <em>@'+key+'</em> ';
+    			  
+    		   }
+    		   label=label.substring(0, label.length-1);
+    		   $('#nav').append('<button class="btn btn-default" name="source" value="'+response[i].sourceString+'" style="width:20%; margin:auto;" type="submit">'+label+'<br>(<em class="source">'+response[i].sourceString+'</em>)</button><br><br>');     
+    	   }    	   
+       }      	
+    });
+
+	</script>
 </body>
 </html>
