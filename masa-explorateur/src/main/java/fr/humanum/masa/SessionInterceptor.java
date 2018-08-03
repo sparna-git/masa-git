@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import fr.humanum.masa.user.MasaAdminAuthenticationProvider;
 import fr.humanum.masa.user.User;
 import fr.humanum.masa.user.UserDaoIfc;
 import fr.humanum.masa.user.UserDetails;
@@ -18,7 +19,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	private final Logger log = LoggerFactory.getLogger(getClass().getName());
 	
 	@Autowired
-	private UserDaoIfc userDao;
+	private MasaAdminAuthenticationProvider authenticationProvider;
 	
 	@Autowired
 	private SessionManager sessionManager;
@@ -44,10 +45,9 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 				)
 		) {
 			log.debug("User logged in as '"+request.getRemoteUser()+"' but no session - will create a new one.");
-			// read the user details
-			User user = userDao.getUser(request.getRemoteUser());
+
 			// enregistrer les infos de l'utilisateur dans la session
-			sessionManager.setUserDetails(new UserDetails(user));
+			sessionManager.setUserDetails(new UserDetails(authenticationProvider.getAdminLogin(), authenticationProvider.getAdminLogin(), authenticationProvider.getDefaultRole()));
 		}
 		
 		return true;		

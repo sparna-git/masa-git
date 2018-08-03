@@ -10,16 +10,12 @@ public class UserDetails {
 	
 	protected String email;
 	
-	protected String espaceUri;
-	
-	protected String espaceName;
-	
 	protected String role;
 	
-	public UserDetails(User user) {
-		this.name = user.getName();
-		this.email = user.getEmail();
-		this.role = user.getRole();
+	public UserDetails(String name, String email, String role) {
+		this.name = name;
+		this.email = email;
+		this.role = role;
 	}
 
 	public String getName() {

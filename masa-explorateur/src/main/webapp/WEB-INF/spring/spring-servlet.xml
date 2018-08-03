@@ -20,7 +20,7 @@
 
 	<!-- ***** Basic application bootstraping ***** -->
 	<import resource="security.xml" />
-	<import resource="spring-database.xml" />
+	<!-- <import resource="spring-database.xml" /> -->
 	
 	
 	
@@ -53,9 +53,6 @@
         	<bean class="fr.humanum.masa.SessionInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>
-    <bean id="userDao" class="fr.humanum.masa.user.UserDaoImpl">
-		<constructor-arg name="dataSource" ref="dataSource" />
-	</bean>
 	<bean class="fr.humanum.masa.SessionManager">
 	</bean>
 </beans>

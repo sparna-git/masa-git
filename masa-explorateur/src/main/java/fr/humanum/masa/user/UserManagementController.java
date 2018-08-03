@@ -17,9 +17,6 @@ import fr.humanum.masa.Utils;
 public class UserManagementController {
 
 	@Autowired
-	private UserDaoIfc user;
-
-	@Autowired
 	private SessionManager sessionManager;
 
 
