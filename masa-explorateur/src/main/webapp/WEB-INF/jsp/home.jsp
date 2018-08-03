@@ -15,18 +15,14 @@
 
 <link rel="icon" type="image/png" href="resources/favicon.png" />
 <!-- Bootstrap core CSS -->
-<link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet" />
-<link
-	href='http://cdn.jsdelivr.net/g/yasqe@2.2(yasqe.min.css),yasr@2.4(yasr.min.css)'
-	rel='stylesheet' type='text/css' />
-<link href="resources/css/style.css" rel="stylesheet" />
-<script src="resources/js/jquery-1.11.3.js"></script>
+<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
-<script src="resources/bootstrap/js/bootstrap.js"></script>
+<link href="resources/css/style.css" rel="stylesheet" />
+
 <script defer
 	src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-<script type="text/javascript">
 
+<script type="text/javascript">
 function submit(){
 	var choix="";
 	var n = $( ".source_to_use:checked" ).length;
@@ -42,30 +38,13 @@ function submit(){
 		document.formsource.submit();
    }
 }
-
-$.ajax({
-       url : 'sources',
-       type : 'GET', 
-       success: function(response) {
-    	   
-    	   for(var i=0;i<response.length;i++){
-    		   var label="";
-    		   for(key in response[i].labels){
-    			   label+=response[i].labels[key]+ ' <em>@'+key+'</em> ';
-    			  
-    		   }
-    		   label=label.substring(0, label.length-1);
-    		   $('#nav').append('<input type="checkbox" class="source_to_use"  value="'+response[i].sourceString+'" style="margin:auto;"> &nbsp;'+label+'&nbsp;(<em class="source">'+response[i].sourceString+'</em>)<br><br>');     
-    	   }
-    	   
-       }
-      	
-    });
-
 </script>
+
 </head>
 <body class="with-background">
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="header.jsp">
+	<jsp:param name="active" value="home"/>
+	</jsp:include>
 	<br><br><br><br>
 	<div class="flex-column " style="margin:auto; text-align:center;">
 	 <span id="nav" ></span>
@@ -76,5 +55,30 @@ $.ajax({
 	</div>
 	
 
+
+	<script src="resources/js/jquery-1.11.3.js"></script>
+	<script src="resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+	$.ajax({
+	       url : 'sources',
+	       type : 'GET', 
+	       success: function(response) {
+	    	   
+	    	   for(var i=0;i<response.length;i++){
+	    		   var label="";
+	    		   for(key in response[i].labels){
+	    			   label+=response[i].labels[key]+ ' <em>@'+key+'</em> ';
+	    			  
+	    		   }
+	    		   label=label.substring(0, label.length-1);
+	    		   $('#nav').append('<input type="checkbox" class="source_to_use"  value="'+response[i].sourceString+'" style="margin:auto;"> &nbsp;'+label+'&nbsp;(<em class="source">'+response[i].sourceString+'</em>)<br><br>');     
+	    	   }
+	    	   
+	       }
+	      	
+	    });
+
+	
+	</script>
 </body>
 </html>

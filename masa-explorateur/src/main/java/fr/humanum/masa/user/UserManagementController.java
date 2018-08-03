@@ -54,7 +54,7 @@ public class UserManagementController {
 			) {
 
 		UserData data=new UserData();
-		ModelAndView model=new ModelAndView("gestion-user", UserData.KEY, data);
+		ModelAndView model=new ModelAndView("admin", UserData.KEY, data);
 		return model;
 
 	}

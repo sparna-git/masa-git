@@ -15,17 +15,18 @@
 
 <link rel="icon" type="image/png" href="resources/favicon.png" />
 <!-- Bootstrap core CSS -->
-<link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet">
+
+<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
 <link
 	href='http://cdn.jsdelivr.net/g/yasqe@2.2(yasqe.min.css),yasr@2.4(yasr.min.css)'
 	rel='stylesheet' type='text/css' />
 <link href="resources/css/style.css" rel="stylesheet" />
-<script src="resources/js/jquery-1.11.3.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
-<script src="resources/bootstrap/js/bootstrap.js"></script>
-<script defer
-	src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
 
 </head>
 <body class="with-background">
@@ -73,9 +74,13 @@ WHERE  {
 		<div id="yasr"></div>
 	</div>
 
-	<script src='http://cdn.jsdelivr.net/yasr/2.4/yasr.bundled.min.js'></script>
-	<script src='http://cdn.jsdelivr.net/yasqe/2.2/yasqe.bundled.min.js'></script>
+
+	<script src="resources/js/jquery-1.11.3.js"></script>
+	<script src="resources/bootstrap/js/bootstrap.min.js"></script>
+	<script src='https://cdn.jsdelivr.net/npm/yasgui-yasr@2.4.15/dist/yasr.bundled.min.js'></script>
+	<script src='https://cdn.jsdelivr.net/npm/yasgui-yasqe@2.2.6/dist/yasqe.bundled.min.js'></script>
 	<script src='resources/js/timeline.js'></script>
+
 	<script type="text/javascript">
 		
 	 $( document ).ready(function() {
@@ -83,42 +88,8 @@ WHERE  {
 			 $('#collapseExample').toggle();
 		 });
 		 YASR.registerOutput("Timeline",timelinePlugin);
-			
-		 
 		 $('#expand').hide();
-		/*  $( "#run" ).click(function() {
-			 var sparql = document.getElementById("sparql").value;
-			
-			 console.log(sparql);
-				 $.ajax({
-			         url : 'expand',
-			         type : 'POST', 
-			         data : 'query=' + sparql+'&source='+'${source}' , 
-			         success: function(response) {
-			        	$('#collapseExample').text(response.expandQuery);
-			        	 $('#expand').show();
-			           
-			   			var query= response.expandQuery;
-			   			 $.ajax({
-			   		         url : 'result',
-			   		         type : 'POST', 
-			   		         data : 'query=' + query , 
-			   		         success: function(response) {
-			   		        	$('#labResult').html('RESULTAT SPARQL :');
-			   		            yasr.setResponse(response);
-			   		          }
-			   		      });
-				   		 
-				   		// yasr.draw();
-			            
-			          }
-			      });
-		
-			}); */
-		 
 
-		 
-		 
 	 });
 	 
 	 function changeView(val){
