@@ -16,19 +16,22 @@
 <link rel="icon" type="image/png" href="resources/favicon.png" />
 <!-- Bootstrap core CSS -->
 <link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet">
 <link
 	href='http://cdn.jsdelivr.net/g/yasqe@2.2(yasqe.min.css),yasr@2.4(yasr.min.css)'
 	rel='stylesheet' type='text/css' />
 <link href="resources/css/style.css" rel="stylesheet" />
 <script src="resources/js/jquery-1.11.3.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
 <script src="resources/bootstrap/js/bootstrap.js"></script>
 <script defer
 	src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
 </head>
 <body class="with-background">
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="header.jsp">
+		<jsp:param name="active" value="sparql"/>
+	</jsp:include>
 	<br>
 	<br>
 
@@ -45,7 +48,15 @@ WHERE  {
 ?this a <http://exemple.com/type/Thing>.
 }'}</textarea>
 		<br>
-		<button type="button" id="run" class="btn btn-primary btn-lg">Run</button>
+		<!-- <button type="button" id="run" class="btn btn-primary btn-lg">Run</button>--><br><br>
+		<select class="form-control" style="width:20%;" id="view" onchange="changeView(this.options[this.selectedIndex].value);">
+			<option value="select_Timeline">Timeline</option>
+			<option value="select_gchart">Google Chart</option>
+			<option value="select_rawResponse">Raw Response</option>
+			<option value="select_pivot">Pivot Chart</option>
+			<option value="select_table" selected>Table</option>
+		</select>
+		<input type="hidden" value="${source}" name="source" id="source">
 	</div>
 
 
@@ -64,14 +75,18 @@ WHERE  {
 
 	<script src='http://cdn.jsdelivr.net/yasr/2.4/yasr.bundled.min.js'></script>
 	<script src='http://cdn.jsdelivr.net/yasqe/2.2/yasqe.bundled.min.js'></script>
+	<script src='resources/js/timeline.js'></script>
 	<script type="text/javascript">
 		
 	 $( document ).ready(function() {
 		 $( "#label" ).click(function() {
 			 $('#collapseExample').toggle();
 		 });
+		 YASR.registerOutput("Timeline",timelinePlugin);
+			
+		 
 		 $('#expand').hide();
-		 $( "#run" ).click(function() {
+		/*  $( "#run" ).click(function() {
 			 var sparql = document.getElementById("sparql").value;
 			
 			 console.log(sparql);
@@ -82,7 +97,7 @@ WHERE  {
 			         success: function(response) {
 			        	$('#collapseExample').text(response.expandQuery);
 			        	 $('#expand').show();
-			            var yasr = YASR(document.getElementById("yasr"));
+			           
 			   			var query= response.expandQuery;
 			   			 $.ajax({
 			   		         url : 'result',
@@ -94,17 +109,48 @@ WHERE  {
 			   		          }
 			   		      });
 				   		 
-				   		 yasr.draw();
+				   		// yasr.draw();
 			            
 			          }
 			      });
 		
-			});
-		
-		
+			}); */
+		 
+
 		 
 		 
 	 });
+	 
+	 function changeView(val){
+		 var sparql = document.getElementById("sparql").value;
+		 
+		 console.log(sparql);
+			 $.ajax({
+		         url : 'timeline',
+		         type : 'POST', 
+		         data : 'query=' + sparql , 
+		         success: function(response) {
+		        	$('#collapseExample').text(response.expandQuery);
+		        	 $('#expand').show();
+		           
+		   			var query= response.expandQuery;
+		   			 $.ajax({
+		   		         url : 'result',
+		   		         type : 'POST', 
+		   		         data : 'query=' + query , 
+		   		         success: function(response) {
+		   		        	$('#labResult').html('RESULTAT SPARQL :');
+		   		        	$("#yasr").html('');
+		   		        	var yasr = YASR(document.getElementById("yasr"));
+		   		            yasr.setResponse(response);
+		   		          }
+		   		      });
+		            
+		          }
+		      });
+		
+			 $( "."+val ).trigger( "click" );
+	 }
 	  
 	</script>
 </body>

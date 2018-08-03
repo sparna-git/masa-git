@@ -7,12 +7,16 @@ import java.util.List;
 import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
-import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.sparql.core.TriplePath;
+import org.apache.jena.sparql.expr.E_Datatype;
+import org.apache.jena.sparql.expr.Expr;
+import org.apache.jena.sparql.expr.ExprVar;
 import org.apache.jena.sparql.path.PathParser;
 import org.apache.jena.sparql.syntax.Element;
+import org.apache.jena.sparql.syntax.ElementFilter;
 import org.apache.jena.sparql.syntax.ElementGroup;
+import org.apache.jena.sparql.syntax.ElementOptional;
 import org.apache.jena.sparql.syntax.ElementPathBlock;
 import org.apache.jena.sparql.syntax.ElementVisitorBase;
 import org.slf4j.Logger;
@@ -22,13 +26,7 @@ public class DisplayProperties {
 
 	private Logger log= LoggerFactory.getLogger(this.getClass().getName());
 
-	protected Model model;
-
-	public DisplayProperties(Model model) {
-		this.model=model;
-	}
-
-
+	
 	public Query getLatitude(String request,String labelProperty){
 		log.debug("- Lecture de la latitude");
 		return getQuery(request,labelProperty,"latitude");
@@ -76,17 +74,21 @@ public class DisplayProperties {
 
 							if(t.getSubject().getName().equals("this"))  {
 								ElementPathBlock newEpb1= new ElementPathBlock();
+								
 								newEpb1.addTriple(new TriplePath(t.getSubject(), PathParser.parse(startDateProperty, ModelFactory.createDefaultModel()),NodeFactory.createVariable("start")));						
-								elementsToAdd.add(newEpb1);
+								ElementOptional op1=new ElementOptional(newEpb1);
+								elementsToAdd.add(op1);
 
 								ElementPathBlock newEpb2= new ElementPathBlock();
 								newEpb2.addTriple(new TriplePath(t.getSubject(), PathParser.parse(endDateProperty, ModelFactory.createDefaultModel()),NodeFactory.createVariable("end")));
-								elementsToAdd.add(newEpb2);
+								ElementOptional op2=new ElementOptional(newEpb2);
+								elementsToAdd.add(op2);
 
 								//Ajout des variables supplementaires au select                    
 								query.setQuerySelectType();                               
 								query.addResultVar("start");
 								query.addResultVar("end");
+								
 							}
 						}
 					}

@@ -27,6 +27,22 @@
 	src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <script type="text/javascript">
 
+function submit(){
+	var choix="";
+	var n = $( ".source_to_use:checked" ).length;
+	var text=n+" sources à intérroger. Confirmez-vous ?"
+    if (confirm(text) == true) {
+		$(".source_to_use:checked").each(function( index ) {
+			choix += $( this ).val();
+			choix += "+";
+		});
+		// on enleve le dernier caractere
+		choix = choix.substr(0, choix.length-1);
+		document.formsource.source.value =choix;
+		document.formsource.submit();
+   }
+}
+
 $.ajax({
        url : 'sources',
        type : 'GET', 
@@ -39,7 +55,7 @@ $.ajax({
     			  
     		   }
     		   label=label.substring(0, label.length-1);
-    		   $('#nav').append('<button class="btn btn-default" name="source" value="'+response[i].sourceString+'" style="width:20%; margin:auto;" type="submit">'+label+'<br>(<em class="source">'+response[i].sourceString+'</em>)</button><br><br>');     
+    		   $('#nav').append('<input type="checkbox" class="source_to_use"  value="'+response[i].sourceString+'" style="margin:auto;"> &nbsp;'+label+'&nbsp;(<em class="source">'+response[i].sourceString+'</em>)<br><br>');     
     	   }
     	   
        }
@@ -51,13 +67,14 @@ $.ajax({
 <body class="with-background">
 	<jsp:include page="header.jsp"></jsp:include>
 	<br><br><br><br>
-	<form action="sparql" method="post">
-	
-		<div class="flex-column " id="nav" style="margin:auto; text-align:center;">
-		
-		</div>
-	
+	<div class="flex-column " style="margin:auto; text-align:center;">
+	 <span id="nav" ></span>
+	<form action="sparql" method="post" style="margin:auto;" name="formsource" onsubmit="return false">
+		<input type="hidden" name="source" id="source" />
+		<button class="btn btn-default" onclick="submit()" style="margin:auto;" type="submit">Valider</button>
 	</form>
+	</div>
+	
 
 </body>
 </html>

@@ -38,7 +38,9 @@
 </head>
 <body class="with-background">
 
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="header.jsp">
+		<jsp:param name="active" value="home"/>
+	</jsp:include>
 	
 	<div class="form-group"
 		style="width: 20%; position: fixed; float: left;">
@@ -128,7 +130,7 @@
 		 var yasr = YASR(document.getElementById("yasr"), {
 			//this way, the URLs in the results are prettified using the defined prefixes in the query
 			getUsedPrefixes : yasqe.getPrefixesFromQuery,
-			outputPlugins : ["Timeline"]
+			outputPlugins : ["Timeline","error", "rawResponse", "table", "pivot", "leaflet"]
 		}); 
 		
 		
@@ -141,45 +143,7 @@
 			yasqe.setValue(query);
 		}
 		
-		function add(yasr){
-			var root = module.exports =function(yasr) {
-				  var container = $("<div class='booleanResult'></div>");
-				  var draw = function() {
-				    container.empty().appendTo(yasr.resultsContainer);
-				    var booleanVal = yasr.results.getBoolean();
-
-				    var imgId = null;
-				    var textVal = null;
-				    if (booleanVal === true) {
-				      imgId = "check";
-				      textVal = "True";
-				    } else if (booleanVal === false) {
-				      imgId = "cross";
-				      textVal = "False";
-				    } else {
-				      container.width("140");
-				      textVal = "Could not find boolean value in response";
-				    }
-
-				    
-
-				    $("<span></span>").text(textVal).appendTo(container);
-				  };
-
-				  var canHandleResults = function() {
-				    return yasr.results.getBoolean && (yasr.results.getBoolean() === true || yasr.results.getBoolean() == false);
-				  };
-
-				  return {
-				    name: null, //don't need to set this: we don't show it in the selection widget anyway, so don't need a human-friendly name
-				    draw: draw,
-				    hideFromSelection: true,
-				    getPriority: 11,
-				    canHandleResults: canHandleResults
-				  };
-				};
-
-		}
+		
 		
 	</script>
 </body>

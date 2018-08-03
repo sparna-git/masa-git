@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -26,6 +27,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.github.jsonldjava.shaded.com.google.common.base.Strings;
+
 import fr.humanum.masa.expand.SparqlExpansionConfig;
 import fr.humanum.masa.expand.SparqlExpansionConfigOwlSupplier;
 import fr.humanum.masa.expand.SparqlExpansionVisitor;
@@ -37,6 +40,7 @@ public class ExplorateurService {
 	
 	private ExtConfigService extConfigService;
 	private SparqlExpansionConfig expansionConfig;
+	private DisplayProperties displayProperties;
 	private FederationService federationService;
 	
 	@Inject
@@ -54,6 +58,7 @@ public class ExplorateurService {
 			RDFDataMgr.read(m, new FileInputStream(expansionConfigFile), Lang.TURTLE);
 			SparqlExpansionConfigOwlSupplier configSupplier = new SparqlExpansionConfigOwlSupplier(m);
 			this.expansionConfig = configSupplier.get();
+			this.displayProperties=new DisplayProperties();
 		} catch (FileNotFoundException ignore) {
 			// Can be safely ignored since we checked for a required file
 			ignore.printStackTrace();
@@ -76,14 +81,20 @@ public class ExplorateurService {
 		return result;
 	}
 	
+	public String addTimelineVariableToQuery(String sparql,String startDateProperty, String endDateProperty) {
+		return displayProperties.getStartAndEndDate(sparql, startDateProperty, endDateProperty).toString(Syntax.syntaxSPARQL_11);
+	}
+	
 	public String addSourceToQuery(String query, String source) {
 		if(source == null) {
 			return query;
 		}
-		
+		String [] sources=source.split("[+]");
 		log.debug("ajout de la source à la requête");
 		Query q=QueryFactory.create(query);
-		q.getNamedGraphURIs().add(source);
+		for (String string : sources) {
+			q.getNamedGraphURIs().add(string);
+		}
 		log.debug("ajout de la source à la requête terminé");
 		return q.toString(Syntax.syntaxSPARQL_11);		
 	}
@@ -92,5 +103,7 @@ public class ExplorateurService {
 		String sources = federationService.getSources();
 		IOUtils.copy(new ByteArrayInputStream(sources.getBytes()), out);
 	}	
+	
+	
 	
 }

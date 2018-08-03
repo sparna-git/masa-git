@@ -84,6 +84,27 @@ public class ExplorateurController {
 		mapper.writeValue(response.getOutputStream(), data);
 		log.debug("Fin d'extension de la requête simple");
 	}
+	
+	@RequestMapping(value = {"timeline"},method={RequestMethod.GET, RequestMethod.POST})
+	public void addVariableForTimeline(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="query",required=true) String query
+	) throws IOException{
+
+		response.addHeader("Content-Encoding", "UTF-8");	
+		response.setContentType("application/json"); 
+		String queryForTimeLine=explorateurService.addTimelineVariableToQuery(query, "<http://fr.dbpedia.org/property/dateDeNaissance>", "<http://fr.dbpedia.org/property/dateDeDécès>");
+		
+		ExplorateurData data= new ExplorateurData();
+		data.setQuery(query);
+		data.setExpandQuery(queryForTimeLine);
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(Include.NON_NULL);
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
+		mapper.writeValue(response.getOutputStream(), data);
+		log.debug("Fin d'extension de la requête simple pour timeline");
+	}
 
 	@RequestMapping(value = {"result"},method=RequestMethod.POST)
 	public void getResult(

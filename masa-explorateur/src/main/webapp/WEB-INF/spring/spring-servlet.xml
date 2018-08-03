@@ -19,7 +19,10 @@
 
 
 	<!-- ***** Basic application bootstraping ***** -->
-
+	<import resource="security.xml" />
+	<import resource="spring-database.xml" />
+	
+	
 	
 	<context:component-scan base-package="fr.humanum.masa" />
 
@@ -43,5 +46,16 @@
 	<!-- ***** Application Config ***** -->
 	
 
-	
+	<mvc:interceptors>
+        <mvc:interceptor>
+        	<mvc:mapping path="/admin*" />
+        	<mvc:exclude-mapping path="/home" />
+        	<bean class="fr.humanum.masa.SessionInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <bean id="userDao" class="fr.humanum.masa.user.UserDaoImpl">
+		<constructor-arg name="dataSource" ref="dataSource" />
+	</bean>
+	<bean class="fr.humanum.masa.SessionManager">
+	</bean>
 </beans>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:/#{systemProperties['masa.home']}/masa-db/db" />
+		<property name="username" value="" />
+		<property name="password" value="" />
+	</bean>
+	<bean id="testDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:mem:test;DB_CLOSE_DELAY=-1" />
+		<property name="username" value="" />
+		<property name="password" value="" />
+	</bean>
+	
+	<bean id="initDBListener" class="fr.humanum.masa.user.DBInit">
+		<constructor-arg name="dataSource" ref="dataSource" />
+		<constructor-arg name="sqlCommands">
+			<util:list value-type="java.lang.String">
+				<!-- TODO : supprimer la colonne admin et garder uniquement la colonne role -->
+				<!-- TODO : rendre la colonne email comme clé unique, pas la colonne username -->
+			    <value>
+			    	CREATE TABLE IF NOT EXISTS USER (
+   						id INT AUTO_INCREMENT,
+   						username VARCHAR(255) NOT NULL,
+   						email VARCHAR(255) UNIQUE NOT NULL,
+   						password VARCHAR(255) NOT NULL,
+   						role VARCHAR(255) NOT NULL,
+   						PRIMARY KEY (id)
+		   			)
+		   		</value>
+				<!-- superadmin = 889a3a791b3875cfae413574b53da4bb8a90d53e -->
+		   		<value>
+			    	MERGE INTO USER (id, username, email, password, role) KEY(id)
+			    	VALUES('1', 'Super Admin', 'super@admin.fr', '889a3a791b3875cfae413574b53da4bb8a90d53e', 'ROLE_ADMIN')
+		   		</value>
+			</util:list>
+		</constructor-arg>		
+	</bean>
+	
+</beans>
