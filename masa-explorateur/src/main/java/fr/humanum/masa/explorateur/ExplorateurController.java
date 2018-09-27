@@ -34,7 +34,7 @@ public class ExplorateurController {
 		this.explorateurService=explorateurService;
 	}
 
-	@RequestMapping(value = {"home","/"},method=RequestMethod.GET)
+	@RequestMapping(value = {"home"},method=RequestMethod.GET)
 	public ModelAndView home(
 			HttpServletRequest request,
 			HttpServletResponse response
@@ -43,16 +43,32 @@ public class ExplorateurController {
 		ModelAndView model=new ModelAndView("home");
 		return model;
 	}
+	
+	@RequestMapping(value = {"sourcesSelect","/"},method=RequestMethod.GET)
+	public ModelAndView sourcesSelect(
+			HttpServletRequest request,
+			HttpServletResponse response
+	) throws Exception {
 
-	@RequestMapping(value = {"sparql"},method=RequestMethod.POST)
+		log.debug("Récupération des sources");
+		String sourcesDefinition = explorateurService.getSources();
+		log.debug("Récupération des sources terminée");
+		
+		ModelAndView model=new ModelAndView("sourcesSelect");
+		model.addObject("sourcesDefinition", sourcesDefinition);
+		return model;
+	}
+
+	@RequestMapping(value = {"explorer"},method=RequestMethod.GET)
 	public ModelAndView sparql(
 			HttpServletRequest request,
 			HttpServletResponse response,
-			@RequestParam(value="source",required=true) String source
+			@RequestParam(value="sources",required=true) String sources
 			){
 
-		ModelAndView model=new ModelAndView("sparql");
-		model.addObject("source", source);
+		ModelAndView model=new ModelAndView("explorer");
+		model.addObject("sources", sources);
+		model.addObject("queries", this.explorateurService.getExampleQueries());
 		return model;
 	}
 
@@ -84,27 +100,7 @@ public class ExplorateurController {
 		mapper.writeValue(response.getOutputStream(), data);
 		log.debug("Fin d'extension de la requête simple");
 	}
-	
-	@RequestMapping(value = {"timeline"},method={RequestMethod.GET, RequestMethod.POST})
-	public void addVariableForTimeline(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			@RequestParam(value="query",required=true) String query
-	) throws IOException{
 
-		response.addHeader("Content-Encoding", "UTF-8");	
-		response.setContentType("application/json"); 
-		String queryForTimeLine=explorateurService.addTimelineVariableToQuery(query, "<http://fr.dbpedia.org/property/dateDeNaissance>", "<http://fr.dbpedia.org/property/dateDeDécès>");
-		
-		ExplorateurData data= new ExplorateurData();
-		data.setQuery(query);
-		data.setExpandQuery(queryForTimeLine);
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.setSerializationInclusion(Include.NON_NULL);
-		mapper.enable(SerializationFeature.INDENT_OUTPUT);
-		mapper.writeValue(response.getOutputStream(), data);
-		log.debug("Fin d'extension de la requête simple pour timeline");
-	}
 
 	@RequestMapping(value = {"result"},method=RequestMethod.POST)
 	public void getResult(
@@ -115,18 +111,6 @@ public class ExplorateurController {
 		log.debug("Récupération du résultat de la requête étendue");
 		this.explorateurService.getResult(query, response.getOutputStream());
 		log.debug("Récupération du résultat terminée");
-	}
-
-	@RequestMapping(value = {"sources"},method=RequestMethod.GET)
-	public void getSources(
-			HttpServletRequest request,
-			HttpServletResponse response)
-	throws ClientProtocolException, IOException {
-		response.addHeader("Content-Encoding", "UTF-8");	
-		response.setContentType("application/json");
-		log.debug("Récupération des sources");
-		explorateurService.getSources(response.getOutputStream());
-		log.debug("Récupération des sources terminée");
 	}
 
 }

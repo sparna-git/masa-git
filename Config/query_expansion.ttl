@@ -1,0 +1,17 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://test.fr/onto#> .
+
+<http://exemple.com/type/Type1> rdfs:subClassOf <http://exemple.com/type/Thing> . 
+<http://exemple.com/type/Type2> rdfs:subClassOf <http://exemple.com/type/Thing> .
+<http://exemple.com/type/SubType22> rdfs:subClassOf <http://exemple.com/type/Type2> .
+
+:hasGrandParent a owl:ObjectProperty ;
+                owl:propertyChainAxiom ( :hasParent
+                                         :hasParent
+                                       ) .
+
+:hasUncle owl:propertyChainAxiom ":hasFather/:hasBrother" .
+:hasUncle owl:propertyChainAxiom ":hasMother/:hasBrother" .
+:hasUncle rdfs:subPropertyOf :hasFamily .
+:hasGrandParent rdfs:subPropertyOf :hasFamily .

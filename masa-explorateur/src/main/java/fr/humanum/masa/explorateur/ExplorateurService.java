@@ -27,7 +27,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.github.jsonldjava.shaded.com.google.common.base.Strings;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.humanum.masa.expand.SparqlExpansionConfig;
 import fr.humanum.masa.expand.SparqlExpansionConfigOwlSupplier;
@@ -99,11 +101,34 @@ public class ExplorateurService {
 		return q.toString(Syntax.syntaxSPARQL_11);		
 	}
 	
-	public void getSources(OutputStream out) throws ClientProtocolException, IOException {
-		String sources = federationService.getSources();
-		IOUtils.copy(new ByteArrayInputStream(sources.getBytes()), out);
+	public String getSources() throws ClientProtocolException, IOException {
+		return federationService.getSources();
 	}	
 	
-	
+	/**
+	 * Renvoie les queries d'exemple paramétrées dans l'application.
+	 * 
+	 * @return
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public List<QueryExample> getExampleQueries() {
+		File exampleQueryFile = this.extConfigService.findFile(ExtConfigService.QUERY_EXAMPLE_CONFIG_FILE);
+		
+		if(exampleQueryFile != null && exampleQueryFile.exists()){
+			ObjectMapper objectMapper=new ObjectMapper();
+			//add this line  
+			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);    
+			try {
+				return objectMapper.readValue(exampleQueryFile , new TypeReference<List<QueryExample>>(){});
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		} else {
+			log.warn("Exemple queries config file is not setup or does not exists.");
+			return null;
+		}
+	}
 	
 }

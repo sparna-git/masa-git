@@ -8,7 +8,7 @@
     <artifactId>root-pom</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>MASA IHM</name>
+    <name>MASA</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,9 +18,11 @@
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.3</logback.version>
         <spring.version>4.3.5.RELEASE</spring.version>
+        <springsecurity.version>4.2.0.RELEASE</springsecurity.version>
 		<jackson.version>2.9.3</jackson.version>
 		<rdf4j.version>2.2.1</rdf4j.version>
 		<jena.version>3.8.0</jena.version>
+		<lucene.version>7.4.0</lucene.version>
     </properties>
 
     <build>
@@ -94,6 +96,21 @@
                 <artifactId>spring-webmvc</artifactId>
                 <version>${spring.version}</version>
             </dependency>
+            <dependency>
+                <groupId>javax.inject</groupId>
+                <artifactId>javax.inject</artifactId>
+                <version>1</version>
+            </dependency>
+            <dependency>
+	            <groupId>org.springframework.security</groupId>
+	            <artifactId>spring-security-web</artifactId>
+	            <version>${springsecurity.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.springframework.security</groupId>
+	            <artifactId>spring-security-config</artifactId>
+	            <version>${springsecurity.version}</version>
+	        </dependency>
 
             <!-- Jackson -->
             <dependency>
@@ -106,6 +123,18 @@
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
+
+            <!-- Lucene -->
+	        <dependency>
+			  <groupId>org.apache.lucene</groupId>
+			  <artifactId>lucene-core</artifactId>
+			  <version>${lucene.version}</version>
+			</dependency>
+			<dependency>
+			  <groupId>org.apache.lucene</groupId>
+			  <artifactId>lucene-queryparser</artifactId>
+			  <version>${lucene.version}</version>
+			</dependency>
 
             <!-- commons dependencies -->
             <dependency>
@@ -124,11 +153,7 @@
                 <version>1.11</version>
             </dependency>
 
-            <dependency>
-                <groupId>javax.inject</groupId>
-                <artifactId>javax.inject</artifactId>
-                <version>1</version>
-            </dependency>
+            
 
         </dependencies>
     </dependencyManagement>

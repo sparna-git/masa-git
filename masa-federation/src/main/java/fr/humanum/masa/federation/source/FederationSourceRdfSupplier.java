@@ -27,11 +27,15 @@ import org.apache.jena.util.FileUtils;
 import org.apache.jena.vocabulary.RDFS;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import fr.humanum.masa.federation.ExtConfigService;
 
 public class FederationSourceRdfSupplier implements Supplier<Set<FederationSource>>{
 
+	private Logger log = LoggerFactory.getLogger(this.getClass().getName());
+	
 	private ExtConfigService extConfig;
 
 
@@ -49,25 +53,26 @@ public class FederationSourceRdfSupplier implements Supplier<Set<FederationSourc
 
 	@Override
 	public Set<FederationSource> get() {
-		// TODO Auto-generated method stub
 
 		String queryString = "prefix sd: <http://www.w3.org/ns/sparql-service-description#>"+
 				             "prefix void: <http://rdfs.org/ns/void#>"+ 
 				             "prefix fed-config: <https://masa.hypotheses.org/federation/config#>"+ 
 						     "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> "+
 
-							 "select DISTINCT ?sourceIRI  ?endpoint ?defaultGraph where {"+
+							 "select ?graph ?sourceIRI ?endpoint ?defaultGraph ?frenchLabel"+
+							 " where {"+
 
 									" ?graph a sd:NamedGraph ;"+
 									" sd:name ?sourceIRI;"+
 									" void:sparqlEndpoint ?endpoint;"+
-									" OPTIONAL{?graphname fed-config:sparqlGraph ?defaultGraph.} "+
+									" rdfs:label ?frenchLabel . FILTER(lang(?frenchLabel) = 'fr')"+
+									" OPTIONAL{?graph fed-config:sparqlGraph ?defaultGraph.} "+
 											
-								" } group by ?sourceIRI ?endpoint ?defaultGraph";
+							" } ORDER BY ?frenchLabel";
 										
 		Query query = QueryFactory.create(queryString) ;
 		Set<FederationSource> result = new HashSet<FederationSource>();
-		Map<String,String> labels=new HashMap<String, String>();
+		
 
 		Model m=null;
 		try {
@@ -80,27 +85,28 @@ public class FederationSourceRdfSupplier implements Supplier<Set<FederationSourc
 		try (QueryExecution qexec = QueryExecutionFactory.create(query, getModel())) {
 			ResultSet results = qexec.execSelect() ;
 			
-			while (results.hasNext())
-			{
-				QuerySolution soln = results.nextSolution() ;    
+			while (results.hasNext()) {
+				QuerySolution soln = results.nextSolution() ;   
+				log.debug("Reading a source result : "+soln);
+				
+				// sourceIRI
 				Resource rSource=soln.getResource("sourceIRI");
-				IRI source = SimpleValueFactory.getInstance().createIRI(rSource.getURI()); 
+				IRI source = SimpleValueFactory.getInstance().createIRI(rSource.getURI());				
+				
+				// labels : hardcoded in French
+				Literal frenchLabel = soln.getLiteral("frenchLabel");
+				Map<String,String> labels=new HashMap<String, String>();
+				labels.put(frenchLabel.getLanguage(), frenchLabel.getLexicalForm());
+				
+				// endpoint
+				IRI endpoint = SimpleValueFactory.getInstance().createIRI(soln.getResource("endpoint").getURI()) ;
+				
+				// default graph
 				IRI defaultGraph =null;
 				if(soln.getResource("defaultGraph")!=null){
 					defaultGraph = SimpleValueFactory.getInstance().createIRI(soln.getResource("defaultGraph").getURI()) ;
 				}
 				
-				
-				Resource rGraph=soln.getResource("graph");
-				NodeIterator resIter=m.listObjectsOfProperty(rGraph,RDFS.label);
-				
-				
-				while(resIter.hasNext()){
-					RDFNode node=resIter.next();
-					Literal literal=node.asLiteral();
-					labels.put(literal.getLanguage(), literal.getLexicalForm());
-				}
-				IRI endpoint = SimpleValueFactory.getInstance().createIRI(soln.getResource("endpoint").getURI()) ;
 				SimpleFederationSource sfs=new SimpleFederationSource(source, endpoint, defaultGraph, labels);
 				result.add(sfs);
 			}

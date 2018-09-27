@@ -18,7 +18,10 @@
         http://www.springframework.org/schema/util/spring-util.xsd">
 
 
+	<import resource="lucene-index-config.xml" />
+
 	<!-- ***** Basic application bootstraping ***** -->
+	<import resource="security.xml" />
 
 	<context:component-scan base-package="fr.humanum.masa" />
 
@@ -40,4 +43,18 @@
 	<mvc:resources mapping="/resources/**" location="/theme-default/" />
 	
 	<!-- ***** Application Config ***** -->
+	
+	<mvc:interceptors>
+        <mvc:interceptor>
+        	<mvc:mapping path="/admin*" />
+        	<mvc:exclude-mapping path="/home" />
+        	<bean class="fr.humanum.masa.federation.admin.SessionInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+	
+	<bean class="fr.humanum.masa.federation.admin.SessionManager">
+	</bean>
+	
+	
+	
 </beans>

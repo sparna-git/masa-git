@@ -1,0 +1,568 @@
+[
+    {
+      "@id": "_:b0",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2002/07/owl#unionOf": {
+        "@list": [
+          {
+            "@id": "http://masa.hypotheses.org/onto#Site"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#Construction"
+          }
+        ]
+      }
+    },
+    {
+      "@id": "_:b1",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2002/07/owl#unionOf": {
+        "@list": [
+          {
+            "@id": "http://masa.hypotheses.org/onto#Mobilier"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#Sepulture"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#Construction"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#Fait"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#US"
+          }
+        ]
+      }
+    },
+    {
+      "@id": "_:b2",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2002/07/owl#unionOf": {
+        "@list": [
+          {
+            "@id": "http://masa.hypotheses.org/onto#Site"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#US"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#Fait"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#Construction"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#Sepulture"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#Mobilier"
+          }
+        ]
+      }
+    },
+    {
+      "@id": "_:b3",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2002/07/owl#unionOf": {
+        "@list": [
+          {
+            "@id": "http://masa.hypotheses.org/onto#Mobilier"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#Sepulture"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#Construction"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#Fait"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#US"
+          }
+        ]
+      }
+    },
+    {
+      "@id": "_:b4",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2002/07/owl#unionOf": {
+        "@list": [
+          {
+            "@id": "http://masa.hypotheses.org/onto#Site"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#US"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#Sepulture"
+          }
+        ]
+      }
+    },
+    {
+      "@id": "_:b5",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2002/07/owl#unionOf": {
+        "@list": [
+          {
+            "@id": "http://masa.hypotheses.org/onto#Fait"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#Sepulture"
+          }
+        ]
+      }
+    },
+    {
+      "@id": "_:b6",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2002/07/owl#unionOf": {
+        "@list": [
+          {
+            "@id": "http://masa.hypotheses.org/onto#US"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#Fait"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#Sepulture"
+          }
+        ]
+      }
+    },
+    {
+      "@id": "_:b7",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2002/07/owl#unionOf": {
+        "@list": [
+          {
+            "@id": "http://masa.hypotheses.org/onto#US"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#Fait"
+          }
+        ]
+      }
+    },
+    {
+      "@id": "_:b8",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2002/07/owl#unionOf": {
+        "@list": [
+          {
+            "@id": "http://masa.hypotheses.org/onto#Fait"
+          },
+          {
+            "@id": "http://masa.hypotheses.org/onto#Sepulture"
+          }
+        ]
+      }
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto",
+      "@type": "http://www.w3.org/2002/07/owl#Ontology"
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#Acteur",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "Actor"
+        },
+        {
+          "@language": "fr",
+          "@value": "Acteur"
+        }
+      ]
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#Construction",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "Built work"
+        },
+        {
+          "@language": "fr",
+          "@value": "Construction"
+        }
+      ]
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#Fait",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "Feature"
+        },
+        {
+          "@language": "fr",
+          "@value": "Fait"
+        }
+      ]
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#Lieu",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "Place"
+        },
+        {
+          "@language": "fr",
+          "@value": "Lieu"
+        }
+      ]
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#Mobilier",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "Artifact"
+        },
+        {
+          "@language": "fr",
+          "@value": "Mobilier"
+        }
+      ]
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#Sepulture",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "Burial"
+        },
+        {
+          "@language": "fr",
+          "@value": "Sepulture"
+        }
+      ]
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#Site",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "Site"
+        },
+        {
+          "@language": "fr",
+          "@value": "Site"
+        }
+      ]
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#Temps",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "Time"
+        },
+        {
+          "@language": "fr",
+          "@value": "Temps"
+        }
+      ]
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#Type",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "Type"
+        },
+        {
+          "@language": "fr",
+          "@value": "Type"
+        }
+      ]
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#US",
+      "@type": "http://www.w3.org/2002/07/owl#Class",
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "Stratigraphic unit"
+        },
+        {
+          "@language": "fr",
+          "@value": "Unité stratigraphique"
+        }
+      ]
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#a_trouve",
+      "@type": "http://www.w3.org/2002/07/owl#ObjectProperty",
+      "http://www.w3.org/2000/01/rdf-schema#domain": {
+        "@id": "http://masa.hypotheses.org/onto#Site"
+      },
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "has found"
+        },
+        {
+          "@language": "fr",
+          "@value": "a trouvé"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#range": {
+        "@id": "_:b1"
+      }
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#contient",
+      "@type": "http://www.w3.org/2002/07/owl#ObjectProperty",
+      "http://www.w3.org/2000/01/rdf-schema#domain": {
+        "@id": "_:b6"
+      },
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "contains"
+        },
+        {
+          "@language": "fr",
+          "@value": "contient"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#range": {
+        "@id": "http://masa.hypotheses.org/onto#Mobilier"
+      }
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#date_de",
+      "@type": "http://www.w3.org/2002/07/owl#ObjectProperty",
+      "http://www.w3.org/2000/01/rdf-schema#domain": {
+        "@id": "_:b2"
+      },
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "dated from"
+        },
+        {
+          "@language": "fr",
+          "@value": "daté de"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#range": {
+        "@id": "http://masa.hypotheses.org/onto#Temps"
+      }
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#de_type",
+      "@type": "http://www.w3.org/2002/07/owl#ObjectProperty",
+      "http://www.w3.org/2000/01/rdf-schema#domain": {
+        "@id": "_:b0"
+      },
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "has type"
+        },
+        {
+          "@language": "fr",
+          "@value": "de type"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#range": {
+        "@id": "http://masa.hypotheses.org/onto#Type"
+      }
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#decouvert_par",
+      "@type": "http://www.w3.org/2002/07/owl#ObjectProperty",
+      "http://www.w3.org/2000/01/rdf-schema#domain": {
+        "@id": "http://masa.hypotheses.org/onto#Site"
+      },
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "found by"
+        },
+        {
+          "@language": "fr",
+          "@value": "découvert par"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#range": {
+        "@id": "http://masa.hypotheses.org/onto#Acteur"
+      }
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#est_compose_de",
+      "@type": "http://www.w3.org/2002/07/owl#ObjectProperty",
+      "http://www.w3.org/2000/01/rdf-schema#domain": {
+        "@id": "_:b8"
+      },
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "composed of"
+        },
+        {
+          "@language": "fr",
+          "@value": "est composé de"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#range": {
+        "@id": "http://masa.hypotheses.org/onto#US"
+      }
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#est_inventeur_de",
+      "@type": "http://www.w3.org/2002/07/owl#ObjectProperty",
+      "http://www.w3.org/2000/01/rdf-schema#domain": {
+        "@id": "http://masa.hypotheses.org/onto#Acteur"
+      },
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "has found"
+        },
+        {
+          "@language": "fr",
+          "@value": "est inventeur de"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#range": {
+        "@id": "http://masa.hypotheses.org/onto#Site"
+      }
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#fait_en",
+      "@type": "http://www.w3.org/2002/07/owl#ObjectProperty",
+      "http://www.w3.org/2000/01/rdf-schema#domain": {
+        "@id": "http://masa.hypotheses.org/onto#Mobilier"
+      },
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "consists of"
+        },
+        {
+          "@language": "fr",
+          "@value": "fait en"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#range": {
+        "@id": "http://masa.hypotheses.org/onto#Type"
+      }
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#fait_partie_de",
+      "@type": "http://www.w3.org/2002/07/owl#ObjectProperty",
+      "http://www.w3.org/2000/01/rdf-schema#domain": {
+        "@id": "http://masa.hypotheses.org/onto#US"
+      },
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "forms part of"
+        },
+        {
+          "@language": "fr",
+          "@value": "fait partie de"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#range": {
+        "@id": "_:b5"
+      }
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#interprete_comme",
+      "@type": "http://www.w3.org/2002/07/owl#ObjectProperty",
+      "http://www.w3.org/2000/01/rdf-schema#domain": {
+        "@id": "_:b7"
+      },
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "interpreted by"
+        },
+        {
+          "@language": "fr",
+          "@value": "interprété comme"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#range": {
+        "@id": "http://masa.hypotheses.org/onto#Type"
+      }
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#situe_a",
+      "@type": "http://www.w3.org/2002/07/owl#ObjectProperty",
+      "http://www.w3.org/2000/01/rdf-schema#domain": {
+        "@id": "http://masa.hypotheses.org/onto#Site"
+      },
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "located in"
+        },
+        {
+          "@language": "fr",
+          "@value": "situé à"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#range": {
+        "@id": "http://masa.hypotheses.org/onto#Lieu"
+      }
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#trouve_dans",
+      "@type": "http://www.w3.org/2002/07/owl#ObjectProperty",
+      "http://www.w3.org/2000/01/rdf-schema#domain": {
+        "@id": "_:b3"
+      },
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "found in"
+        },
+        {
+          "@language": "fr",
+          "@value": "trouvé dans"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#range": {
+        "@id": "_:b4"
+      }
+    },
+    {
+      "@id": "http://masa.hypotheses.org/onto#utilise_pour",
+      "@type": "http://www.w3.org/2002/07/owl#ObjectProperty",
+      "http://www.w3.org/2000/01/rdf-schema#domain": {
+        "@id": "http://masa.hypotheses.org/onto#Mobilier"
+      },
+      "http://www.w3.org/2000/01/rdf-schema#label": [
+        {
+          "@language": "en",
+          "@value": "function is"
+        },
+        {
+          "@language": "fr",
+          "@value": "utilisé pour"
+        }
+      ],
+      "http://www.w3.org/2000/01/rdf-schema#range": {
+        "@id": "http://masa.hypotheses.org/onto#Type"
+      }
+    }
+  ]

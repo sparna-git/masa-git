@@ -1,31 +1,53 @@
 package fr.humanum.masa.federation;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.util.Properties;
 
 import org.springframework.stereotype.Service;
 
 import fr.humanum.masa.MasaException;
 
-@Service
+@Service(value = "extConfigService")
 public class ExtConfigService {
 
-	private String EXT_DIRECTORY_PROPERTY = "ext.directory";
-	private String APPLICATION_QUERY_FILE = "query.json";
-	private String APPLICATION_SOURCES_FILE="source.ttl";
+	public static String APPLICATION_PROPERTIES_FILE 	= "config.properties";
+	
+	private static String EXT_DIRECTORY_PROPERTY 	= "ext.directory.federation";
+	private static String APPLICATION_QUERY_FILE 	= "query_examples.json";
+	private static String APPLICATION_SOURCES_FILE	= "sources.ttl";
 
-	private String extPath;
+	public static String LUCENE_INDEX_DIRECTORY			= "lucene.index.directory";
+	
 	private File extFolder;
+	private Properties properties;
 
 	public ExtConfigService() {
 		if(System.getProperty(EXT_DIRECTORY_PROPERTY) == null) {
 			throw new RuntimeException("System Property '"+EXT_DIRECTORY_PROPERTY+"' was not found. Please set this system property to point to the ext folder containing configuration files (java -D"+EXT_DIRECTORY_PROPERTY+"=/path/to/ext/folder ...).");
 		}
-		this.extPath = System.getProperty(EXT_DIRECTORY_PROPERTY);
+		String extPath = System.getProperty(EXT_DIRECTORY_PROPERTY);
 		this.extFolder = new File(extPath);
 		
 		if(!this.extFolder.exists()) {
 			throw new RuntimeException("Configured '"+EXT_DIRECTORY_PROPERTY+"' does not exist : "+extPath);
 		}
+		
+		File f = findFile(APPLICATION_PROPERTIES_FILE);
+		this.properties = new Properties();
+		try {
+			this.properties.load(new FileInputStream(f));
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public Properties getApplicationProperties() {
+		return properties;
+	}
+	
+	public String getLuceneIndexDirectory() {
+		return getApplicationProperties().getProperty(LUCENE_INDEX_DIRECTORY);
 	}
 
 	public File getSourceFile(){

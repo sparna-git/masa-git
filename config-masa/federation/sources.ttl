@@ -1,0 +1,43 @@
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix fed-config: <https://masa.hypotheses.org/federation/config#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+<http://masa.humanum.fr/masa-federation/sparql> a sd:Service ;
+    sd:endpoint <http://masa.humanum.fr/masa-federation/sparql> ;
+    sd:availableGraphs [
+        a sd:GraphCollection ;
+        sd:namedGraph [
+            a sd:NamedGraph ;
+            # FederationSource.getSourceIri
+            sd:name <http://masa.humanum.fr/sources/referentiels> ;
+            # FederationSource.getLabels
+            rdfs:label "Référentiels"@fr;
+            rdfs:label "Referentials"@en;
+            # FederationSource.getEndpoint
+            void:sparqlEndpoint <http://localhost:7200/repositories/masa-referentiels> ;
+            # optionnel : FederationSource.getDefaultGraph
+            # fed-config:sparqlGraph <http://www.exemple.fr/monGraphe> ;
+        ] ;
+        sd:namedGraph [
+            a sd:NamedGraph ;
+            # FederationSource.getSourceIri
+            sd:name <http://masa.humanum.fr/sources/data> ;
+            # FederationSource.getLabels
+            rdfs:label "Data MASA"@fr;
+            rdfs:label "Data MASA"@en;
+            # FederationSource.getEndpoint
+            void:sparqlEndpoint <http://localhost:7200/repositories/masa-data> ;
+            # par exemple ici, pas de graphe
+        ] ;
+        sd:namedGraph [
+            a sd:NamedGraph ;
+            # FederationSource.getSourceIri
+            sd:name <http://masa.humanum.fr/sources/dbpedia> ;
+            # FederationSource.getLabels
+            rdfs:label "DBPedia"@fr;
+            rdfs:label "DBPedia"@en;
+            # FederationSource.getEndpoint
+            void:sparqlEndpoint <http://fr.dbpedia.org/sparql> ;
+        ] ;
+    ] .

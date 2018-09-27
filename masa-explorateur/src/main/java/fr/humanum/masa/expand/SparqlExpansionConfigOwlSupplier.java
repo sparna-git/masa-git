@@ -11,15 +11,20 @@ import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFList;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.sparql.path.Path;
 import org.apache.jena.sparql.path.PathParser;
+import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.OWL2;
+import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import fr.humanum.masa.expand.SparqlExpansionConfig.ClassMapping;
 
 public class SparqlExpansionConfigOwlSupplier implements Supplier<SparqlExpansionConfig> {
 
@@ -44,10 +49,53 @@ public class SparqlExpansionConfigOwlSupplier implements Supplier<SparqlExpansio
 		while(objectsOfSubClasseOf.hasNext()) {
 			// recurse for each one to find all the recursive subClasses
 			Resource aClass = objectsOfSubClasseOf.next().asResource();
-			Set<Resource> subClasses = followInverseTransitiveRec(aClass, RDFS.subClassOf);
-			Set<String> subClassesString = subClasses.stream().map(s -> s.getURI()).collect(Collectors.toSet());
-			log.debug("Parsed recursive rdfs:subClassOf for "+aClass.getURI()+" : "+subClassesString);
-			result.addTypeMapping(aClass.getURI(), subClassesString);
+			// exclude has value restrictions
+			if(!aClass.hasProperty(OWL.intersectionOf)) {
+				Set<Resource> subClasses = followInverseTransitiveRec(aClass, RDFS.subClassOf);
+				Set<String> subClassesString = subClasses.stream().map(s -> s.getURI()).collect(Collectors.toSet());
+				log.debug("Parsed recursive rdfs:subClassOf for "+aClass.getURI()+" : "+subClassesString);
+				result.addTypeMapping(aClass.getURI(), subClassesString);
+			}
+		}
+		
+		// now interpretes the has value restrictions
+		ResIterator subjectsOfIntersectionOf = this.model.listSubjectsWithProperty(OWL.intersectionOf);
+		while(subjectsOfIntersectionOf.hasNext()) {
+			log.debug("Parsing a Class with an owl:intersectionOf");
+			// recurse for each one to find all the recursive subClasses
+			Resource aRestriction = subjectsOfIntersectionOf.next().asResource();
+			List<RDFNode> list = aRestriction.getProperty(OWL.intersectionOf).getObject().as(RDFList.class).asJavaList();
+			String clazz = null;
+			String onProperty = null;
+			String hasValue = null;
+			for (RDFNode aNode : list) {
+				if(aNode.isURIResource()) {
+					clazz = aNode.asResource().getURI();
+					log.debug("Found the restricted class : "+clazz);
+				}
+				if(
+						aNode.isAnon()
+						&&
+						aNode.asResource().hasProperty(RDF.type)
+						&&
+						aNode.asResource().getProperty(RDF.type).getObject().asResource().getURI().equals(OWL.Restriction.getURI())
+				) {
+					onProperty = aNode.asResource().getProperty(OWL.onProperty).getObject().asResource().getURI();
+					hasValue = aNode.asResource().getProperty(OWL.hasValue).getObject().asResource().getURI();
+					log.debug("Found the restricted onProperty : "+onProperty);
+					log.debug("Found the restricted hasValue : "+hasValue);
+				}
+			}
+			if(clazz != null && onProperty != null && hasValue != null) {
+				// find the original class
+				List<Resource> subjectsOfSubClassOfWithRestriction = this.model.listSubjectsWithProperty(RDFS.subClassOf, aRestriction).toList();
+				if(!subjectsOfSubClassOfWithRestriction.isEmpty()) {
+					String originalClass = subjectsOfSubClassOfWithRestriction.get(0).asResource().getURI();
+					log.debug("Mapped "+originalClass+" to every "+clazz+" having value "+hasValue+" on property "+onProperty);
+					result.addTypeMapping(originalClass, result.new ClassMapping(clazz, onProperty, hasValue));
+				}
+			}
+			
 		}
 		
 		// parse property chains and generate property mappings
@@ -93,7 +141,7 @@ public class SparqlExpansionConfigOwlSupplier implements Supplier<SparqlExpansio
 		
 		// TODO : currently there is no combination of the propertyPathAxioms and the subProperties
 		
-		// find all objects of subClassOf
+		// find all objects of subPropertyOf
 		NodeIterator objectsOfSubPropertyOf = this.model.listObjectsOfProperty(RDFS.subPropertyOf);
 		while(objectsOfSubPropertyOf.hasNext()) {
 			// recurse for each one to find all the recursive subProeprties

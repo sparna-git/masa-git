@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+
+	
+	<bean class="fr.humanum.masa.federation.index.RdfsLabelFetcher" id="rdfsLabelFetcher">
+		<constructor-arg value="fr"></constructor-arg>
+	</bean>
+	
+	<bean class="fr.humanum.masa.federation.index.LuceneDocumentBuilderFactory" id="luceneDocumentBuilderFactory">
+		<constructor-arg name="prefixes">
+			<map>
+				<entry key="crm" value="http://www.cidoc-crm.org/cidoc-crm/" />
+				<entry key="rdfs" value="http://www.w3.org/2000/01/rdf-schema#" />
+				<entry key="prop-fr" value="http://fr.dbpedia.org/property/" />
+				<entry key="dbpedia-owl" value="http://dbpedia.org/ontology/" />
+			</map>		
+		</constructor-arg>
+		<constructor-arg name="defaultLabelFetcher" ref="rdfsLabelFetcher"></constructor-arg>
+	</bean>
+	
+	
+	<bean class="fr.humanum.masa.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="domain" value="dbpedia-owl:Person" />
+		<constructor-arg name="path" value="dbpedia-owl:birthPlace" />
+		<constructor-arg name="range" value="dbpedia-owl:Place" />
+	</bean>
+	
+<!-- 	<util:list id="luceneDocumentBuilders" value-type="fr.humanum.masa.federation.index.LuceneDocumentBuilder"> -->
+		
+<!-- 	</util:list> -->
+</beans>

@@ -51,7 +51,6 @@ public class DisplayProperties {
 
 
 	private Query getDatesQuery(String request, final String startDateProperty, final String endDateProperty) {
-		// TODO Auto-generated method stub
 		final Query query = QueryFactory.create(request);
 		Element where = query.getQueryPattern();
 

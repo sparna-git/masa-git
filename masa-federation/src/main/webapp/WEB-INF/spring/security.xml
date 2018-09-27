@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans 
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security.xsd">
+	
+	<http pattern="/login**" security="none"/>
+	<http pattern="/favicon.ico" security="none"/>
+
+	<http>
+		<intercept-url pattern="/admin" 		access="hasAnyRole('ROLE_ADMIN')" />
+			
+		<form-login 
+		    login-page="/login"
+		    username-parameter="username"
+		    password-parameter="password"
+		    login-processing-url="/j_spring_security_check"
+		    default-target-url="/admin"
+			authentication-failure-url="/login?error"
+		/>
+		
+		<logout invalidate-session="true"  logout-success-url="/login?logout" delete-cookies="JSESSIONID" />
+		
+		<!-- disable csrf protection -->
+		<csrf disabled="true"/>		
+	
+		<!-- 		<remember-me /> -->
+		<headers>
+			<cache-control />
+			<xss-protection />
+		</headers>
+		
+		<session-management invalid-session-url="/">
+			<!--Adding max-sessions attribut to define the number of session.
+				A negative value enabled multiple sessions for user -->
+            <concurrency-control expired-url="/" max-sessions="-1"/>
+        </session-management>
+	</http>
+ 	
+    <authentication-manager>
+		<authentication-provider ref="MasaAdminAuthenticationProvider">
+		</authentication-provider>
+	</authentication-manager>
+	
+	<beans:bean id="MasaAdminAuthenticationProvider" class="fr.humanum.masa.federation.admin.MasaAdminAuthenticationProvider">
+		<beans:constructor-arg name="adminLogin" value="admin@masa.fr" />
+		<!-- superadmin = 889a3a791b3875cfae413574b53da4bb8a90d53e -->
+		<beans:constructor-arg name="adminHashedPassword" value="889a3a791b3875cfae413574b53da4bb8a90d53e" />
+		<beans:constructor-arg name="defaultRole" value="ROLE_ADMIN" />
+	</beans:bean>
+
+</beans:beans>

@@ -10,10 +10,10 @@
         sd:namedGraph [
             a sd:NamedGraph ;
             # FederationSource.getSourceIri
-            sd:name <http://masa.humanum.fr/source1> ;
+            sd:name <http://masa.humanum.fr/sources/source-testB> ;
             # FederationSource.getLabels
-            rdfs:label "La Source 1"@fr;
-            rdfs:label "The Source 1"@en;
+            rdfs:label "Repository testA"@fr;
+            rdfs:label "Repository testA"@en;
             # FederationSource.getEndpoint
             void:sparqlEndpoint <http://localhost:7200/repositories/testA> ;
             # optionnel : FederationSource.getDefaultGraph
@@ -22,10 +22,10 @@
         sd:namedGraph [
             a sd:NamedGraph ;
             # FederationSource.getSourceIri
-            sd:name <http://masa.humanum.fr/source222> ;
+            sd:name <http://masa.humanum.fr/sources/source-testB> ;
             # FederationSource.getLabels
-            rdfs:label "La Source 222"@fr;
-            rdfs:label "The Source 222"@en;
+            rdfs:label "Repository testB"@fr;
+            rdfs:label "Repository testB"@en;
             # FederationSource.getEndpoint
             void:sparqlEndpoint <http://localhost:7200/repositories/testB> ;
             # par exemple ici, pas de graphe

@@ -4,13 +4,12 @@ import java.util.List;
 import java.util.Set;
 
 import fr.humanum.masa.federation.source.FederationSource;
-import fr.humanum.masa.federation.source.FederationSparqlQueriesExample;
 
 public class FederationData {
 
 	public static final String KEY=FederationData.class.getCanonicalName();
 	
-	protected List<FederationSparqlQueriesExample> queries;
+	protected List<QueryExample> queries;
 	
 	protected Set<FederationSource> federationSources;
 	
@@ -25,11 +24,11 @@ public class FederationData {
 		this.federationSources = federationSources;
 	}
 
-	public List<FederationSparqlQueriesExample> getQueries() {
+	public List<QueryExample> getQueries() {
 		return queries;
 	}
 
-	public void setQueries(List<FederationSparqlQueriesExample> queries) {
+	public void setQueries(List<QueryExample> queries) {
 		this.queries = queries;
 	}
 	

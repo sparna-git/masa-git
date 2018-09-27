@@ -28,6 +28,7 @@ import org.apache.jena.sparql.expr.ExprFunction2;
 import org.apache.jena.sparql.expr.ExprFunctionN;
 import org.apache.jena.sparql.expr.ExprVisitorBase;
 import org.apache.jena.sparql.path.Path;
+import org.apache.jena.sparql.path.PathFactory;
 import org.apache.jena.sparql.syntax.Element;
 import org.apache.jena.sparql.syntax.ElementData;
 import org.apache.jena.sparql.syntax.ElementFilter;
@@ -37,6 +38,8 @@ import org.apache.jena.sparql.syntax.ElementVisitorBase;
 import org.apache.jena.vocabulary.RDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import fr.humanum.masa.expand.SparqlExpansionConfig.ClassMapping;
 
 public class SparqlExpansionVisitor extends ElementVisitorBase {
 
@@ -93,31 +96,50 @@ public class SparqlExpansionVisitor extends ElementVisitorBase {
 							config.getTypeMapping(t.getObject().getURI()) != null
 					) {							
 						log.debug("Found a known type : <"+t.getObject().getURI()+">");
-						// creation du triplet en prenant le sujet d'origine, le path et la creation d'une nouvelle variable "type"							
-						String varName = null;
-						do {
-							// check already inserted vars to avoid name colisions
-							varName = "t_"+UUID.randomUUID().toString().substring(0, 3);
-						} while(this.alreadyUsedVars.contains(varName));
-						this.alreadyUsedVars.add(varName);						
 						
-						Node var = NodeFactory.createVariable(varName.replaceAll("-", ""));
-						newTriplesToAdd.add(new TriplePath(t.getSubject(), t.getPath(), var));
-						
-						//retire le triplet courant de la clause where
-						triples.remove();
+						if(SparqlExpansionConfig.isSingleHasRestrictionMapping(config.getTypeMapping(t.getObject().getURI()))) {
+							// case of hasValue restriction
+							ClassMapping mapping = config.getTypeMapping(t.getObject().getURI()).iterator().next();
+							newTriplesToAdd.add(new TriplePath(t.getSubject(), t.getPath(), NodeFactory.createURI(mapping.getClazz())));
+							newTriplesToAdd.add(new TriplePath(t.getSubject(), PathFactory.pathLink(NodeFactory.createURI(mapping.getOnProperty())), NodeFactory.createURI(mapping.getHasValue())));
+							//retire le triplet courant de la clause where
+							triples.remove();
+							log.debug("Type <"+t.getObject().getURI()+"> replaced by restriction on class <"+mapping.getClazz()+"> with value <"+mapping.getHasValue()+"> on property <"+mapping.getOnProperty()+">");
+						} else if(config.getTypeMapping(t.getObject().getURI()).size() == 1) {
+							// single value, let's not insert a VALUES clause but use it directly as a value of the triple
+							ClassMapping mapping = config.getTypeMapping(t.getObject().getURI()).iterator().next();
+							//retire le triplet courant de la clause where
+							triples.remove();
+							newTriplesToAdd.add(new TriplePath(t.getSubject(), t.getPath(), NodeFactory.createURI(mapping.clazz)));
+						} else {
+							// creation du triplet en prenant le sujet d'origine, le path et la creation d'une nouvelle variable "t_xxx"							
+							String varName = null;
+							do {
+								// check already inserted vars to avoid name colisions
+								varName = "t_"+UUID.randomUUID().toString().substring(0, 3);
+							} while(this.alreadyUsedVars.contains(varName));
+							this.alreadyUsedVars.add(varName);						
+							
+							Node var = NodeFactory.createVariable(varName);
+							newTriplesToAdd.add(new TriplePath(t.getSubject(), t.getPath(), var));
+							
+							//retire le triplet courant de la clause where
+							triples.remove();
 
-						ElementData valuesClause = new ElementData();
-						valuesClause.add(Var.alloc(var));
-						
-						for(String uri: config.getTypeMapping(t.getObject().getURI())){
-							BindingHashMap bhm = new BindingHashMap();
-							bhm.add(Var.alloc(var),NodeFactory.createURI(uri));
-							valuesClause.add(bhm);
+							// creation de la clause VALUES
+							ElementData valuesClause = new ElementData();
+							valuesClause.add(Var.alloc(var));
+							
+							for(ClassMapping cm: config.getTypeMapping(t.getObject().getURI())){
+								BindingHashMap bhm = new BindingHashMap();
+								bhm.add(Var.alloc(var),NodeFactory.createURI(cm.getClazz()));
+								valuesClause.add(bhm);
+							}
+
+							valuesClauseToAdd.add(valuesClause);
+							log.debug("Type <"+t.getObject().getURI()+"> replaced by var ?"+varName+" with values "+config.getTypeMapping(t.getObject().getURI()));
 						}
-
-						valuesClauseToAdd.add(valuesClause);
-						log.debug("Type <"+t.getObject().getURI()+"> replaced by var ?"+varName+" with values "+config.getTypeMapping(t.getObject().getURI()));
+						
 					}
 					
 					// properties
@@ -213,9 +235,9 @@ public class SparqlExpansionVisitor extends ElementVisitorBase {
 							bindingsToRemove.add(aBinding);
 							
 							// now add new bindings
-							for(String uri: config.getTypeMapping(value.getURI())){
+							for(ClassMapping cm: config.getTypeMapping(value.getURI())){
 								BindingHashMap bhm = new BindingHashMap();
-								bhm.add(Var.alloc(aTypeVar),NodeFactory.createURI(uri));
+								bhm.add(Var.alloc(aTypeVar),NodeFactory.createURI(cm.getClazz()));
 								bindingsToAdd.add(bhm);
 							}							
 						}
@@ -280,6 +302,7 @@ public class SparqlExpansionVisitor extends ElementVisitorBase {
 				+ "<http://exemple.com/type/Type1> rdfs:subClassOf <http://exemple.com/type/Thing> . " +"\n"
 				+ "<http://exemple.com/type/Type2> rdfs:subClassOf <http://exemple.com/type/Thing> ." +"\n"
 				+ "<http://exemple.com/type/SubType22> rdfs:subClassOf <http://exemple.com/type/Type2> ." +"\n"
+				+ "<http://exemple.com/type/Sepulture> rdfs:subClassOf [ a owl:Class ; owl:intersectionOf ( :Man_Made_Feature [ a owl:Restriction ; owl:onProperty :hasType ; owl:hasValue :sepulture ; ] ) ] ."+"\n"
 				+ ":hasGrandParent a owl:ObjectProperty ;" +"\n"
 				+ "                owl:propertyChainAxiom ( :hasParent" +"\n"
 				+ "                                         :hasParent" +"\n"
@@ -287,7 +310,9 @@ public class SparqlExpansionVisitor extends ElementVisitorBase {
 				+ ":hasUncle owl:propertyChainAxiom \":hasFather/:hasBrother\" ."+"\n"
 				+ ":hasUncle owl:propertyChainAxiom \":hasMother/:hasBrother\" ."+"\n"
 				+ ":hasUncle rdfs:subPropertyOf :hasFamily ."+"\n"
-				+ ":hasGrandParent rdfs:subPropertyOf :hasFamily ."+"\n";
+				+ ":hasGrandParent rdfs:subPropertyOf :hasFamily ."+"\n"
+				+ ":hasGrandParent rdfs:subPropertyOf :hasFamily ."+"\n"
+				;
 		RDFDataMgr.read(m, new ByteArrayInputStream(testConfig.getBytes()), Lang.TURTLE);
 		
 		SparqlExpansionConfigOwlSupplier supplier = new SparqlExpansionConfigOwlSupplier(m);
@@ -299,6 +324,11 @@ public class SparqlExpansionVisitor extends ElementVisitorBase {
 		Query query2 = QueryFactory.create(SPARQL2);
 		ElementWalker_New.walk(query2.getQueryPattern(), new SparqlExpansionVisitor(supplier.get()), new ExprVisitorBase());
 		System.out.println(query2.toString(Syntax.syntaxSPARQL_11));
+		
+		final String SPARQL3 = "SELECT ?x WHERE {?x a <http://exemple.com/type/Sepulture> } LIMIT 10";
+		Query query3 = QueryFactory.create(SPARQL3);
+		ElementWalker_New.walk(query3.getQueryPattern(), new SparqlExpansionVisitor(supplier.get()), new ExprVisitorBase());
+		System.out.println(query3.toString(Syntax.syntaxSPARQL_11));
 	}
 	
 	
