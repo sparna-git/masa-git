@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+
+	
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.CidocCrmAppellationLabelFetcher" id="cidocCrmAppellationLabelFetcher">
+	</bean>
+	
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.RdfsLabelFetcher" id="rdfsLabelFetcher">
+		<constructor-arg value="fr"></constructor-arg>
+	</bean>
+	
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.SkosLabelFetcher" id="skosLabelFetcher">
+	</bean>
+	
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilderFactory" id="luceneDocumentBuilderFactory">
+		<constructor-arg name="prefixes">
+			<map>
+				<entry key="crm" value="http://www.cidoc-crm.org/cidoc-crm/" />
+				<entry key="crmarchaeo" value="http://www.cidoc-crm.org/cidoc-crm/CRMarchaeo/" />
+				<entry key="crmsci" value="http://www.ics.forth.gr/isl/CRMsci/" />
+				<entry key="crmba" value="http://www.ics.forth.gr/isl/CRMba/" />
+				<entry key="rdfs" value="http://www.w3.org/2000/01/rdf-schema#" />
+				<entry key="prop-fr" value="http://fr.dbpedia.org/property/" />
+				<entry key="oa" value="http://www.openarchaeo.fr/explorateur/onto#" />
+			</map>		
+		</constructor-arg>
+		<constructor-arg name="defaultLabelFetcher" ref="skosLabelFetcher"></constructor-arg>
+		<constructor-arg name="extConfigService" ref="extConfigService"></constructor-arg>
+	</bean>
+	
+	<!-- situe_a Site-Lieu -->
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Site oa:situe_a oa:Lieu" />
+	</bean>
+	<!-- de_type Site Type -->
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Site oa:de_type oa:Type" />
+	</bean>
+	<!-- de_type Construction Type -->
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Construction oa:de_type oa:Type" />
+	</bean>
+	<!-- etudie_par Site Acteur -->	
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Site oa:etudie_par oa:Acteur" />
+	</bean>
+	<!-- a_trouve -->
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Site oa:a_trouve oa:Mobilier" />
+	</bean>
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Site oa:a_trouve oa:Sepulture" />
+	</bean>
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Site oa:a_trouve oa:Construction" />
+	</bean>
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Site oa:a_trouve oa:Fait" />
+	</bean>
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Site oa:a_trouve oa:US" />
+	</bean>
+	<!-- date_de : pas d'indexation -->
+	<!-- trouve_a -->
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Mobilier oa:trouve_a oa:Site" />
+	</bean>
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Sepulture oa:trouve_a oa:Site" />
+	</bean>
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Construction oa:trouve_a oa:Site" />
+	</bean>
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Fait oa:trouve_a oa:Site" />
+	</bean>
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:US oa:trouve_a oa:Site" />
+	</bean>
+	<!-- fait_partie_de -->
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:US oa:fait_partie_de oa:Fait" />
+	</bean>
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:US oa:fait_partie_de oa:Sepulture" />
+	</bean>
+	<!-- contient -->
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:US oa:contient oa:Mobilier" />
+	</bean>
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Fait oa:contient oa:Mobilier" />
+	</bean>
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Sepulture oa:contient oa:Mobilier" />
+	</bean>
+	<!-- interprete_comme -->
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:US oa:interprete_comme oa:Type" />
+	</bean>
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Fait oa:interprete_comme oa:Type" />
+	</bean>
+	<!-- est_compose_de -->
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Fait oa:est_compose_de oa:US" />
+	</bean>
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Sepulture oa:est_compose_de oa:US" />
+	</bean>
+	<!-- trouve_dans -->
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Mobilier oa:trouve_dans oa:Site" />
+	</bean>
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Mobilier oa:trouve_dans oa:US" />
+	</bean>
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Mobilier oa:trouve_dans oa:Sepulture" />
+	</bean>
+	<!-- utilise_pour -->
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Mobilier oa:utilise_pour oa:Type" />
+	</bean>
+	<!-- fait_en -->
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Mobilier oa:fait_en oa:Type" />
+	</bean>
+	<!-- a_etudie -->
+	<bean class="fr.humanum.masa.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Acteur oa:a_etudie oa:Site" />
+	</bean>
+
+</beans>

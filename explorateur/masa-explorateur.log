@@ -1,0 +1,396 @@
+10:30:24.621  188  [main] DEBUG Jena - Jena initialization
+10:30:24.714  281  [main] DEBUG org.apache.jena.util.FileManager - Add location: LocatorFile
+10:30:24.715  282  [main] DEBUG org.apache.jena.util.FileManager - Add location: ClassLoaderLocator
+10:30:24.718  285  [main] DEBUG org.apache.jena.util.LocationMapper - Failed to find configuration: file:location-mapping.rdf;file:location-mapping.n3;file:location-mapping.ttl;file:etc/location-mapping.rdf;file:etc/location-mapping.n3;file:etc/location-mapping.ttl
+10:30:24.719  286  [main] DEBUG org.apache.jena.util.FileManager - Add location: LocatorFile
+10:30:24.720  287  [main] DEBUG org.apache.jena.util.FileManager - Add location: LocatorURL
+10:30:24.720  287  [main] DEBUG org.apache.jena.util.FileManager - Add location: ClassLoaderLocator
+10:30:24.730  297  [main] DEBUG o.a.j.r.s.stream.JenaIOEnvironment - Failed to find configuration: location-mapping.ttl;location-mapping.rdf;location-mapping.n3;etc/location-mapping.rdf;etc/location-mapping.n3;etc/location-mapping.ttl
+10:30:25.136  703  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Thing : [http://exemple.com/type/SubType22, http://exemple.com/type/Type1, http://exemple.com/type/Type2]
+10:30:25.138  705  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Type2 : [http://exemple.com/type/SubType22]
+10:30:25.139  706  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing a Class with an owl:intersectionOf
+10:30:25.140  707  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted class : http://test.fr/onto#Man_Made_Feature
+10:30:25.141  708  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted onProperty : http://test.fr/onto#hasType
+10:30:25.141  708  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted hasValue : http://test.fr/onto#sepulture
+10:30:25.141  708  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Mapped http://exemple.com/type/Sepulture to every http://test.fr/onto#Man_Made_Feature having value http://test.fr/onto#sepulture on property http://test.fr/onto#hasType
+10:30:25.143  710  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasMother/:hasBrother"]
+10:30:25.143  710  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:30:25.143  710  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : :hasMother/:hasBrother
+10:30:25.161  728  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasFather/:hasBrother"]
+10:30:25.161  728  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:30:25.165  732  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - A path is already mapped to http://test.fr/onto#hasUncle : <http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>, will concatenate paths
+10:30:25.165  732  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(:hasFather/:hasBrother)
+10:30:25.165  732  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasGrandParent, http://www.w3.org/2002/07/owl#propertyChainAxiom, 6252cef7-fab4-4cac-a967-340d4e2e85a5]
+10:30:25.166  733  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is an RDF list resource, turning it into SPARQL path
+10:30:25.168  735  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : <http://test.fr/onto#hasParent>/<http://test.fr/onto#hasParent>
+10:30:25.168  735  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subPropertiesOf for http://test.fr/onto#hasFamily : [http://test.fr/onto#hasUncle, http://test.fr/onto#hasGrandParent]
+10:30:25.168  735  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of property path : <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:30:25.169  736  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Built a SPARQL expansion config with 3 types mappings and 3 property mappings
+10:30:25.174  741  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Examining an ElementPathBlock with 3 paths.
+10:30:25.175  742  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known type : <http://exemple.com/type/Thing>
+10:30:25.180  747  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Type <http://exemple.com/type/Thing> replaced by var ?t_1ba with values [fr.humanum.masa.expand.SparqlExpansionConfig$ClassMapping@7161d8d1, fr.humanum.masa.expand.SparqlExpansionConfig$ClassMapping@74e28667, fr.humanum.masa.expand.SparqlExpansionConfig$ClassMapping@1cf6d1be]
+10:30:25.180  747  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known property : <http://test.fr/onto#hasUncle>
+10:30:25.181  748  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Property <http://test.fr/onto#hasUncle> replaced by path (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(<http://test.fr/onto#hasFather>/<http://test.fr/onto#hasBrother>)
+10:30:25.181  748  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known property : <http://test.fr/onto#hasFamily>
+10:30:25.181  748  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Property <http://test.fr/onto#hasFamily> replaced by path <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:30:25.207  774  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Thing : [http://exemple.com/type/SubType22, http://exemple.com/type/Type1, http://exemple.com/type/Type2]
+10:30:25.207  774  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Type2 : [http://exemple.com/type/SubType22]
+10:30:25.207  774  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing a Class with an owl:intersectionOf
+10:30:25.207  774  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted class : http://test.fr/onto#Man_Made_Feature
+10:30:25.207  774  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted onProperty : http://test.fr/onto#hasType
+10:30:25.207  774  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted hasValue : http://test.fr/onto#sepulture
+10:30:25.207  774  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Mapped http://exemple.com/type/Sepulture to every http://test.fr/onto#Man_Made_Feature having value http://test.fr/onto#sepulture on property http://test.fr/onto#hasType
+10:30:25.208  775  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasMother/:hasBrother"]
+10:30:25.208  775  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:30:25.208  775  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : :hasMother/:hasBrother
+10:30:25.208  775  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasFather/:hasBrother"]
+10:30:25.208  775  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:30:25.208  775  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - A path is already mapped to http://test.fr/onto#hasUncle : <http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>, will concatenate paths
+10:30:25.208  775  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(:hasFather/:hasBrother)
+10:30:25.208  775  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasGrandParent, http://www.w3.org/2002/07/owl#propertyChainAxiom, 6252cef7-fab4-4cac-a967-340d4e2e85a5]
+10:30:25.208  775  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is an RDF list resource, turning it into SPARQL path
+10:30:25.209  776  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : <http://test.fr/onto#hasParent>/<http://test.fr/onto#hasParent>
+10:30:25.209  776  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subPropertiesOf for http://test.fr/onto#hasFamily : [http://test.fr/onto#hasUncle, http://test.fr/onto#hasGrandParent]
+10:30:25.209  776  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of property path : <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:30:25.209  776  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Built a SPARQL expansion config with 3 types mappings and 3 property mappings
+10:30:25.209  776  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a variable object of rdf:type : ?type
+10:30:25.210  777  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Matched a known binding for a variable type : ?type with value http://exemple.com/type/Thing
+10:30:25.210  777  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found variable ?type in an equality condition in a FILTER
+10:30:25.210  777  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - in
+10:30:25.210  777  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Examining an ElementPathBlock with 1 paths.
+10:30:25.210  777  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Query left untouched
+10:32:20.557  236  [main] DEBUG Jena - Jena initialization
+10:32:20.641  320  [main] DEBUG org.apache.jena.util.FileManager - Add location: LocatorFile
+10:32:20.642  321  [main] DEBUG org.apache.jena.util.FileManager - Add location: ClassLoaderLocator
+10:32:20.644  323  [main] DEBUG org.apache.jena.util.LocationMapper - Failed to find configuration: file:location-mapping.rdf;file:location-mapping.n3;file:location-mapping.ttl;file:etc/location-mapping.rdf;file:etc/location-mapping.n3;file:etc/location-mapping.ttl
+10:32:20.644  323  [main] DEBUG org.apache.jena.util.FileManager - Add location: LocatorFile
+10:32:20.645  324  [main] DEBUG org.apache.jena.util.FileManager - Add location: LocatorURL
+10:32:20.645  324  [main] DEBUG org.apache.jena.util.FileManager - Add location: ClassLoaderLocator
+10:32:20.653  332  [main] DEBUG o.a.j.r.s.stream.JenaIOEnvironment - Failed to find configuration: location-mapping.ttl;location-mapping.rdf;location-mapping.n3;etc/location-mapping.rdf;etc/location-mapping.n3;etc/location-mapping.ttl
+10:32:21.096  775  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Thing : [http://exemple.com/type/SubType22, http://exemple.com/type/Type1, http://exemple.com/type/Type2]
+10:32:21.099  778  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Type2 : [http://exemple.com/type/SubType22]
+10:32:21.101  780  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing a Class with an owl:intersectionOf
+10:32:21.102  781  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted class : http://test.fr/onto#Man_Made_Feature
+10:32:21.102  781  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted onProperty : http://test.fr/onto#hasType
+10:32:21.102  781  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted hasValue : http://test.fr/onto#sepulture
+10:32:21.102  781  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Mapped http://exemple.com/type/Sepulture to every http://test.fr/onto#Man_Made_Feature having value http://test.fr/onto#sepulture on property http://test.fr/onto#hasType
+10:32:21.104  783  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasMother/:hasBrother"]
+10:32:21.104  783  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:32:21.105  784  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : :hasMother/:hasBrother
+10:32:21.122  801  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasFather/:hasBrother"]
+10:32:21.123  802  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:32:21.126  805  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - A path is already mapped to http://test.fr/onto#hasUncle : <http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>, will concatenate paths
+10:32:21.126  805  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(:hasFather/:hasBrother)
+10:32:21.127  806  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasGrandParent, http://www.w3.org/2002/07/owl#propertyChainAxiom, f7baf87e-1c29-424d-9a32-ea465e932aaa]
+10:32:21.127  806  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is an RDF list resource, turning it into SPARQL path
+10:32:21.128  807  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : <http://test.fr/onto#hasParent>/<http://test.fr/onto#hasParent>
+10:32:21.129  808  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subPropertiesOf for http://test.fr/onto#hasFamily : [http://test.fr/onto#hasUncle, http://test.fr/onto#hasGrandParent]
+10:32:21.129  808  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of property path : <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:32:21.129  808  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Built a SPARQL expansion config with 3 types mappings and 3 property mappings
+10:32:21.134  813  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Examining an ElementPathBlock with 3 paths.
+10:32:21.134  813  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known type : <http://exemple.com/type/Thing>
+10:32:21.138  817  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Type <http://exemple.com/type/Thing> replaced by var ?t_c64 with values [fr.humanum.masa.expand.SparqlExpansionConfig$ClassMapping@7161d8d1, fr.humanum.masa.expand.SparqlExpansionConfig$ClassMapping@74e28667, fr.humanum.masa.expand.SparqlExpansionConfig$ClassMapping@1cf6d1be]
+10:32:21.138  817  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known property : <http://test.fr/onto#hasUncle>
+10:32:21.139  818  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Property <http://test.fr/onto#hasUncle> replaced by path (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(<http://test.fr/onto#hasFather>/<http://test.fr/onto#hasBrother>)
+10:32:21.139  818  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known property : <http://test.fr/onto#hasFamily>
+10:32:21.139  818  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Property <http://test.fr/onto#hasFamily> replaced by path <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:32:21.165  844  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Thing : [http://exemple.com/type/SubType22, http://exemple.com/type/Type1, http://exemple.com/type/Type2]
+10:32:21.165  844  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Type2 : [http://exemple.com/type/SubType22]
+10:32:21.166  845  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing a Class with an owl:intersectionOf
+10:32:21.166  845  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted class : http://test.fr/onto#Man_Made_Feature
+10:32:21.166  845  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted onProperty : http://test.fr/onto#hasType
+10:32:21.166  845  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted hasValue : http://test.fr/onto#sepulture
+10:32:21.167  846  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Mapped http://exemple.com/type/Sepulture to every http://test.fr/onto#Man_Made_Feature having value http://test.fr/onto#sepulture on property http://test.fr/onto#hasType
+10:32:21.167  846  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasMother/:hasBrother"]
+10:32:21.167  846  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:32:21.167  846  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : :hasMother/:hasBrother
+10:32:21.168  847  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasFather/:hasBrother"]
+10:32:21.168  847  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:32:21.168  847  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - A path is already mapped to http://test.fr/onto#hasUncle : <http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>, will concatenate paths
+10:32:21.168  847  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(:hasFather/:hasBrother)
+10:32:21.168  847  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasGrandParent, http://www.w3.org/2002/07/owl#propertyChainAxiom, f7baf87e-1c29-424d-9a32-ea465e932aaa]
+10:32:21.169  848  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is an RDF list resource, turning it into SPARQL path
+10:32:21.169  848  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : <http://test.fr/onto#hasParent>/<http://test.fr/onto#hasParent>
+10:32:21.169  848  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subPropertiesOf for http://test.fr/onto#hasFamily : [http://test.fr/onto#hasUncle, http://test.fr/onto#hasGrandParent]
+10:32:21.169  848  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of property path : <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:32:21.170  849  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Built a SPARQL expansion config with 3 types mappings and 3 property mappings
+10:32:21.170  849  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a variable object of rdf:type : ?type
+10:32:21.170  849  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Matched a known binding for a variable type : ?type with value http://exemple.com/type/Thing
+10:32:21.170  849  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found variable ?type in an equality condition in a FILTER
+10:32:21.170  849  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - in
+10:32:21.171  850  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Examining an ElementPathBlock with 1 paths.
+10:32:21.171  850  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Query left untouched
+10:32:21.172  851  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Thing : [http://exemple.com/type/SubType22, http://exemple.com/type/Type1, http://exemple.com/type/Type2]
+10:32:21.173  852  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Type2 : [http://exemple.com/type/SubType22]
+10:32:21.173  852  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing a Class with an owl:intersectionOf
+10:32:21.173  852  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted class : http://test.fr/onto#Man_Made_Feature
+10:32:21.173  852  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted onProperty : http://test.fr/onto#hasType
+10:32:21.173  852  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted hasValue : http://test.fr/onto#sepulture
+10:32:21.173  852  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Mapped http://exemple.com/type/Sepulture to every http://test.fr/onto#Man_Made_Feature having value http://test.fr/onto#sepulture on property http://test.fr/onto#hasType
+10:32:21.174  853  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasMother/:hasBrother"]
+10:32:21.174  853  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:32:21.174  853  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : :hasMother/:hasBrother
+10:32:21.174  853  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasFather/:hasBrother"]
+10:32:21.174  853  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:32:21.174  853  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - A path is already mapped to http://test.fr/onto#hasUncle : <http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>, will concatenate paths
+10:32:21.174  853  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(:hasFather/:hasBrother)
+10:32:21.175  854  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasGrandParent, http://www.w3.org/2002/07/owl#propertyChainAxiom, f7baf87e-1c29-424d-9a32-ea465e932aaa]
+10:32:21.175  854  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is an RDF list resource, turning it into SPARQL path
+10:32:21.175  854  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : <http://test.fr/onto#hasParent>/<http://test.fr/onto#hasParent>
+10:32:21.175  854  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subPropertiesOf for http://test.fr/onto#hasFamily : [http://test.fr/onto#hasUncle, http://test.fr/onto#hasGrandParent]
+10:32:21.175  854  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of property path : <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:32:21.176  855  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Built a SPARQL expansion config with 3 types mappings and 3 property mappings
+10:32:21.176  855  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Examining an ElementPathBlock with 1 paths.
+10:32:21.176  855  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known type : <http://exemple.com/type/Sepulture>
+10:32:21.176  855  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Type <http://exemple.com/type/Sepulture> replaced by var ?t_d6d with values [fr.humanum.masa.expand.SparqlExpansionConfig$ClassMapping@c05fddc]
+10:37:35.575  233  [main] DEBUG Jena - Jena initialization
+10:37:35.666  324  [main] DEBUG org.apache.jena.util.FileManager - Add location: LocatorFile
+10:37:35.667  325  [main] DEBUG org.apache.jena.util.FileManager - Add location: ClassLoaderLocator
+10:37:35.669  327  [main] DEBUG org.apache.jena.util.LocationMapper - Failed to find configuration: file:location-mapping.rdf;file:location-mapping.n3;file:location-mapping.ttl;file:etc/location-mapping.rdf;file:etc/location-mapping.n3;file:etc/location-mapping.ttl
+10:37:35.669  327  [main] DEBUG org.apache.jena.util.FileManager - Add location: LocatorFile
+10:37:35.670  328  [main] DEBUG org.apache.jena.util.FileManager - Add location: LocatorURL
+10:37:35.670  328  [main] DEBUG org.apache.jena.util.FileManager - Add location: ClassLoaderLocator
+10:37:35.679  337  [main] DEBUG o.a.j.r.s.stream.JenaIOEnvironment - Failed to find configuration: location-mapping.ttl;location-mapping.rdf;location-mapping.n3;etc/location-mapping.rdf;etc/location-mapping.n3;etc/location-mapping.ttl
+10:37:36.130  788  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Thing : [http://exemple.com/type/SubType22, http://exemple.com/type/Type1, http://exemple.com/type/Type2]
+10:37:36.132  790  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Type2 : [http://exemple.com/type/SubType22]
+10:37:36.133  791  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing a Class with an owl:intersectionOf
+10:37:36.134  792  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted class : http://test.fr/onto#Man_Made_Feature
+10:37:36.135  793  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted onProperty : http://test.fr/onto#hasType
+10:37:36.135  793  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted hasValue : http://test.fr/onto#sepulture
+10:37:36.135  793  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Mapped http://exemple.com/type/Sepulture to every http://test.fr/onto#Man_Made_Feature having value http://test.fr/onto#sepulture on property http://test.fr/onto#hasType
+10:37:36.138  796  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasMother/:hasBrother"]
+10:37:36.138  796  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:37:36.138  796  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : :hasMother/:hasBrother
+10:37:36.168  826  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasFather/:hasBrother"]
+10:37:36.168  826  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:37:36.173  831  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - A path is already mapped to http://test.fr/onto#hasUncle : <http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>, will concatenate paths
+10:37:36.173  831  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(:hasFather/:hasBrother)
+10:37:36.174  832  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasGrandParent, http://www.w3.org/2002/07/owl#propertyChainAxiom, b0360abe-c258-4475-bce4-c24fdccaef60]
+10:37:36.174  832  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is an RDF list resource, turning it into SPARQL path
+10:37:36.176  834  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : <http://test.fr/onto#hasParent>/<http://test.fr/onto#hasParent>
+10:37:36.177  835  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subPropertiesOf for http://test.fr/onto#hasFamily : [http://test.fr/onto#hasUncle, http://test.fr/onto#hasGrandParent]
+10:37:36.178  836  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of property path : <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:37:36.178  836  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Built a SPARQL expansion config with 3 types mappings and 3 property mappings
+10:37:36.184  842  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Examining an ElementPathBlock with 3 paths.
+10:37:36.185  843  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known type : <http://exemple.com/type/Thing>
+10:37:36.190  848  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Type <http://exemple.com/type/Thing> replaced by var ?t_023 with values [fr.humanum.masa.expand.SparqlExpansionConfig$ClassMapping@7161d8d1, fr.humanum.masa.expand.SparqlExpansionConfig$ClassMapping@74e28667, fr.humanum.masa.expand.SparqlExpansionConfig$ClassMapping@1cf6d1be]
+10:37:36.190  848  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known property : <http://test.fr/onto#hasUncle>
+10:37:36.191  849  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Property <http://test.fr/onto#hasUncle> replaced by path (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(<http://test.fr/onto#hasFather>/<http://test.fr/onto#hasBrother>)
+10:37:36.191  849  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known property : <http://test.fr/onto#hasFamily>
+10:37:36.191  849  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Property <http://test.fr/onto#hasFamily> replaced by path <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:37:36.224  882  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Thing : [http://exemple.com/type/SubType22, http://exemple.com/type/Type1, http://exemple.com/type/Type2]
+10:37:36.224  882  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Type2 : [http://exemple.com/type/SubType22]
+10:37:36.225  883  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing a Class with an owl:intersectionOf
+10:37:36.226  884  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted class : http://test.fr/onto#Man_Made_Feature
+10:37:36.226  884  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted onProperty : http://test.fr/onto#hasType
+10:37:36.226  884  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted hasValue : http://test.fr/onto#sepulture
+10:37:36.226  884  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Mapped http://exemple.com/type/Sepulture to every http://test.fr/onto#Man_Made_Feature having value http://test.fr/onto#sepulture on property http://test.fr/onto#hasType
+10:37:36.227  885  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasMother/:hasBrother"]
+10:37:36.227  885  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:37:36.227  885  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : :hasMother/:hasBrother
+10:37:36.227  885  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasFather/:hasBrother"]
+10:37:36.227  885  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:37:36.227  885  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - A path is already mapped to http://test.fr/onto#hasUncle : <http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>, will concatenate paths
+10:37:36.227  885  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(:hasFather/:hasBrother)
+10:37:36.227  885  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasGrandParent, http://www.w3.org/2002/07/owl#propertyChainAxiom, b0360abe-c258-4475-bce4-c24fdccaef60]
+10:37:36.228  886  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is an RDF list resource, turning it into SPARQL path
+10:37:36.228  886  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : <http://test.fr/onto#hasParent>/<http://test.fr/onto#hasParent>
+10:37:36.229  887  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subPropertiesOf for http://test.fr/onto#hasFamily : [http://test.fr/onto#hasUncle, http://test.fr/onto#hasGrandParent]
+10:37:36.229  887  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of property path : <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:37:36.229  887  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Built a SPARQL expansion config with 3 types mappings and 3 property mappings
+10:37:36.229  887  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a variable object of rdf:type : ?type
+10:37:36.229  887  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Matched a known binding for a variable type : ?type with value http://exemple.com/type/Thing
+10:37:36.230  888  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found variable ?type in an equality condition in a FILTER
+10:37:36.230  888  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - in
+10:37:36.230  888  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Examining an ElementPathBlock with 1 paths.
+10:37:36.230  888  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Query left untouched
+10:37:36.232  890  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Thing : [http://exemple.com/type/SubType22, http://exemple.com/type/Type1, http://exemple.com/type/Type2]
+10:37:36.233  891  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Type2 : [http://exemple.com/type/SubType22]
+10:37:36.233  891  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing a Class with an owl:intersectionOf
+10:37:36.233  891  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted class : http://test.fr/onto#Man_Made_Feature
+10:37:36.234  892  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted onProperty : http://test.fr/onto#hasType
+10:37:36.234  892  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted hasValue : http://test.fr/onto#sepulture
+10:37:36.234  892  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Mapped http://exemple.com/type/Sepulture to every http://test.fr/onto#Man_Made_Feature having value http://test.fr/onto#sepulture on property http://test.fr/onto#hasType
+10:37:36.234  892  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasMother/:hasBrother"]
+10:37:36.234  892  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:37:36.234  892  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : :hasMother/:hasBrother
+10:37:36.234  892  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasFather/:hasBrother"]
+10:37:36.234  892  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:37:36.235  893  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - A path is already mapped to http://test.fr/onto#hasUncle : <http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>, will concatenate paths
+10:37:36.235  893  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(:hasFather/:hasBrother)
+10:37:36.235  893  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasGrandParent, http://www.w3.org/2002/07/owl#propertyChainAxiom, b0360abe-c258-4475-bce4-c24fdccaef60]
+10:37:36.235  893  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is an RDF list resource, turning it into SPARQL path
+10:37:36.235  893  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : <http://test.fr/onto#hasParent>/<http://test.fr/onto#hasParent>
+10:37:36.236  894  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subPropertiesOf for http://test.fr/onto#hasFamily : [http://test.fr/onto#hasUncle, http://test.fr/onto#hasGrandParent]
+10:37:36.236  894  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of property path : <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:37:36.236  894  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Built a SPARQL expansion config with 3 types mappings and 3 property mappings
+10:37:36.236  894  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Examining an ElementPathBlock with 1 paths.
+10:37:36.236  894  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known type : <http://exemple.com/type/Sepulture>
+10:39:30.162  181  [main] DEBUG Jena - Jena initialization
+10:39:30.233  252  [main] DEBUG org.apache.jena.util.FileManager - Add location: LocatorFile
+10:39:30.234  253  [main] DEBUG org.apache.jena.util.FileManager - Add location: ClassLoaderLocator
+10:39:30.235  254  [main] DEBUG org.apache.jena.util.LocationMapper - Failed to find configuration: file:location-mapping.rdf;file:location-mapping.n3;file:location-mapping.ttl;file:etc/location-mapping.rdf;file:etc/location-mapping.n3;file:etc/location-mapping.ttl
+10:39:30.236  255  [main] DEBUG org.apache.jena.util.FileManager - Add location: LocatorFile
+10:39:30.237  256  [main] DEBUG org.apache.jena.util.FileManager - Add location: LocatorURL
+10:39:30.237  256  [main] DEBUG org.apache.jena.util.FileManager - Add location: ClassLoaderLocator
+10:39:30.243  262  [main] DEBUG o.a.j.r.s.stream.JenaIOEnvironment - Failed to find configuration: location-mapping.ttl;location-mapping.rdf;location-mapping.n3;etc/location-mapping.rdf;etc/location-mapping.n3;etc/location-mapping.ttl
+10:39:30.600  619  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Thing : [http://exemple.com/type/SubType22, http://exemple.com/type/Type1, http://exemple.com/type/Type2]
+10:39:30.602  621  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Type2 : [http://exemple.com/type/SubType22]
+10:39:30.603  622  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing a Class with an owl:intersectionOf
+10:39:30.604  623  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted class : http://test.fr/onto#Man_Made_Feature
+10:39:30.605  624  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted onProperty : http://test.fr/onto#hasType
+10:39:30.605  624  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted hasValue : http://test.fr/onto#sepulture
+10:39:30.605  624  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Mapped http://exemple.com/type/Sepulture to every http://test.fr/onto#Man_Made_Feature having value http://test.fr/onto#sepulture on property http://test.fr/onto#hasType
+10:39:30.607  626  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasMother/:hasBrother"]
+10:39:30.607  626  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:39:30.607  626  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : :hasMother/:hasBrother
+10:39:30.625  644  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasFather/:hasBrother"]
+10:39:30.625  644  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:39:30.629  648  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - A path is already mapped to http://test.fr/onto#hasUncle : <http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>, will concatenate paths
+10:39:30.629  648  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(:hasFather/:hasBrother)
+10:39:30.629  648  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasGrandParent, http://www.w3.org/2002/07/owl#propertyChainAxiom, 8673cdd3-5387-4342-9312-986c18e77688]
+10:39:30.630  649  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is an RDF list resource, turning it into SPARQL path
+10:39:30.631  650  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : <http://test.fr/onto#hasParent>/<http://test.fr/onto#hasParent>
+10:39:30.632  651  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subPropertiesOf for http://test.fr/onto#hasFamily : [http://test.fr/onto#hasUncle, http://test.fr/onto#hasGrandParent]
+10:39:30.632  651  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of property path : <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:39:30.632  651  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Built a SPARQL expansion config with 3 types mappings and 3 property mappings
+10:39:30.637  656  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Examining an ElementPathBlock with 3 paths.
+10:39:30.637  656  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known type : <http://exemple.com/type/Thing>
+10:39:30.642  661  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Type <http://exemple.com/type/Thing> replaced by var ?t_657 with values [fr.humanum.masa.expand.SparqlExpansionConfig$ClassMapping@7161d8d1, fr.humanum.masa.expand.SparqlExpansionConfig$ClassMapping@74e28667, fr.humanum.masa.expand.SparqlExpansionConfig$ClassMapping@1cf6d1be]
+10:39:30.642  661  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known property : <http://test.fr/onto#hasUncle>
+10:39:30.643  662  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Property <http://test.fr/onto#hasUncle> replaced by path (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(<http://test.fr/onto#hasFather>/<http://test.fr/onto#hasBrother>)
+10:39:30.643  662  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known property : <http://test.fr/onto#hasFamily>
+10:39:30.643  662  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Property <http://test.fr/onto#hasFamily> replaced by path <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:39:30.673  692  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Thing : [http://exemple.com/type/SubType22, http://exemple.com/type/Type1, http://exemple.com/type/Type2]
+10:39:30.673  692  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Type2 : [http://exemple.com/type/SubType22]
+10:39:30.673  692  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing a Class with an owl:intersectionOf
+10:39:30.674  693  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted class : http://test.fr/onto#Man_Made_Feature
+10:39:30.674  693  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted onProperty : http://test.fr/onto#hasType
+10:39:30.674  693  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted hasValue : http://test.fr/onto#sepulture
+10:39:30.674  693  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Mapped http://exemple.com/type/Sepulture to every http://test.fr/onto#Man_Made_Feature having value http://test.fr/onto#sepulture on property http://test.fr/onto#hasType
+10:39:30.674  693  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasMother/:hasBrother"]
+10:39:30.675  694  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:39:30.675  694  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : :hasMother/:hasBrother
+10:39:30.675  694  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasFather/:hasBrother"]
+10:39:30.675  694  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:39:30.676  695  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - A path is already mapped to http://test.fr/onto#hasUncle : <http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>, will concatenate paths
+10:39:30.676  695  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(:hasFather/:hasBrother)
+10:39:30.676  695  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasGrandParent, http://www.w3.org/2002/07/owl#propertyChainAxiom, 8673cdd3-5387-4342-9312-986c18e77688]
+10:39:30.677  696  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is an RDF list resource, turning it into SPARQL path
+10:39:30.678  697  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : <http://test.fr/onto#hasParent>/<http://test.fr/onto#hasParent>
+10:39:30.679  698  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subPropertiesOf for http://test.fr/onto#hasFamily : [http://test.fr/onto#hasUncle, http://test.fr/onto#hasGrandParent]
+10:39:30.679  698  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of property path : <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:39:30.680  699  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Built a SPARQL expansion config with 3 types mappings and 3 property mappings
+10:39:30.680  699  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a variable object of rdf:type : ?type
+10:39:30.680  699  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Matched a known binding for a variable type : ?type with value http://exemple.com/type/Thing
+10:39:30.680  699  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found variable ?type in an equality condition in a FILTER
+10:39:30.681  700  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - in
+10:39:30.681  700  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Examining an ElementPathBlock with 1 paths.
+10:39:30.681  700  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Query left untouched
+10:39:30.683  702  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Thing : [http://exemple.com/type/SubType22, http://exemple.com/type/Type1, http://exemple.com/type/Type2]
+10:39:30.684  703  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Type2 : [http://exemple.com/type/SubType22]
+10:39:30.684  703  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing a Class with an owl:intersectionOf
+10:39:30.684  703  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted class : http://test.fr/onto#Man_Made_Feature
+10:39:30.684  703  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted onProperty : http://test.fr/onto#hasType
+10:39:30.684  703  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted hasValue : http://test.fr/onto#sepulture
+10:39:30.685  704  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Mapped http://exemple.com/type/Sepulture to every http://test.fr/onto#Man_Made_Feature having value http://test.fr/onto#sepulture on property http://test.fr/onto#hasType
+10:39:30.685  704  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasMother/:hasBrother"]
+10:39:30.685  704  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:39:30.685  704  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : :hasMother/:hasBrother
+10:39:30.685  704  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasFather/:hasBrother"]
+10:39:30.685  704  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:39:30.685  704  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - A path is already mapped to http://test.fr/onto#hasUncle : <http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>, will concatenate paths
+10:39:30.686  705  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(:hasFather/:hasBrother)
+10:39:30.686  705  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasGrandParent, http://www.w3.org/2002/07/owl#propertyChainAxiom, 8673cdd3-5387-4342-9312-986c18e77688]
+10:39:30.686  705  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is an RDF list resource, turning it into SPARQL path
+10:39:30.686  705  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : <http://test.fr/onto#hasParent>/<http://test.fr/onto#hasParent>
+10:39:30.687  706  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subPropertiesOf for http://test.fr/onto#hasFamily : [http://test.fr/onto#hasUncle, http://test.fr/onto#hasGrandParent]
+10:39:30.687  706  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of property path : <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:39:30.687  706  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Built a SPARQL expansion config with 3 types mappings and 3 property mappings
+10:39:30.687  706  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Examining an ElementPathBlock with 1 paths.
+10:39:30.687  706  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known type : <http://exemple.com/type/Sepulture>
+10:39:30.687  706  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Type <http://exemple.com/type/Sepulture> replaced by restriction on class http://test.fr/onto#Man_Made_Feature with value http://test.fr/onto#sepulture on property http://test.fr/onto#hasType
+10:39:55.751  224  [main] DEBUG Jena - Jena initialization
+10:39:55.838  311  [main] DEBUG org.apache.jena.util.FileManager - Add location: LocatorFile
+10:39:55.838  311  [main] DEBUG org.apache.jena.util.FileManager - Add location: ClassLoaderLocator
+10:39:55.841  314  [main] DEBUG org.apache.jena.util.LocationMapper - Failed to find configuration: file:location-mapping.rdf;file:location-mapping.n3;file:location-mapping.ttl;file:etc/location-mapping.rdf;file:etc/location-mapping.n3;file:etc/location-mapping.ttl
+10:39:55.841  314  [main] DEBUG org.apache.jena.util.FileManager - Add location: LocatorFile
+10:39:55.842  315  [main] DEBUG org.apache.jena.util.FileManager - Add location: LocatorURL
+10:39:55.843  316  [main] DEBUG org.apache.jena.util.FileManager - Add location: ClassLoaderLocator
+10:39:55.851  324  [main] DEBUG o.a.j.r.s.stream.JenaIOEnvironment - Failed to find configuration: location-mapping.ttl;location-mapping.rdf;location-mapping.n3;etc/location-mapping.rdf;etc/location-mapping.n3;etc/location-mapping.ttl
+10:39:56.288  761  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Thing : [http://exemple.com/type/SubType22, http://exemple.com/type/Type1, http://exemple.com/type/Type2]
+10:39:56.289  762  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Type2 : [http://exemple.com/type/SubType22]
+10:39:56.291  764  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing a Class with an owl:intersectionOf
+10:39:56.293  766  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted class : http://test.fr/onto#Man_Made_Feature
+10:39:56.293  766  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted onProperty : http://test.fr/onto#hasType
+10:39:56.293  766  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted hasValue : http://test.fr/onto#sepulture
+10:39:56.294  767  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Mapped http://exemple.com/type/Sepulture to every http://test.fr/onto#Man_Made_Feature having value http://test.fr/onto#sepulture on property http://test.fr/onto#hasType
+10:39:56.296  769  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasMother/:hasBrother"]
+10:39:56.296  769  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:39:56.296  769  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : :hasMother/:hasBrother
+10:39:56.319  792  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasFather/:hasBrother"]
+10:39:56.319  792  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:39:56.324  797  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - A path is already mapped to http://test.fr/onto#hasUncle : <http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>, will concatenate paths
+10:39:56.324  797  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(:hasFather/:hasBrother)
+10:39:56.325  798  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasGrandParent, http://www.w3.org/2002/07/owl#propertyChainAxiom, 841a65e4-b6c7-4f4e-ba15-bdf31d190a84]
+10:39:56.325  798  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is an RDF list resource, turning it into SPARQL path
+10:39:56.327  800  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : <http://test.fr/onto#hasParent>/<http://test.fr/onto#hasParent>
+10:39:56.329  802  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subPropertiesOf for http://test.fr/onto#hasFamily : [http://test.fr/onto#hasUncle, http://test.fr/onto#hasGrandParent]
+10:39:56.329  802  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of property path : <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:39:56.329  802  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Built a SPARQL expansion config with 3 types mappings and 3 property mappings
+10:39:56.334  807  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Examining an ElementPathBlock with 3 paths.
+10:39:56.334  807  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known type : <http://exemple.com/type/Thing>
+10:39:56.340  813  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Type <http://exemple.com/type/Thing> replaced by var ?t_c92 with values [fr.humanum.masa.expand.SparqlExpansionConfig$ClassMapping@7161d8d1, fr.humanum.masa.expand.SparqlExpansionConfig$ClassMapping@74e28667, fr.humanum.masa.expand.SparqlExpansionConfig$ClassMapping@1cf6d1be]
+10:39:56.340  813  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known property : <http://test.fr/onto#hasUncle>
+10:39:56.340  813  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Property <http://test.fr/onto#hasUncle> replaced by path (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(<http://test.fr/onto#hasFather>/<http://test.fr/onto#hasBrother>)
+10:39:56.340  813  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known property : <http://test.fr/onto#hasFamily>
+10:39:56.341  814  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Property <http://test.fr/onto#hasFamily> replaced by path <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:39:56.372  845  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Thing : [http://exemple.com/type/SubType22, http://exemple.com/type/Type1, http://exemple.com/type/Type2]
+10:39:56.373  846  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Type2 : [http://exemple.com/type/SubType22]
+10:39:56.373  846  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing a Class with an owl:intersectionOf
+10:39:56.373  846  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted class : http://test.fr/onto#Man_Made_Feature
+10:39:56.374  847  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted onProperty : http://test.fr/onto#hasType
+10:39:56.374  847  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted hasValue : http://test.fr/onto#sepulture
+10:39:56.375  848  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Mapped http://exemple.com/type/Sepulture to every http://test.fr/onto#Man_Made_Feature having value http://test.fr/onto#sepulture on property http://test.fr/onto#hasType
+10:39:56.378  851  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasMother/:hasBrother"]
+10:39:56.379  852  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:39:56.379  852  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : :hasMother/:hasBrother
+10:39:56.379  852  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasFather/:hasBrother"]
+10:39:56.379  852  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:39:56.379  852  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - A path is already mapped to http://test.fr/onto#hasUncle : <http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>, will concatenate paths
+10:39:56.379  852  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(:hasFather/:hasBrother)
+10:39:56.379  852  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasGrandParent, http://www.w3.org/2002/07/owl#propertyChainAxiom, 841a65e4-b6c7-4f4e-ba15-bdf31d190a84]
+10:39:56.379  852  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is an RDF list resource, turning it into SPARQL path
+10:39:56.380  853  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : <http://test.fr/onto#hasParent>/<http://test.fr/onto#hasParent>
+10:39:56.380  853  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subPropertiesOf for http://test.fr/onto#hasFamily : [http://test.fr/onto#hasUncle, http://test.fr/onto#hasGrandParent]
+10:39:56.380  853  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of property path : <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:39:56.380  853  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Built a SPARQL expansion config with 3 types mappings and 3 property mappings
+10:39:56.380  853  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a variable object of rdf:type : ?type
+10:39:56.381  854  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Matched a known binding for a variable type : ?type with value http://exemple.com/type/Thing
+10:39:56.381  854  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found variable ?type in an equality condition in a FILTER
+10:39:56.381  854  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - in
+10:39:56.381  854  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Examining an ElementPathBlock with 1 paths.
+10:39:56.381  854  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Query left untouched
+10:39:56.388  861  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Thing : [http://exemple.com/type/SubType22, http://exemple.com/type/Type1, http://exemple.com/type/Type2]
+10:39:56.388  861  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subClassOf for http://exemple.com/type/Type2 : [http://exemple.com/type/SubType22]
+10:39:56.388  861  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing a Class with an owl:intersectionOf
+10:39:56.389  862  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted class : http://test.fr/onto#Man_Made_Feature
+10:39:56.389  862  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted onProperty : http://test.fr/onto#hasType
+10:39:56.389  862  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Found the restricted hasValue : http://test.fr/onto#sepulture
+10:39:56.389  862  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Mapped http://exemple.com/type/Sepulture to every http://test.fr/onto#Man_Made_Feature having value http://test.fr/onto#sepulture on property http://test.fr/onto#hasType
+10:39:56.389  862  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasMother/:hasBrother"]
+10:39:56.390  863  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:39:56.390  863  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : :hasMother/:hasBrother
+10:39:56.390  863  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasUncle, http://www.w3.org/2002/07/owl#propertyChainAxiom, ":hasFather/:hasBrother"]
+10:39:56.390  863  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is a Literal value
+10:39:56.390  863  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - A path is already mapped to http://test.fr/onto#hasUncle : <http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>, will concatenate paths
+10:39:56.390  863  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : (<http://test.fr/onto#hasMother>/<http://test.fr/onto#hasBrother>)|(:hasFather/:hasBrother)
+10:39:56.391  864  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsing an owl:propertyChainAxiom statement : [http://test.fr/onto#hasGrandParent, http://www.w3.org/2002/07/owl#propertyChainAxiom, 841a65e4-b6c7-4f4e-ba15-bdf31d190a84]
+10:39:56.391  864  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - owl:propertyChainAxiom value is an RDF list resource, turning it into SPARQL path
+10:39:56.391  864  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of SPARQL property path : <http://test.fr/onto#hasParent>/<http://test.fr/onto#hasParent>
+10:39:56.391  864  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Parsed recursive rdfs:subPropertiesOf for http://test.fr/onto#hasFamily : [http://test.fr/onto#hasUncle, http://test.fr/onto#hasGrandParent]
+10:39:56.392  865  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Will attempt parsing of property path : <http://test.fr/onto#hasUncle>|<http://test.fr/onto#hasGrandParent>
+10:39:56.392  865  [main] DEBUG f.h.m.e.SparqlExpansionConfigOwlSupplier - Built a SPARQL expansion config with 3 types mappings and 3 property mappings
+10:39:56.392  865  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Examining an ElementPathBlock with 1 paths.
+10:39:56.392  865  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Found a known type : <http://exemple.com/type/Sepulture>
+10:39:56.392  865  [main] DEBUG f.h.m.expand.SparqlExpansionVisitor - Type <http://exemple.com/type/Sepulture> replaced by restriction on class <http://test.fr/onto#Man_Made_Feature> with value <http://test.fr/onto#sepulture> on property <http://test.fr/onto#hasType>

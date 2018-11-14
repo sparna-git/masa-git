@@ -1,0 +1,68 @@
+[
+	{
+		"title":"Liste de tous les E27_Site dans toutes les sources",
+
+		"query": [
+			"PREFIX wficheweb: <http://arsol.univ-tours.fr/4DACTION/WFICHEWEB/>",
+			"PREFIX crmsci: <http://www.ics.forth.gr/isl/CRMsci/>",
+			"PREFIX crmba: <http://www.ics.forth.gr/isl/CRMba/>",
+			"PREFIX crmarch: <http://www.ics.forth.gr/isl/CRMarchaeo/>",
+			"PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>",
+			"PREFIX owl: <http://www.w3.org/2002/07/owl#>",
+			"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>",
+			"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+			"PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+			"SELECT  ?site ?nom",
+			"WHERE {",
+			"  ?site a crm:E27_Site .",
+			"  # AERBA n'a pour l'instant pas les libellés",
+			"  OPTIONAL { ",
+			"    ?site skos:prefLabel ?nom .",
+			"  }",
+			"}"
+  		]		
+	},
+	{
+		"title":"ARSOL : Liste des sépultures trouvées dans un site",
+
+		"query": [
+			"PREFIX wficheweb: <http://arsol.univ-tours.fr/4DACTION/WFICHEWEB/>",
+			"PREFIX crmsci: <http://www.ics.forth.gr/isl/CRMsci/>",
+			"PREFIX crmba: <http://www.ics.forth.gr/isl/CRMba/>",
+			"PREFIX crmarch: <http://www.ics.forth.gr/isl/CRMarchaeo/>",
+			"PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>",
+			"PREFIX frantiq: <https://ark.frantiq.fr/ark:/26678/>",
+			"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>",
+			"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+			"PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
+			"SELECT ?mmf ?nom",
+			"FROM NAMED <http://openarchaeo.org/sources/arsol>",
+			"WHERE {",
+			"  # les E25_Man-Made-Feature...",
+			"  ?mmf a crm:E25_Man-Made_Feature .",
+			"  # de type sépulture...",
+			"  ?mmf crm:P2_has_type frantiq:pcrt795b632nWw .",
+			"  # découvert dans un site donné...",
+			"  ?mmf crmsci:O19i_was_object_found_by ?decouverte .",
+			"  ?decouverte crm:P8_took_place_on_or_within wficheweb:isiteAJ .",
+			"  # et on va chercher le nom",
+			"  ?mmf crm:P3_has_note ?nom .",
+			"}"
+  		]		
+	},
+	{
+		"title":"Explorer une URI connue",
+
+		"query": [
+			"PREFIX wficheweb: <http://arsol.univ-tours.fr/4DACTION/WFICHEWEB/>",
+			"PREFIX crmsci: <http://www.ics.forth.gr/isl/CRMsci/>",
+			"PREFIX crmba: <http://www.ics.forth.gr/isl/CRMba/>",
+			"PREFIX crmarch: <http://www.ics.forth.gr/isl/CRMarchaeo/>",
+			"PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>",
+			"SELECT  ?p ?o",
+			"WHERE {",
+			"  wficheweb:isiteAA ?p ?o",
+			"}"
+		]		
+	}
+]

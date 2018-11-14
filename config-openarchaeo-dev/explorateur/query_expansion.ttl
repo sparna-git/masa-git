@@ -1,0 +1,176 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://www.openarchaeo.fr/explorateur/onto#> .
+@prefix crm: <http://www.cidoc-crm.org/cidoc-crm/> .
+@prefix crmarchaeo: <http://www.ics.forth.gr/isl/CRMarchaeo/> .
+@prefix crmsci: <http://www.ics.forth.gr/isl/CRMsci/> .
+@prefix crmba: <http://www.ics.forth.gr/isl/CRMba/> .
+@prefix frantiq: <https://ark.frantiq.fr/ark:/26678/> .
+
+##### Site et ses proprietes
+
+crm:E27_Site rdfs:subClassOf :Site .
+
+:situe_a owl:propertyChainAxiom (
+	crm:P53_has_former_or_current_location
+) .
+
+:de_type owl:propertyChainAxiom (
+	crm:P2_has_type
+) .
+
+# cela recouvre à la fois les cas de prospection/decouverte et les cas de responsabilité de fouille
+:etudie_par owl:propertyChainAxiom (
+	crm:P8i_witnessed
+	crm:P14_carried_out_by
+) .
+
+:a_trouve owl:propertyChainAxiom (
+	crm:P8i_witnessed
+	crmsci:O19_has_found_object
+) .
+
+:date_de owl:propertyChainAxiom (
+	crm:P8i_witnessed
+	crm:P4_has_time-span
+	crm:P82a_begin_of_the_begin
+) .
+:date_de owl:propertyChainAxiom (
+	crm:P8i_witnessed
+	crm:P4_has_time-span
+	crm:P82b_end_of_the_end
+) .
+
+##### US et ses proprietes
+
+crmarchaeo:A8_Stratigraphic_Unit rdfs:subClassOf :US .
+
+:trouve_a owl:propertyChainAxiom (
+	crmsci:O19i_was_object_found_by
+	crm:P8_took_place_on_or_within
+) .
+
+:fait_partie_de owl:propertyChainAxiom (
+	crm:P46i_forms_part_of
+) .
+
+:contient owl:propertyChainAxiom (
+	crm:P21_had_general_purpose
+) .
+
+:interprete_comme owl:propertyChainAxiom (
+	crm:P101_had_as_general_use
+) .
+
+# date_de
+
+##### Fait et ses propriétés
+
+:Fait rdfs:subClassOf [
+	a owl:Class ;
+	owl:intersectionOf ( 
+		crm:E25_Man-Made_Feature
+		[
+			a owl:Restriction ;
+			owl:onProperty crm:P2_has_type ;
+			owl:hasValue frantiq:crtyuEo4S4GyD ;
+		]
+	)
+] .
+
+# contient
+
+# interprete_comme
+
+# date_de
+
+:est_compose_de owl:propertyChainAxiom (
+	crm:P46_is_composed_of
+) .
+
+# trouve_dans
+
+##### Construction et ses propriétés
+
+crmba:B1_Built_Work rdfs:subClassOf :Construction .
+
+# trouve_dans
+
+# date_de
+
+# Note : cette definition s'ajoute a celle au-dessus
+:de_type owl:propertyChainAxiom (
+	crm:P101_had_as_general_use
+) .
+
+
+
+
+##### Sepulture et ses proprietes
+
+:Sepulture rdfs:subClassOf [
+	a owl:Class ;
+	owl:intersectionOf ( 
+		crm:E25_Man-Made_Feature
+		[
+			a owl:Restriction ;
+			owl:onProperty crm:P2_has_type ;
+			owl:hasValue frantiq:pcrt795b632nWw ;
+		]
+	)
+] .
+
+# contient
+
+# date_de
+
+# est_compose_de
+
+# trouve_dans
+
+
+##### Mobilier et ses proprietes
+
+crm:E22_Man-Made_Object rdfs:subClassOf :Mobilier .
+
+:utilise_pour owl:propertyChainAxiom (
+	crm:P101_had_as_general_use
+) .
+
+:fait_en owl:propertyChainAxiom (
+	crm:P45_consists_of
+) .
+
+# date_de
+
+:trouve_dans owl:propertyChainAxiom (
+	crmarchaeo:AP21i_is_contained_in
+) .
+:trouve_dans owl:propertyChainAxiom (
+	crmsci:O19i_was_object_found_by
+	crm:P8_took_place_on_or_within
+) .
+
+
+##### Acteur et ses propriétés
+
+crm:E21_Person rdfs:subClassOf :Acteur .
+
+:a_etudie owl:propertyChainAxiom (
+	crm:P14i_performed
+	crm:P8_took_place_on_or_within
+) .
+
+# :hasGrandParent a owl:ObjectProperty ;
+#                 owl:propertyChainAxiom ( :hasParent
+#                                          :hasParent
+#                                        ) .
+# 
+# :hasUncle owl:propertyChainAxiom ":hasFather/:hasBrother" .
+# :hasUncle owl:propertyChainAxiom ":hasMother/:hasBrother" .
+# :hasGrandParent rdfs:subPropertyOf :hasFamily .
+
+
+##### Lieu
+
+crm:E53_Place rdfs:subClassOf :Lieu .
