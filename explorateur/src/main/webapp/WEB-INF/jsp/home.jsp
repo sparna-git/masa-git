@@ -5,9 +5,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
+<!-- setup the locale for the messages based on the language in the session -->
+<fmt:setLocale value="${sessionScope['fr.humanum.openarchaeo.SessionData'].userLocale.language}"/>
+<fmt:setBundle basename="fr.humanum.openarchaeo.explorateur.i18n.OpenArchaeo"/>
+
 <html>
 <head>
-<title>OpenArchaeo Explorateur | Accueil</title>
+<title><fmt:message key="window.app" /> | <fmt:message key="home.window.title" /></title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
@@ -21,7 +25,7 @@
 <link rel="stylesheet" href="<c:url value="/resources/MDB-Free/css/mdb.min.css" />">
 
 <!-- App-specific CSS -->
-<link rel="stylesheet" href="<c:url value="/resources/css/masa-explorateur.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/openarchaeo-explorateur.css" />" />
 
 <!-- favicon, if any -->
 <link rel="icon" type="image/png" href="resources/favicon.png" />
@@ -60,9 +64,11 @@ function submit(){
 			</div>
 		</div>
 	</div>
-	
+
+	<jsp:include page="footer.jsp" />
 	
 	<script src="<c:url value="/resources/MDB-Free/js/jquery-3.1.1.min.js" />"></script>
+	<script src="<c:url value="/resources/MDB-Free/js/popper.min.js" />"></script>
 	<script src="<c:url value="/resources/MDB-Free/js/bootstrap.min.js" />"></script>	
 	<script type="text/javascript">
 

@@ -5,11 +5,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-<c:set var="data" value="${requestScope['fr.humanum.masa.openarchaeo.federation.admin.AdminData']}" />
+<!-- setup the locale for the messages based on the language in the session -->
+<fmt:setLocale value="${sessionScope['fr.humanum.openarchaeo.SessionData'].userLocale.language}"/>
+<fmt:setBundle basename="fr.humanum.openarchaeo.federation.i18n.OpenArchaeo"/>
+
+<c:set var="data" value="${requestScope['fr.humanum.openarchaeo.federation.admin.AdminData']}" />
+<c:set var="lang" value="${sessionScope['fr.humanum.openarchaeo.SessionData'].userLocale.language}" />
 
 <html>
 <head>
-<title>openArchaeo Federation | Administration</title>
+<title><fmt:message key="window.app" /> | <fmt:message key="admin.window.title" /></title>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,7 +30,7 @@
 <link rel="stylesheet" href="<c:url value="/resources/css/easy-autocomplete.min.css" />"> 
 
 <!-- App-specific CSS -->
-<link rel="stylesheet" href="<c:url value="/resources/css/masa-federation.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/openarchaeo-federation.css" />" />
 
 <!-- favicon, if any -->
 <link rel="icon" type="image/png" href="resources/favicon.png" />
@@ -79,7 +84,7 @@
 				    <div class="card-text">
 				    	<ul class="fa-ul">
 				    		<c:forEach items="${data.federationSources}" var="source">
-								<li><i class="fa-li fal fa-angle-right"></i>${source.labels["fr"]}&nbsp;|&nbsp;<a href="<c:url value="/admin/sources/reIndex?source=${source.sourceIri}" />">Réindexer la source</a></li>
+								<li><i class="fa-li fal fa-angle-right"></i>${source.getTitle(lang)}&nbsp;|&nbsp;<a href="<c:url value="/admin/sources/reIndex?source=${source.sourceIri}" />">Réindexer la source</a></li>
 							</c:forEach>
 				    	</ul>
 				    </div>
@@ -95,7 +100,15 @@
 								<option value="${idx}">${idx}</value>
 							</c:forEach>
 				    	</select>
-				    	<input name="autocompleteTest" id="autocompleteTest" placeholder="Cherchez ici..." />
+				    	<div class="row">
+				    		<div class="col-sm-4">
+				    			<input name="autocompleteTest" id="autocompleteTest" style="width:100%;" placeholder="Cherchez ici..." />
+				    		</div>
+				    		<div class="col-sm-5">
+				    			<span id="selectedUri"></span>
+				    		</div>
+				    	</div>
+				    		
 				    </div>
 				  </div>
 				</div>
@@ -106,8 +119,11 @@
 		</div><!-- /.row -->
 		
 	</div>
+	
+	<jsp:include page="footer.jsp" />
 	 
 	<script src="<c:url value="/resources/MDB-Free/js/jquery-3.1.1.min.js" />"></script>
+	<script src="<c:url value="/resources/MDB-Free/js/popper.min.js" />"></script>
 	<script src="<c:url value="/resources/MDB-Free/js/bootstrap.min.js" />"></script>
 	<script src="<c:url value="/resources/js/jquery.easy-autocomplete.min.js" />"></script>
 	
@@ -121,7 +137,14 @@
 				},
 
 				getValue: "label",
-				requestDelay: 400
+				requestDelay: 400,
+				
+				list: {
+					onClickEvent: function() {
+						var value = $("#autocompleteTest").getSelectedItemData().uri;
+						$("#selectedUri").html('<a href="'+value+'">'+value+"</a>");
+					}	
+				}
 			};
 			
 			$("#autocompleteTest").easyAutocomplete(options);

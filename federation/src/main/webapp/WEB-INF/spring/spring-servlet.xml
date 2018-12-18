@@ -23,7 +23,7 @@
 	<!-- ***** Basic application bootstraping ***** -->
 	<import resource="security.xml" />
 
-	<context:component-scan base-package="fr.humanum.masa.openarchaeo" />
+	<context:component-scan base-package="fr.humanum.openarchaeo" />
 
 	<!-- Maps /** to the DefaultServletHandler -->
 	<mvc:default-servlet-handler />
@@ -48,13 +48,15 @@
         <mvc:interceptor>
         	<mvc:mapping path="/admin*" />
         	<mvc:exclude-mapping path="/home" />
-        	<bean class="fr.humanum.masa.openarchaeo.federation.admin.SessionInterceptor" />
+        	<bean class="fr.humanum.openarchaeo.federation.admin.SessionInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>
 	
-	<bean class="fr.humanum.masa.openarchaeo.federation.admin.SessionManager">
+	<bean class="fr.humanum.openarchaeo.federation.admin.SessionManager">
 	</bean>
 	
-	
+	<bean class="fr.humanum.openarchaeo.federation.period.PeriodoPeriodService" id="periodService">
+		<constructor-arg name="periodoFile" value="#{extConfigService.periodoFile}" />
+	</bean>
 	
 </beans>

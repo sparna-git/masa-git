@@ -55,7 +55,7 @@ crmarchaeo:A8_Stratigraphic_Unit rdfs:subClassOf :US .
 ) .
 
 :contient owl:propertyChainAxiom (
-	crm:P21_had_general_purpose
+	crmarchaeo:AP21_contains
 ) .
 
 :interprete_comme owl:propertyChainAxiom (

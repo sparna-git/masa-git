@@ -5,11 +5,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-<c:set var="data" value="${requestScope['fr.humanum.masa.openarchaeo.federation.FederationData']}" />
+<!-- setup the locale for the messages based on the language in the session -->
+<fmt:setLocale value="${sessionScope['fr.humanum.openarchaeo.SessionData'].userLocale.language}"/>
+<fmt:setBundle basename="fr.humanum.openarchaeo.federation.i18n.OpenArchaeo"/>
+
+<c:set var="data" value="${requestScope['fr.humanum.openarchaeo.federation.FederationData']}" />
 
 <html>
 <head>
-<title>OpenArchaeo federation API</title>
+<title><fmt:message key="window.app" /> | <fmt:message key="api.window.title" /></title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
@@ -24,7 +28,7 @@
 <link rel="stylesheet" href="<c:url value="/resources/MDB-Free/css/mdb.min.css" />">
 
 <!-- App-specific CSS -->
-<link rel="stylesheet" href="<c:url value="/resources/css/masa-federation.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/openarchaeo-federation.css" />" />
 
 <!-- favicon, if any -->
 <link rel="icon" type="image/png" href="resources/favicon.png" />
@@ -43,18 +47,48 @@
 			
 			<div class="col-sm-7">
 				<h1>API documentation</h1>
-				<p>
+				<h2>Sources API</h2>
 				<ul class="fa-ul">
-					<li><i class="fa-li fal fa-angle-right"></i><a href="<c:url value="/api/sources" />">/api/sources</a></li>
+				<li><i class="fa-li fal fa-angle-right"></i><code>/api/sources</code></li>
+					<li>Example : <i class="fa-li fal fa-angle-right"></i><a href="<c:url value="/api/sources" />">/api/sources</a></li>
 		    	</ul>
-				</p>
+				<h2>Autocomplete API</h2>
+				<h3>domain / property / range variant</h3>
+				<ul class="fa-ul">
+					<li><i class="fa-li fal fa-angle-right"></i><code>/api/autocomplete?key=...&domain=...&property=...&range=...</code></li>
+					<li>Example : <i class="fa-li fal fa-angle-right"></i><a href="<c:url value="/api/autocomplete?key=tou&domain=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23Mobilier&property=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23trouve_dans&range=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23Site" />">/api/autocomplete?key=tou&domain=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23Mobilier&property=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23trouve_dans&range=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23Site</a></li>
+		    	</ul>
+				<h3>index variant</h3>
+				<ul class="fa-ul">
+					<li><i class="fa-li fal fa-angle-right"></i><code>/api/autocomplete?key=...&index=...</code></li>
+					<li>Example : <i class="fa-li fal fa-angle-right"></i><a href="<c:url value="/api/autocomplete?key=tou&index=httpwwwopenarchaeofrexplorateurontoMobilier_httpwwwopenarchaeofrexplorateurontotrouve_a_httpwwwopenarchaeofrexplorateurontoSite" />">/api/autocomple?key=tou&index=httpwwwopenarchaeofrexplorateurontoMobilier_httpwwwopenarchaeofrexplorateurontotrouve_a_httpwwwopenarchaeofrexplorateurontoSite</a></li>
+		    	</ul>
+		    	<h2>List API</h2>
+		    	<h3>domain / property / range variant</h3>
+				<ul class="fa-ul">
+					<li><i class="fa-li fal fa-angle-right"></i><code>/api/list?domain=...&property=...&range=...</code></li>
+					<li>Example : <i class="fa-li fal fa-angle-right"></i><a href="<c:url value="/api/list?domain=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23Mobilier&property=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23trouve_dans&range=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23Site" />">/api/list?domain=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23Mobilier&property=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23trouve_dans&range=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23Site</a></li>
+		    	</ul>
+				<h3>index variant</h3>
+				<ul class="fa-ul">
+					<li><i class="fa-li fal fa-angle-right"></i><code>/api/list?index=...</code></li>
+					<li>Example : <i class="fa-li fal fa-angle-right"></i><a href="<c:url value="/api/list?index=httpwwwopenarchaeofrexplorateurontoMobilier_httpwwwopenarchaeofrexplorateurontotrouve_a_httpwwwopenarchaeofrexplorateurontoSite" />">/api/list?index=httpwwwopenarchaeofrexplorateurontoMobilier_httpwwwopenarchaeofrexplorateurontotrouve_a_httpwwwopenarchaeofrexplorateurontoSite</a></li>
+		    	</ul>
+		    	<h2>Periods API</h2>
+				<ul class="fa-ul">
+					<li><i class="fa-li fal fa-angle-right"></i><code>/api/periods?lang=...</code></li>
+					<li>Example : <i class="fa-li fal fa-angle-right"></i><a href="<c:url value="/api/periods?lang=fr" />">/api/periods?lang=fr</a></li>
+		    	</ul>
 			</div>
 		
 		</div><!-- /.row -->
 		
 	</div>
 	
+	<jsp:include page="footer.jsp" />
+	
 	<script src="<c:url value="/resources/MDB-Free/js/jquery-3.1.1.min.js" />"></script>
+	<script src="<c:url value="/resources/MDB-Free/js/popper.min.js" />"></script>
 	<script src="<c:url value="/resources/MDB-Free/js/bootstrap.min.js" />"></script>
 	
 

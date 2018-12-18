@@ -46,7 +46,7 @@
 		</authentication-provider>
 	</authentication-manager>
 	
-	<beans:bean id="OpenArchaeoAdminAuthenticationProvider" class="fr.humanum.masa.openarchaeo.federation.admin.MasaAdminAuthenticationProvider">
+	<beans:bean id="OpenArchaeoAdminAuthenticationProvider" class="fr.humanum.openarchaeo.federation.admin.MasaAdminAuthenticationProvider">
 		<beans:constructor-arg name="adminLogin" value="admin@masa.fr" />
 		<!-- superadmin = 889a3a791b3875cfae413574b53da4bb8a90d53e -->
 		<beans:constructor-arg name="adminHashedPassword" value="889a3a791b3875cfae413574b53da4bb8a90d53e" />

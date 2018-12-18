@@ -5,11 +5,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-<c:set var="data" value="${requestScope['fr.humanum.masa.openarchaeo.federation.FederationData']}" />
+<!-- setup the locale for the messages based on the language in the session -->
+<fmt:setLocale value="${sessionScope['fr.humanum.openarchaeo.SessionData'].userLocale.language}"/>
+<fmt:setBundle basename="fr.humanum.openarchaeo.federation.i18n.OpenArchaeo"/>
+
+<c:set var="data" value="${requestScope['fr.humanum.openarchaeo.federation.FederationData']}" />
 
 <html>
 <head>
-<title>OpenArchaeo federation SPARQL service</title>
+<title><fmt:message key="window.app" /> | <fmt:message key="sparql.window.title" /></title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
@@ -23,7 +27,7 @@
 <link rel="stylesheet" href="<c:url value="/resources/MDB-Free/css/mdb.min.css" />">
 
 <!-- App-specific CSS -->
-<link rel="stylesheet" href="<c:url value="/resources/css/masa-federation.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/openarchaeo-federation.css" />" />
 
 <!-- Vis.js -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css">
@@ -35,6 +39,9 @@
 	href='http://cdn.jsdelivr.net/g/yasqe@2.2(yasqe.min.css),yasr@2.4(yasr.min.css)'
 	rel='stylesheet' type='text/css' />
 
+<style>
+  .yasqe .CodeMirror { height: 420px; }
+</style>
 
 </head>
 <body class="with-background">
@@ -51,11 +58,11 @@
 			
 				<div class="card left-pane-card">
 				  <div class="card-body">
-				    <h4 class="card-title"><i class="fal fa-caret-square-right"></i>&nbsp;Requêtes</h4>
+				    <h4 class="card-title"><i class="fal fa-caret-square-right"></i>&nbsp;<fmt:message key="sparql.queries" /></h4>
 				    <div class="card-text">
 				    	<ul class="fa-ul">
 				    		<c:forEach items="${data.queries}" var="query">
-								<li><i class="fa-li fal fa-angle-right"></i><a onclick="setQuery('${query.sparqlQueryForJavascript}')" href="#">${query.title}</a></li>
+								<li><i class="fa-li fal fa-angle-right"></i><a onclick="setQuery('${query.sparqlQueryForJavascript}')" href="#">${query.titles[sessionScope['fr.humanum.openarchaeo.SessionData'].userLocale.language]}</a></li>
 							</c:forEach>
 				    	</ul>
 				    </div>
@@ -64,11 +71,11 @@
 				
 				<div class="card left-pane-card">
 				  <div class="card-body">
-				    <h4 class="card-title"><i class="fal fa-database"></i>&nbsp;Sources de la fédération</h4>
+				    <h4 class="card-title"><i class="fal fa-database"></i>&nbsp;<fmt:message key="sparql.sources" /></h4>
 				    <div class="card-text">
 				    	<ul class="fa-ul">
 				    		<c:forEach items="${data.federationSources}" var="source">
-								<li><i class="fa-li fal fa-angle-right"></i>${source.labels["fr"]}&nbsp;<small><em>(${source.sourceIri})</em></small></li>
+								<li><i class="fa-li fal fa-angle-right"></i>${source.getTitle("fr")}&nbsp;<small><em>(${source.sourceIri})</em></small></li>
 								<ul class="fa-ul">
 									<li><i class="fa-li fal fa-angle-right"></i><small>Endpoint : ${source.endpoint}</small></li>
 									<c:if test="${ source.defaultGraph.isPresent() }"><li><i class="fa-li fal fa-angle-right"></i><small>Default graph : ${source.defaultGraph.get() }</small></li></c:if>
@@ -93,7 +100,10 @@
 		
 	</div>
 	
+	<jsp:include page="footer.jsp" />
+	
 	<script src="<c:url value="/resources/MDB-Free/js/jquery-3.1.1.min.js" />"></script>
+	<script src="<c:url value="/resources/MDB-Free/js/popper.min.js" />"></script>
 	<script src="<c:url value="/resources/MDB-Free/js/bootstrap.min.js" />"></script>
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>

@@ -1,0 +1,41 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#>.
+@prefix dct: <http://purl.org/dc/terms/>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix schema: <http://schema.org/>.
+
+<http://openarchaeo.huma-num.fr/federation/sources/arsol> a dcat:Dataset ;
+	# mandatory
+	dct:title "Base ARSOL"@fr ;
+	# mandatory
+	dct:description "blah blah blah"@fr;
+	# recommended : lien vers la page du publisher
+	dct:publisher <http://citeres.univ-tours.fr/spip.php?rubrique31> ;
+	# recommended
+	dcat:contactPoint <mailto:olivier.marlet@univ-tours.fr> ;
+	# recommended
+	dcat:keyword "archéologie" ;
+	dcat:keyword "touraine" ;
+	dcat:keyword "toto" ;
+	# recommended
+	dcat:theme <http://publications.europa.eu/resource/authority/data-theme/TECH> ;
+	# dates
+	dct:issued "2018-01-01"^^xsd:date;
+	dct:modified "2018-01-01"^^xsd:date;
+	# source d'origine
+	dct:source <http://arsol.univ-tours.fr/> ;
+	# standard
+	dct:conformsTo <http://cidoc-crm.org/> ;
+	# couverture temporelle
+	dct:temporal [
+		schema:startDate "1200-01-01"^^xsd:date ;
+		schema:endDate "1950-01-01"^^xsd:date ;
+	]
+	# couverture spatiale : URI Geonames
+	dct:spatial <http://sws.geonames.org/2972290/> ;
+	dcat:distribution [
+		# Mandatory
+		dcat:accessUrl <http://openarchaeo.huma-num.fr/federation> ;
+		dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+		# Toujours SPARQL
+		dct:format <https://www.iana.org/assignments/media-types/application/sparql-results+xml> ;
+	] ;

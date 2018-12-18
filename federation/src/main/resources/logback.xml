@@ -10,7 +10,7 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>openarchaeo-federation.log</file>
+        <file>${catalina.base}/logs/openarchaeo-federation.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
             <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
@@ -25,9 +25,10 @@
     </appender>
 
 	<!-- Logs of SPARQL queries -->
-	<logger name="fr.humanum.masa.openarchaeo.Perform" 	level="INFO" />
+	<logger name="fr.humanum.openarchaeo.Perform" 	level="INFO" />
 	<!-- Logs during the index process -->
-	<logger name="fr.humanum.masa.openarchaeo.federation.index" 	level="INFO" />
+	<logger name="fr.humanum.openarchaeo.federation.index" 	level="INFO" />
+	<logger name="fr.humanum.openarchaeo.federation.index.IndexService" 	level="DEBUG" />
 
 
 	<logger name="org.xml.sax.XMLReader" 		level="INFO" />

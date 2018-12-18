@@ -1,0 +1,56 @@
+#globalnav {
+	margin-bottom: 2em;
+}
+
+.btn-group-vertical{
+	margin:auto;
+	text-align: center;	
+}
+
+.thing{
+	margin-bottom: 50px;
+	width:100%;
+	margin:auto;
+	text-align: center;
+}
+
+#sparql {
+	height: 15rem;	
+}
+
+.collapse:(.show) {
+    display: block;
+}
+
+footer {
+	font-size: 0.8em;
+	padding-top:2em;
+	padding-bottom:2em;
+	color:#B0B0B0;
+	text-align: center;
+}
+
+#sourcesList {
+	margin-top:2em;
+}
+
+.sourceCard {
+	margin-bottom: 1em;
+}
+
+.sourceCardHeader-hovered {
+	background-color: #fbb03c;
+}
+
+.sourceCardHeader-selected {
+	background-color: #f15c26;
+	color: black;
+}
+
+#simsemsearch-container {
+	margin-bottom: 2em;
+}
+
+#expandedQueryContainer {
+	padding-bottom:2em;
+}
