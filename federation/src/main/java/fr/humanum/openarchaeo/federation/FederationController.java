@@ -1,7 +1,9 @@
 package fr.humanum.openarchaeo.federation;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Set;
 
@@ -62,25 +64,21 @@ public class FederationController {
 			@RequestParam(value="query",required=true) String query
 			)
 	throws Exception {
-		log.debug("Requête SPARQL à exécuter : \n"+query);
-		List<FederationSource> sourcesToQuery = federationService.filterFederationSources(QueryFactory.create(query));
-
-		String queryWithoutFromClauses = federationService.removeFromClauses(QueryFactory.create(query)).toString(Syntax.syntaxSPARQL_11);
-		log.debug("Requête après suppression des clauses FROM : \n"+queryWithoutFromClauses);
-		
-		Repository federationRepository = federationService.createFederationRepositoryFromSources(sourcesToQuery);	
-		
 		QueryResultFormat outputFormat = TupleQueryResultFormat.JSON;
 		log.debug("MimeType : "+outputFormat.getDefaultMIMEType());
-		response.setContentType(outputFormat.getDefaultMIMEType());
 		
-		federationService.getResult(
-				queryWithoutFromClauses,
-				federationRepository,
-				response.getOutputStream(),
-				outputFormat.getDefaultMIMEType()
-		);
-		log.debug("Fin d'exécution de la requête");
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			federationService.executeSparql(query, baos, outputFormat.getDefaultMIMEType());
+			response.setContentType(outputFormat.getDefaultMIMEType());
+			response.getOutputStream().write(baos.toByteArray());
+		} catch (Exception e) {
+			log.error("Error while executing SPARQL query, returning raw stacktrace.");
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+			e.printStackTrace(response.getWriter());
+			response.flushBuffer();
+		}
 	}
 
 }

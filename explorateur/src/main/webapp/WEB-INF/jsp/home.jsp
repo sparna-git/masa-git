@@ -9,6 +9,8 @@
 <fmt:setLocale value="${sessionScope['fr.humanum.openarchaeo.SessionData'].userLocale.language}"/>
 <fmt:setBundle basename="fr.humanum.openarchaeo.explorateur.i18n.OpenArchaeo"/>
 
+<c:set var="content" value="${requestScope['content']}" />
+
 <html>
 <head>
 <title><fmt:message key="window.app" /> | <fmt:message key="home.window.title" /></title>
@@ -30,24 +32,6 @@
 <!-- favicon, if any -->
 <link rel="icon" type="image/png" href="resources/favicon.png" />
 
-<script type="text/javascript">
-function submit(){
-	var choix="";
-	var n = $( ".source_to_use:checked" ).length;
-	var text=n+" sources à intérroger. Confirmez-vous ?"
-    if (confirm(text) == true) {
-		$(".source_to_use:checked").each(function( index ) {
-			choix += $( this ).val();
-			choix += "+";
-		});
-		// on enleve le dernier caractere
-		choix = choix.substr(0, choix.length-1);
-		document.formsource.source.value =choix;
-		document.formsource.submit();
-   }
-}
-</script>
-
 </head>
 
 <body>
@@ -59,8 +43,7 @@ function submit(){
 	<div class="container">
 		<div class="row">
 			<div class="col-sm">			
-				<h1>Bienvenue dans l'explorateur OpenArchaeo</h1>
-			
+				${content}
 			</div>
 		</div>
 	</div>

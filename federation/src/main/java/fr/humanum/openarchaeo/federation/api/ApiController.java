@@ -3,6 +3,7 @@ package fr.humanum.openarchaeo.federation.api;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,7 +72,8 @@ public class ApiController {
 			@RequestParam(value="key",required=true) String key,
 			@RequestParam(value="domain",required=true) String domain,
 			@RequestParam(value="property",required=true) String property,
-			@RequestParam(value="range",required=true) String range
+			@RequestParam(value="range",required=true) String range,
+			@RequestParam(value="sources",required=false) String sources
 	) throws JsonGenerationException, JsonMappingException, IOException {
 		
 		String indexId = (domain+"_"+property+"_"+range).replaceAll("\\W+", "");
@@ -79,7 +81,8 @@ public class ApiController {
 			request,
 			response,
 			key,
-			indexId
+			indexId,
+			sources
 		);
 	}
 	
@@ -88,12 +91,15 @@ public class ApiController {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value="key",required=true) String key,
-			@RequestParam(value="index",required=true) String index
+			@RequestParam(value="index",required=true) String index,
+			@RequestParam(value="sources",required=false) String sources
 	) throws JsonGenerationException, JsonMappingException, IOException {
 		
+		List<String> sourcesList = (sources != null && !sources.isEmpty())?Arrays.asList(sources.split(" ")):null;
 		List<SearchResultJson> results = federationService.autocomplete(
 				key,
 				index,
+				sourcesList,
 				5
 		)
 		.stream()

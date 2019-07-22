@@ -90,9 +90,9 @@ crmarchaeo:A8_Stratigraphic_Unit rdfs:subClassOf :US .
 
 # trouve_dans
 
-##### Construction et ses propriétés
+##### Entite_Archeologique et ses propriétés
 
-crmba:B1_Built_Work rdfs:subClassOf :Construction .
+crmba:B1_Built_Work rdfs:subClassOf :Entite_Archeologique .
 
 # trouve_dans
 
@@ -103,8 +103,25 @@ crmba:B1_Built_Work rdfs:subClassOf :Construction .
 	crm:P101_had_as_general_use
 ) .
 
+# entite_archeologique_est_compose_de
 
+:entite_archeologique_est_compose_de owl:propertyChainAxiom (
+	crm:P46_is_composed_of
+) .
 
+##### Mur et ses propriétés
+
+:Mur rdfs:subClassOf [
+	a owl:Class ;
+	owl:intersectionOf ( 
+		crm:E25_Man-Made_Feature
+		[
+			a owl:Restriction ;
+			owl:onProperty crm:P2_has_type ;
+			owl:hasValue frantiq:pcrtIxHmbVwDYW ;
+		]
+	)
+] .
 
 ##### Sepulture et ses proprietes
 

@@ -4,11 +4,11 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     
     <modelVersion>4.0.0</modelVersion>
-    <groupId>fr.humanum.masa</groupId>
-    <artifactId>root-pom</artifactId>
+    <groupId>fr.humanum.masa.openarchaeo</groupId>
+    <artifactId>openarchaeo-root-pom</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>MASA</name>
+    <name>OpenArchaeo</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,9 +18,9 @@
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.3</logback.version>
         <spring.version>4.3.5.RELEASE</spring.version>
-        <springsecurity.version>4.2.0.RELEASE</springsecurity.version>
+        <springsecurity.version>4.2.3.RELEASE</springsecurity.version>
 		<jackson.version>2.9.3</jackson.version>
-		<rdf4j.version>2.2.1</rdf4j.version>
+		<rdf4j.version>2.4.2</rdf4j.version>
 		<jena.version>3.8.0</jena.version>
 		<lucene.version>7.4.0</lucene.version>
     </properties>
@@ -130,6 +130,11 @@
 			  <artifactId>lucene-core</artifactId>
 			  <version>${lucene.version}</version>
 			</dependency>
+            <dependency>
+              <groupId>org.apache.lucene</groupId>
+              <artifactId>lucene-analyzers-common</artifactId>
+              <version>${lucene.version}</version>
+            </dependency>
 			<dependency>
 			  <groupId>org.apache.lucene</groupId>
 			  <artifactId>lucene-queryparser</artifactId>
@@ -159,8 +164,9 @@
     </dependencyManagement>
 
     <modules>
-        <module>masa-federation</module>
-        <module>masa-explorateur</module>
+        <module>query-expand</module>
+        <module>federation</module>
+        <module>explorateur</module>
     </modules>
 
 </project>

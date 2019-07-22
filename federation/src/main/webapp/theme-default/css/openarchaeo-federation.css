@@ -24,3 +24,7 @@ footer {
 	color:#B0B0B0;
 	text-align: center;
 }
+
+/* fix display problems in datatable search header */
+input[type="search"] { width: auto; }
+.yasr .dataTables_wrapper .dataTables_filter {white-space: nowrap;}

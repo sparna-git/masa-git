@@ -52,27 +52,38 @@
 				    <h1 class="card-title"><i class="fal fa-database"></i>&nbsp;&nbsp;<fmt:message key="sources.title" /></h1>
 				    <div class="card-text">				    	
 				    		<div id="sourcesList">
-				    			<ul>
+								<div class="row">
 					    			<c:forEach items="${data}" var="source" varStatus="i">
-					    				<div class="card sourceCard">
-					    				  <div class="card-header sourceCardHeader" id="heading${i.index}" data-uri="${source.sourceString}">
-					    				  	<div class="row">
-					    				  		<div class="col-sm-10">
-						    				  		<h4 class="card-title">${source.getTitle(lang)}</h4>
-						    				  		<p>${source.getAbstract(lang)}</p>
-					    				  		</div>
-					    				  	</div>
-					    				  </div> <!-- / .card-header -->
-										  <div class="card-body">
-									    	<ul class="fa-ul">
-										    	<c:forEach var="entry" items="${source.getDescriptionInLang(lang)}">
-										    	  	<li><i class="fa-li fal fa-angle-right"></i><c:out value="${entry.key}"/>&nbsp;:&nbsp;${entry.value}</li>
-												</c:forEach>
-											</ul>
-										  </div> <!-- / .card-body -->
-										</div> 
+					    				<div class="col-6">
+						    				<div class="card sourceCard">
+						    				  <div class="card-header sourceCardHeader" id="heading${i.index}" data-uri="${source.sourceString}">
+						    				  	<div class="row">
+						    				  		<div class="col-sm-10">
+							    				  		<h4 class="card-title">${source.getTitle(lang)}</h4>
+							    				  		<p><em>${source.getShortDesc(lang)}</em></p>
+						    				  		</div>
+						    				  	</div>
+						    				  </div> <!-- / .card-header -->
+											  <div class="card-body">
+									    		<ul class="fa-ul">
+					    				  			<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.spatial" /> : ${source.displayValueList(source.getSpatial(lang))}</li>
+					    				  			<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.temporal" /> : <fmt:message key="sources.desc.temporal.from" /> ${source.getStartDate(lang)} <fmt:message key="sources.desc.temporal.to" /> ${source.getEndDate(lang)}</li>
+					    				  			<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.keywords" /> : ${source.displayValueList(source.getKeywords(lang))}</li>
+					    				  		</ul>
+					    				  		<hr />
+										    	<ul class="fa-ul">
+											    	<c:forEach var="entry" items="${source.getDescriptionInLang(lang)}">
+											    	  	<li>
+											    	  		<i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.${fn:replace(entry.key, ':', '_')}" />&nbsp;:&nbsp;
+											    	  		${source.displayValueList(entry.value)}
+											    	  	</li>
+													</c:forEach>
+												</ul>
+											  </div> <!-- / .card-body -->
+											</div> 
+										</div>
 									</c:forEach>
-								</ul>
+								</div>
 				    		</div>
 				    		<form action="explorer" method="get" style="margin:auto;" name="formsource" id="formsource">
 								<input type="hidden" name="sources" id="sources" />

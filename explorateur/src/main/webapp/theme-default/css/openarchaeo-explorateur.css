@@ -35,7 +35,7 @@ footer {
 }
 
 .sourceCard {
-	margin-bottom: 1em;
+	margin: 1em;
 }
 
 .sourceCardHeader-hovered {
@@ -48,9 +48,24 @@ footer {
 }
 
 #simsemsearch-container {
+	margin-top: 1em;
 	margin-bottom: 2em;
+}
+#simsemsearch-control {
+	margin-top: 0.5em;
+}
+#view {
+	margin-top:0.3em;
 }
 
 #expandedQueryContainer {
 	padding-bottom:2em;
 }
+
+#sparqlResultLabel {
+	width: 100%;
+}
+
+/* fix display problems in datatable search header */
+input[type="search"] { width: auto; }
+.yasr .dataTables_wrapper .dataTables_filter {white-space: nowrap;}

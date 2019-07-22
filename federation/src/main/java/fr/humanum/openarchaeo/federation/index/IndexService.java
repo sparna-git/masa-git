@@ -230,9 +230,9 @@ public class IndexService {
      * @return
      * @throws IOException
      */
-    public List<SearchResult> autocomplete(String term, String index, String lang, int maxHits) throws IOException {
-    	log.debug("Search '"+term+"' on index '"+index+"'");
-    	Query query = buildQuery(term, lang, index);
+    public List<SearchResult> autocomplete(String term, String index, List<String> sources, String lang, int maxHits) throws IOException {
+    	log.debug("Search '"+term+"' on index '"+index+"' and sources "+sources);
+    	Query query = buildQuery(term, lang, index, sources);
 		log.debug("Lucene query : '"+query.toString()+"'");
 
         // Search top results
@@ -311,7 +311,7 @@ public class IndexService {
     	return values;
     }
     
-    private Query buildQuery(String term, String lang, String index) {    	
+    private Query buildQuery(String term, String lang, String index, List<String> sources) {    	
     	try {    		
     		// we use the query parser to parse the user query
     		// so that we benefit from the Analyzer
@@ -328,18 +328,30 @@ public class IndexService {
 //							.build(),
 //						 Occur.SHOULD
 //					 )
+					// finalement on met la chaine "null" pour les termes sans langue
 					.add(new TermQuery(new Term(IndexFields.LANG_FIELD, "null")), Occur.SHOULD
 					 )
 					.build();
 			
+			
 			// then we combine it in a Boolean query with the index criteria	    	   	
-	    	BooleanQuery bq = new BooleanQuery.Builder()
+			BooleanQuery.Builder qb = new BooleanQuery.Builder()
 	    			.add(termQuery, Occur.MUST)
 	    			.add(indexClause, Occur.MUST)
-	    			.add(langClause, Occur.MUST)
-	    			.build();
+	    			.add(langClause, Occur.MUST);
+			
+			if(sources != null && sources.size() > 0) {
+				BooleanQuery.Builder sourcesClauseBuilder = new BooleanQuery.Builder();
+				for (String source : sources) {
+					sourcesClauseBuilder.add(new TermQuery(new Term(IndexFields.SOURCE_FIELD, source)), Occur.SHOULD);
+				}
+				Query sourcesClause = sourcesClauseBuilder.build();
+				qb.add(sourcesClause, Occur.MUST);
+			}
+			
+
 	    	
-	    	return bq;
+	    	return qb.build();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

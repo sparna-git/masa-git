@@ -37,9 +37,7 @@
 <script src="<c:url value="/resources/codemirror/mode/sparql/sparql.js" />"></script>
 
 <!-- SimSemSearch -->
-<link rel="stylesheet" href="<c:url value="/resources/css/nice-select.css" />">
-<link rel="stylesheet" href="<c:url value="/resources/css/easy-autocomplete.min.css" />">
-<link rel="stylesheet" href="<c:url value="/resources/css/simsemsearch.css" />">
+<link rel="stylesheet" href="<c:url value="/resources/css/simsemsearch-min.css" />">
 
 <!-- favicon, if any -->
 <link rel="icon" type="image/png" href="resources/favicon.png" />
@@ -78,16 +76,11 @@
 									</div>
 								</div>
 								<div class="col-sm-2">
-									<div class="align-middle">
 										<select class="form-control form-control-lg" id="view">
 											<option value="table" selected><fmt:message key="explore.output.table" /></option>
 											<option value="leaflet"><fmt:message key="explore.output.leaflet" /></option>
 											<option value="timeline"><fmt:message key="explore.output.timeline" /></option>
-											<option value="gchart"><fmt:message key="explore.output.gchart" /></option>
-											<option value="pivot"><fmt:message key="explore.output.pivot" /></option>
-											<option value="rawResponse"><fmt:message key="explore.output.rawResponse" /></option>
 										</select>
-									</div>
 								</div>
 							</div>
 						</div>
@@ -99,10 +92,11 @@
 				<input type="hidden" name="rawExpandedSparql" id="rawExpandedSparql" />
 				
 				<div class="form-group">
-					<label for="yasr" id="sparqlResultLabel"></label>					
+					<div id="sparqlResultAlert"></div>					
 					<div id="expandedQueryContainer">
 						<textarea class="form-control" rows="15" readonly="readonly" name="expandedQuery" id="expandedQuery"></textarea>
 					</div>
+					<div id="loading" style="width:100%; text-align:center; display:none;" ><img src="<c:url value="/resources/img/Polar-1.5s-325px.gif" />" /></div>
 					<div id="yasr"></div>
 				</div>
 			
@@ -113,6 +107,7 @@
 	<jsp:include page="footer.jsp" />
 
 	<!-- <script src="<c:url value="/resources/MDB-Free/js/jquery-3.1.1.min.js" />"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
 	<script src="<c:url value="/resources/js/jquery-3.3.1.min.js" />"></script>
 	<script src="https://cdn.jsdelivr.net/npm/yasgui-yasr@2.12.19/dist/yasr.bundled.min.js"></script>
 	
@@ -121,81 +116,111 @@
  	<script src="<c:url value="/resources/js/timeline.js" />"></script>
  	
  	<!-- simsemsearch -->
- 	<script src="<c:url value="/resources/js/sparqljs-browser.js" />"></script>
- 	<script src="<c:url value="/resources/js/jquery.nice-select.js" />"></script>
- 	<script src="<c:url value="/resources/js/jquery.easy-autocomplete.min.js" />"></script>
- 	<script src="<c:url value="/resources/js/simsemsearch.js" />"></script>
+ 	<script src="<c:url value="/resources/js/simsemsearch-min.js" />"></script>
 
 	<script type="text/javascript">
 	
 	 var yasr;
+	 var editor;
 	
-	 function execute(view){
-		 var sparql = $('#sparql').val();
-		 $('#sparqlResultLabel').html('');
+	 function onStartExecute() {
+		 // disable button
+		 $( "#run" ).prop('disabled', true);
+		 // reset alert message
+		 $('#sparqlResultAlert').html('');
+		 // reset yasr
 		 $('#yasr').html('');
+		 // display loading icon
+		 $('#loading').toggle();
+	 }
+	 
+	 function onSuccessExpandQuery(query) {
+     	document.getElementById("rawExpandedSparql").value = query;
+    	
+    	// remove old CodeMirror
+    	$('.CodeMirror').remove();
+    	// set the value of the textarea
+    	$('#expandedQuery').text(query);
+    	// recreate CodeMirror
+    	editor = CodeMirror.fromTextArea(document.getElementById("expandedQuery"), {
+			  lineNumbers: true,
+			  mode: "sparql"
+		});
+	 }
+	 
+	 function onSuccessExecuteQuery(response) {
+		$('#sparqlResultAlert').html('<div class="alert alert-success" role="alert"><i class="fal fa-check"></i>&nbsp;<fmt:message key="explore.results.querySuccessful" /> - <small><a href="#" class="alert-link" id="toggleQueryButton"><fmt:message key="explore.results.viewSparql" /></a></small></div>');
+       	$( "#toggleQueryButton" ).click(function() {
+			 $('#expandedQueryContainer').toggle();
+			 // refresh CodeMirror after toggle for proper display
+			 editor.refresh();
+		});
+       	
+       	yasr = YASR(
+       			document.getElementById("yasr"),
+       			{ 
+       				// select the proper output
+       				"output": $( "#view option:selected" ).val(),
+       				// still allow to switch to other display
+       				"drawOutputSelector": true,
+       				// avoid persistency side-effects
+					"persistency": { "prefix": false, "results": { "key": false }}
+				},
+				response
+		);
+       	
+       	// re-enable execute button
+       	$( "#run" ).prop('disabled', false);
+       	// hide loading icon
+       	$('#loading').toggle();
+	 }
+	 
+	 function onErrorExecuteQuery(response) {
+		$('#sparqlResultAlert').html('<div class="alert alert-danger" role="alert"><i class="fal fa-exclamation-triangle"></i>&nbsp;<fmt:message key="explore.results.queryError" /> <small><a href="#" class="alert-link" id="toggleQueryButton"><fmt:message key="explore.results.viewSparql" /></a></small><br /><br /><pre>'+response.responseText+'</pre></div>');
+       	$( "#toggleQueryButton" ).click(function() {
+			 $('#expandedQueryContainer').toggle();
+			 // refresh CodeMirror after toggle for proper display
+			 editor.refresh();
+		});
+     	// re-enable execute button
+       	$( "#run" ).prop('disabled', false);
+     	// hide loading
+       	$('#loading').toggle();
+	 }
+	 
+	 function execute() {
+		 var sparql = $('#sparql').val();
+		 onStartExecute();
 		 
 		 $.ajax({
 	         url : 'expand',
 	         type : 'POST', 
-	         data : 'query=' + encodeURIComponent(sparql) + '&sources=${sources}&view='+view , 
+	         data : 'query=' + encodeURIComponent(sparql) + '&sources=${sources}&view='+($( "#view option:selected" ).val()), 
 	         success: function(response) {
-	        	document.getElementById("rawExpandedSparql").value = response.expandQuery;
-	        	
-	        	// remove old CodeMirror
-	        	$('.CodeMirror').remove();
-	        	// set the value of the textarea
-	        	$('#expandedQuery').text(document.getElementById("rawExpandedSparql").value);
-	        	// recreate CodeMirror
-	        	var editor = CodeMirror.fromTextArea(document.getElementById("expandedQuery"), {
-	  			  lineNumbers: true,
-	  			   mode: "sparql"
-	  			});
-	        	
-	           
-	   			var query= response.expandQuery;
+	        	var query = response.expandQuery;
+	        	onSuccessExpandQuery(query);
+	   			
 	   			 $.ajax({
-	   		         // url : 'result',
-	   		         url : 'sparql',
+	   		         url : '/federation/sparql',
 	   		         type : 'POST', 
 	   		         data : 'query=' + encodeURIComponent(query) , 
-	   		         success: function(response) {
-	   		        	$('#sparqlResultLabel').html('<div class="alert alert-success" role="alert"><i class="fal fa-check"></i>&nbsp;<fmt:message key="explore.results.querySuccessful" /> - <small><a href="#" class="alert-link" id="toggleQueryButton"><fmt:message key="explore.results.viewSparql" /></a></small></div>');
-	   		        	$( "#toggleQueryButton" ).click(function() {
-		   					 $('#expandedQueryContainer').toggle();
-		   					 // refresh CodeMirror after toggle for proper display
-		   					 editor.refresh();
-		   				});
-	   		        	
-	   		        	yasr = YASR(
-	   		        			document.getElementById("yasr"),
-	   		        			{ 
-	   		        				"output": view,
-	   		        				"drawOutputSelector": true,
-									"persistency": { "prefix": false, "results": { "key": false }}
-								},
-								response
-						);
-	   			 	  },
-	   		       	  error: function(response) {
-	   		        	$('#sparqlResultLabel').html('<div class="alert alert-danger" role="alert"><i class="fal fa-exclamation-triangle"></i>&nbsp;<fmt:message key="explore.results.queryError" /></div>');
-	   		          }
-	   		      });
+	   		         success: onSuccessExecuteQuery,
+	   		       	 error: onErrorExecuteQuery
+	   		     });
 	          }
 	      });
-		
-		  // trigger click in YASR
-		  $( "."+view ).trigger( "click" );
 	 }
 	
+	 
 	
 	 $( document ).ready(function() {
 		 
 		 // hide query expansion
 		 $('#expandedQueryContainer').hide();
 		 
+		 // event on the execute button
 		 $( "#run" ).click(function() {
-			 execute($( "#view option:selected" ).val());
+			 execute();
 		 });
 		 
 		 // YASR.plugins.table.defaults = { "mergeLabelsWithUris": true };
@@ -206,28 +231,32 @@
 // 			}	 
 // 		 );
 
+
 		 $('#simsemsearch').SimSemSearchForm({
 			pathSpecSearch: 'resources/config/spec-search.json',
+			pathLanguages: 'resources/config/lang/',
 			language: '${sessionScope['fr.humanum.openarchaeo.SessionData'].userLocale.language}',
 			addDistinct: true,
-			autocompleteUrl: function(domain, property, range, key) {
-				// ici le code qui se charge de retourner les résultats de la recherche
-				return '/federation/api/autocomplete?key='+key+'&domain='+encodeURIComponent(domain)+'&property='+encodeURIComponent(property)+'&range='+encodeURIComponent(range) ;
+			autocomplete : {
+				url: function(domain, property, range, key) {
+					return '/federation/api/autocomplete?sources=${sources}&key='+key+'&domain='+encodeURIComponent(domain)+'&property='+encodeURIComponent(property)+'&range='+encodeURIComponent(range) ;
+				}
 			},
-			listUrl: function(domain, property, range) {
-				// ici le code qui se charge de retourner les résultats de la recherche
-				return '/federation/api/list?domain='+encodeURIComponent(domain)+'&property='+encodeURIComponent(property)+'&range='+encodeURIComponent(range) ;
+			list : {
+				url: function(domain, property, range) {
+					return '/federation/api/list?sources=${sources}&domain='+encodeURIComponent(domain)+'&property='+encodeURIComponent(property)+'&range='+encodeURIComponent(range) ;
+				}
 			},
-			datesUrl: function(domain, property, range, key) {
-				// ici le code qui se charge de retourner les résultats de la recherche
-				return '/federation/api/periods?lang=${sessionScope['fr.humanum.openarchaeo.SessionData'].userLocale.language}' ;
+			dates : {
+				url: function(domain, property, range) {
+					return '/federation/api/periods?lang=${sessionScope['fr.humanum.openarchaeo.SessionData'].userLocale.language}' ;
+				}
 			},
-			onQueryUpdated: function(queryString) {
+			onQueryUpdated: function(queryString, queryJson) {
 				// ici on récupère la requete Sparql grace au premier parametre de la fonction
 				console.log(queryString) ;
-				// $('#sparql').val(queryString.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
 				$('#sparql').val(queryString);
-			}
+			}			
 		  });
 		 
 	 });

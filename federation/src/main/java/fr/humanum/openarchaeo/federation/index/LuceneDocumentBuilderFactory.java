@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 import fr.humanum.masa.openarchaeo.expand.SparqlExpander;
 import fr.humanum.masa.openarchaeo.expand.SparqlExpansionConfigOwlSupplier;
 import fr.humanum.openarchaeo.federation.ExtConfigService;
-import fr.humanum.openarchaeo.federation.referentiels.ReferentielRepositoryIriHarvester;
+import fr.humanum.openarchaeo.federation.referentiels.IriHarvester;
 
 public class LuceneDocumentBuilderFactory {
 
@@ -42,18 +42,19 @@ public class LuceneDocumentBuilderFactory {
 	 * The object to perform SPARQL expansion
 	 */
 	protected SparqlExpander sparqlExpander;
-	protected ReferentielRepositoryIriHarvester referentielHarvester;
+	protected IriHarvester referentielHarvester;
 	
 	public LuceneDocumentBuilderFactory(
 			Map<String, String> prefixes,
 			LabelFetcher defaultLabelFetcher,
-			ExtConfigService extConfigService
+			ExtConfigService extConfigService,
+			IriHarvester iriHarvester
 	) {
 		super();
 		log.debug("Init LuceneDocumentBuilderFactory with defaultLabelFetcher : "+defaultLabelFetcher.getClass().getSimpleName());
 		this.prefixes = prefixes;
 		this.defaultLabelFetcher = defaultLabelFetcher;
-		this.referentielHarvester = new ReferentielRepositoryIriHarvester(extConfigService.getApplicationProperties().getProperty(ExtConfigService.REFERENTIELS_REPOSITORY_URL));
+		this.referentielHarvester = iriHarvester;
 		
 		try {
 			File expansionConfigFile = extConfigService.findMandatoryFile(ExtConfigService.QUERY_EXPANSION_CONFIG_FILE);
@@ -132,6 +133,7 @@ public class LuceneDocumentBuilderFactory {
 			}
 			String sparql = builder.generateSparql();
 			
+			// expand SPARQL on CIDOC-CRM
 			String expandedSparql = this.sparqlExpander.expand(sparql);
 			IriFetcher iriFetcher = (fetchIris)?new IriRetriever(new SparqlIriFetcher(expandedSparql), this.referentielHarvester):new SparqlIriFetcher(expandedSparql);
 			

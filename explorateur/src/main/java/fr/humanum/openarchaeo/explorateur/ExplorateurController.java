@@ -50,6 +50,7 @@ public class ExplorateurController {
 			){
 
 		ModelAndView model=new ModelAndView("home");
+		model.addObject("content", this.readHomePage(SessionData.get(request.getSession()).getUserLocale()));
 		model.addObject("legalNotice", this.readLegalNotice(SessionData.get(request.getSession()).getUserLocale()));
 		return model;
 	}
@@ -118,18 +119,6 @@ public class ExplorateurController {
 		mapper.writeValue(response.getOutputStream(), data);
 		log.debug("Final query after expansion : "+"\n"+queryExpand);
 	}
-
-
-	@RequestMapping(value = {"sparql"},method=RequestMethod.POST)
-	public void getResult(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			@RequestParam(value="query",required=true) String query) throws IOException, ClassNotFoundException{
-
-		log.debug("Récupération du résultat de la requête étendue");
-		this.explorateurService.getResult(query, response.getOutputStream());
-		log.debug("Récupération du résultat terminée");
-	}
 	
 	private String readLegalNotice(Locale locale) {
 		// retrieve resource bundle for path to home page
@@ -141,6 +130,22 @@ public class ExplorateurController {
 
 		try {
 			return IOUtils.toString(new FileInputStream(this.extConfigService.findMandatoryFile(b.getString("window.footer.legalNotice.content"))), Charset.forName("UTF-8"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+	
+	private String readHomePage(Locale locale) {
+		// retrieve resource bundle for path to home page
+		ResourceBundle b = ResourceBundle.getBundle(
+				"fr.humanum.openarchaeo.explorateur.i18n.OpenArchaeo",
+				locale,
+				new StrictResourceBundleControl()
+		);
+
+		try {
+			return IOUtils.toString(new FileInputStream(this.extConfigService.findMandatoryFile(b.getString("home.content"))), Charset.forName("UTF-8"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "";

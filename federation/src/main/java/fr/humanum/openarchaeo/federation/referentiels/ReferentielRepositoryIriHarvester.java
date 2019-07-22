@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +15,6 @@ import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.model.vocabulary.DCTERMS;
 import org.eclipse.rdf4j.query.AbstractTupleQueryResultHandler;
 import org.eclipse.rdf4j.query.BindingSet;
-import org.eclipse.rdf4j.query.TupleQueryResultHandlerBase;
 import org.eclipse.rdf4j.query.TupleQueryResultHandlerException;
 import org.eclipse.rdf4j.query.Update;
 import org.eclipse.rdf4j.repository.Repository;
@@ -31,6 +31,7 @@ public class ReferentielRepositoryIriHarvester implements IriHarvester {
 	
 	protected String referentielRepositoryUrl;
 	private Repository referentialRepository;
+	private String followPath;
 	
 	public ReferentielRepositoryIriHarvester(String referentielRepositoryUrl) {
 		super();
@@ -38,6 +39,15 @@ public class ReferentielRepositoryIriHarvester implements IriHarvester {
 		this.init();
 	}
 	
+	public ReferentielRepositoryIriHarvester(String referentielRepositoryUrl, String followPath) {
+		super();
+		this.referentielRepositoryUrl = referentielRepositoryUrl;
+		this.followPath = followPath;
+		this.init();
+	}
+
+
+
 	private void init() {
 		this.referentialRepository = new HTTPRepository(referentielRepositoryUrl);
 		this.referentialRepository.initialize();
@@ -53,14 +63,19 @@ public class ReferentielRepositoryIriHarvester implements IriHarvester {
 			log.debug("Fetching graphs that require an update...");
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(new Date());
-			cal.add(Calendar.DAY_OF_MONTH, 30);;
+			cal.add(Calendar.DAY_OF_MONTH, 30);
 			Date limitDate = cal.getTime();
 			
 			String fetchGraphsString = buildeFetchUnknownOrInvalidGraphsSparql(graphIris, limitDate);
-			Perform.on(c).query(fetchGraphsString, new AbstractTupleQueryResultHandler() {
-
+			// log.debug("Using SPARQL :\n"+fetchGraphsString);
+			
+			class GraphUpdaterHandler extends AbstractTupleQueryResultHandler {
+				
+				protected int count = 0;
+				
 				@Override
 				public void handleSolution(BindingSet bindingSet) throws TupleQueryResultHandlerException {
+					count++;
 					IRI graphIri = (IRI)bindingSet.getValue("g");
 					IRI anIri = decodeIri(graphIri);
 					
@@ -98,7 +113,21 @@ public class ReferentielRepositoryIriHarvester implements IriHarvester {
 					}
 				}				
 				
-			});
+			};
+			
+			GraphUpdaterHandler handler = new GraphUpdaterHandler();
+			Perform.on(c).query(fetchGraphsString, handler);
+			if(handler.count == 0) {
+				log.debug("No data update needed - everything uptodate");
+			} else {
+				log.debug(handler.count+" IRIs were updated");
+			}
+		}
+		
+		List<IRI> targetIris = this.followLinks(iris);
+		if(targetIris != null && targetIris.size() > 0) {
+			// recurse on target IRIs
+			this.harvest(targetIris);
 		}
 		
 	}
@@ -127,6 +156,28 @@ public class ReferentielRepositoryIriHarvester implements IriHarvester {
 						"https://pactols.frantiq.fr/opentheso/webresources/rest/skos/ark:"+originalIri.toString().substring(originalIri.toString().indexOf("ark:")+4)
 						:originalIri.toString()
 		);
+	}
+	
+	private List<IRI> followLinks(List<IRI> startIris) {		
+		if(this.followPath != null && !this.followPath.isEmpty()) {
+			log.debug("Following path "+this.followPath+" on "+startIris.size()+" iris...");
+			List<IRI> targets = new ArrayList<IRI>();
+			try(RepositoryConnection c = this.referentialRepository.getConnection()) {
+				String followSparql = this.buildFollowLinksSparql(startIris, this.followPath);
+				log.debug("Using SPARQL :\n"+followSparql);
+				Perform.on(c).query(followSparql, new AbstractTupleQueryResultHandler() {
+					@Override
+					public void handleSolution(BindingSet bindingSet) throws TupleQueryResultHandlerException {
+						IRI target = (IRI)bindingSet.getValue("target");
+						targets.add(target);
+					}
+				});
+			}
+			log.debug("Found "+targets.size()+" target IRIs");
+			return targets;
+		} else {
+			return null;
+		}
 	}
 	
 	public String buildLoadIriSparql(IRI anIri, IRI graphIri) {
@@ -158,17 +209,37 @@ public class ReferentielRepositoryIriHarvester implements IriHarvester {
 		sb.append("     ?g dct:created ?created . "+"\n");
 		sb.append("     FILTER(?created < \""+new SimpleDateFormat("YYYY-MM-DD").format(limitDate)+"\"^^xsd:date) "+"\n");
 		sb.append("   }"+"\n");
+		sb.append("   VALUES ?g { "+String.join(" ", graphIris.stream().map(i -> "<"+i.stringValue()+">").collect(Collectors.toList()))+"}");
 		sb.append(" } UNION {"+"\n");
 		sb.append("   FILTER NOT EXISTS { GRAPH ?g { ?g dct:created ?created . } } "+"\n");
+		sb.append("   VALUES ?g { "+String.join(" ", graphIris.stream().map(i -> "<"+i.stringValue()+">").collect(Collectors.toList()))+"}");
 		sb.append(" }"+"\n");
 		sb.append(" }"+"\n");
-		sb.append(" VALUES ?g {"+"\n");
-		for (IRI graphIri : graphIris) {
-			sb.append("    <"+graphIri+">"+"\n");
+
+		sb.append("}"+"\n");
+		return sb.toString();
+	}
+	
+	public String buildFollowLinksSparql(List<IRI> resourceIris, String followPath) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("SELECT ?target"+"\n");
+		sb.append("WHERE {"+"\n");
+		sb.append("  ?iri "+followPath+" ?target ."+"\n");
+		sb.append("  VALUES ?iri {"+"\n");
+		for (IRI iri : resourceIris) {
+			sb.append("    <"+iri+">"+"\n");
 		}
 		sb.append(" }"+"\n");
 		sb.append("}"+"\n");
-		return sb.toString();
+		return sb.toString();		
+	}
+
+	public String getFollowPath() {
+		return followPath;
+	}
+
+	public void setFollowPath(String followPath) {
+		this.followPath = followPath;
 	}
 	
 }

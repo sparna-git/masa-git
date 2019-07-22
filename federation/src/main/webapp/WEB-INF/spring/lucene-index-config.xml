@@ -28,7 +28,16 @@
 	<bean class="fr.humanum.openarchaeo.federation.index.SkosLabelFetcher" id="skosLabelFetcher">
 	</bean>
 	
+	<bean class="fr.humanum.openarchaeo.federation.referentiels.ReferentielRepositoryIriHarvester" id="referentielIriHarvester">
+		<constructor-arg name="referentielRepositoryUrl" value="#{extConfigService.applicationProperties['referentiels.repository.url']}" />
+		<constructor-arg name="followPath" value="&lt;http://www.geonames.org/ontology#parentFeature&gt;" />
+	</bean>
+	
 	<bean class="fr.humanum.openarchaeo.federation.index.ReferentielLabelFetcher" id="referentielLabelFetcher">
+		<constructor-arg name="service" value="#{extConfigService.applicationProperties['referentiels.repository.url']}" />
+	</bean>
+	
+	<bean class="fr.humanum.openarchaeo.federation.index.GeonamesADMLabelFetcher" id="geonamesADMLabelFetcher">
 		<constructor-arg name="service" value="#{extConfigService.applicationProperties['referentiels.repository.url']}" />
 	</bean>
 	
@@ -46,22 +55,29 @@
 		</constructor-arg>
 		<constructor-arg name="defaultLabelFetcher" ref="skosLabelFetcher"></constructor-arg>
 		<constructor-arg name="extConfigService" ref="extConfigService"></constructor-arg>
+		<constructor-arg name="iriHarvester" ref="referentielIriHarvester"></constructor-arg>
 	</bean>
 	
 	<!-- situe_a Site-Lieu -->
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
-		<constructor-arg name="spec" value="oa:Site oa:situe_a oa:Place" />
+		<constructor-arg name="spec" value="oa:Site oa:situe_a oa:Lieu" />
 		<constructor-arg name="fetchIris" value="true" />
 		<constructor-arg name="ignoreRange" value="true" />
-		<constructor-arg name="labelFetcher" ref="referentielLabelFetcher" />
+		<constructor-arg name="labelFetcher" ref="geonamesADMLabelFetcher" />
 	</bean>
 	<!-- de_type Site Type -->
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
 		<constructor-arg name="spec" value="oa:Site oa:de_type oa:Type" />
+		<constructor-arg name="fetchIris" value="false" />
+		<constructor-arg name="ignoreRange" value="true" />
+		<constructor-arg name="labelFetcher" ref="skosLabelFetcher" />
 	</bean>
-	<!-- de_type Construction Type -->
+	<!-- de_type Entite_Archeologique Type -->
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
-		<constructor-arg name="spec" value="oa:Construction oa:de_type oa:Type" />
+		<constructor-arg name="spec" value="oa:Entite_Archeologique oa:de_type oa:Type" />
+		<constructor-arg name="fetchIris" value="false" />
+		<constructor-arg name="ignoreRange" value="true" />
+		<constructor-arg name="labelFetcher" ref="skosLabelFetcher" />
 	</bean>
 	<!-- etudie_par Site Acteur -->	
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
@@ -75,7 +91,7 @@
 		<constructor-arg name="spec" value="oa:Site oa:a_trouve oa:Sepulture" />
 	</bean>
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
-		<constructor-arg name="spec" value="oa:Site oa:a_trouve oa:Construction" />
+		<constructor-arg name="spec" value="oa:Site oa:a_trouve oa:Entite_Archeologique" />
 	</bean>
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
 		<constructor-arg name="spec" value="oa:Site oa:a_trouve oa:Fait" />
@@ -92,7 +108,7 @@
 		<constructor-arg name="spec" value="oa:Sepulture oa:trouve_a oa:Site" />
 	</bean>
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
-		<constructor-arg name="spec" value="oa:Construction oa:trouve_a oa:Site" />
+		<constructor-arg name="spec" value="oa:Entite_Archeologique oa:trouve_a oa:Site" />
 	</bean>
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
 		<constructor-arg name="spec" value="oa:Fait oa:trouve_a oa:Site" />
@@ -120,9 +136,15 @@
 	<!-- interprete_comme -->
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
 		<constructor-arg name="spec" value="oa:US oa:interprete_comme oa:Type" />
+		<constructor-arg name="fetchIris" value="false" />
+		<constructor-arg name="ignoreRange" value="true" />
+		<constructor-arg name="labelFetcher" ref="skosLabelFetcher" />
 	</bean>
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
 		<constructor-arg name="spec" value="oa:Fait oa:interprete_comme oa:Type" />
+		<constructor-arg name="fetchIris" value="false" />
+		<constructor-arg name="ignoreRange" value="true" />
+		<constructor-arg name="labelFetcher" ref="skosLabelFetcher" />
 	</bean>
 	<!-- est_compose_de -->
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
@@ -130,6 +152,16 @@
 	</bean>
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
 		<constructor-arg name="spec" value="oa:Sepulture oa:est_compose_de oa:US" />
+	</bean>
+	<!-- entite_archeologique_est_compose_de -->
+	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Entite_Archeologique oa:entite_archeologique_est_compose_de oa:Sepulture" />
+	</bean>
+	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Entite_Archeologique oa:entite_archeologique_est_compose_de oa:Mur" />
+	</bean>
+	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
+		<constructor-arg name="spec" value="oa:Entite_Archeologique oa:entite_archeologique_est_compose_de oa:Fait" />
 	</bean>
 	<!-- trouve_dans -->
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
@@ -144,10 +176,16 @@
 	<!-- utilise_pour -->
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
 		<constructor-arg name="spec" value="oa:Mobilier oa:utilise_pour oa:Type" />
+		<constructor-arg name="fetchIris" value="false" />
+		<constructor-arg name="ignoreRange" value="true" />
+		<constructor-arg name="labelFetcher" ref="skosLabelFetcher" />
 	</bean>
 	<!-- fait_en -->
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
 		<constructor-arg name="spec" value="oa:Mobilier oa:fait_en oa:Type" />
+		<constructor-arg name="fetchIris" value="false" />
+		<constructor-arg name="ignoreRange" value="true" />
+		<constructor-arg name="labelFetcher" ref="skosLabelFetcher" />
 	</bean>
 	<!-- a_etudie -->
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">

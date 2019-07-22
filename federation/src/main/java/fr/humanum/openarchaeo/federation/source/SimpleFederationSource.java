@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Literal;
+import org.eclipse.rdf4j.model.Resource;
+import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.vocabulary.DCTERMS;
 
 
@@ -15,9 +17,9 @@ public class SimpleFederationSource implements FederationSource {
 	protected IRI sourceIri;
 	protected IRI endpoint;
 	protected IRI defaultGraph;
-	protected Map<IRI, List<Literal>> dcterms;
+	protected Map<IRI, List<Value>> dcterms;
 	
-	public SimpleFederationSource(IRI sourceIri, IRI endpoint, IRI defaultGraph, Map<IRI, List<Literal>> dcterms) {
+	public SimpleFederationSource(IRI sourceIri, IRI endpoint, IRI defaultGraph, Map<IRI, List<Value>> dcterms) {
 		super();
 		this.sourceIri = sourceIri;
 		this.endpoint = endpoint;
@@ -44,12 +46,18 @@ public class SimpleFederationSource implements FederationSource {
 	}
 	
 	private List<String> getDctermsValues(IRI dcProperty, String lang) {
-		System.out.println(dcterms);
-		List<Literal> values = this.dcterms.get(dcProperty);
+		List<Value> values = this.dcterms.get(dcProperty);
 		if(values == null) {
 			return null;
 		} else {
-			return values.stream().filter(v -> v.getLanguage().isPresent() && v.getLanguage().get().equals(lang)).map(v -> v.getLabel()).collect(Collectors.toList());
+			return values.stream()
+					.filter(v -> 
+						v instanceof Resource
+						||
+						(v instanceof Literal && ((Literal)v).getLanguage().isPresent() && ((Literal)v).getLanguage().get().equals(lang))
+					)
+					.map(v -> v.stringValue())
+					.collect(Collectors.toList());
 		}
 	}
 
@@ -69,7 +77,7 @@ public class SimpleFederationSource implements FederationSource {
 	}
 	
 	@Override
-	public Map<IRI, List<Literal>> getDcterms() {
+	public Map<IRI, List<Value>> getDcterms() {
 		return dcterms;
 	}
 
@@ -81,7 +89,7 @@ public class SimpleFederationSource implements FederationSource {
 		this.defaultGraph = defaultGraph;
 	}
 
-	public void setDcterms(Map<IRI, List<Literal>> dcterms) {
+	public void setDcterms(Map<IRI, List<Value>> dcterms) {
 		this.dcterms = dcterms;
 	}
 

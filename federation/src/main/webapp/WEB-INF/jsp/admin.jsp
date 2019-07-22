@@ -84,7 +84,15 @@
 				    <div class="card-text">
 				    	<ul class="fa-ul">
 				    		<c:forEach items="${data.federationSources}" var="source">
-								<li><i class="fa-li fal fa-angle-right"></i>${source.getTitle(lang)}&nbsp;|&nbsp;<a href="<c:url value="/admin/sources/reIndex?source=${source.sourceIri}" />">Réindexer la source</a></li>
+								<li><i class="fa-li fal fa-angle-right"></i>
+									${source.getTitle(lang)}
+									&nbsp;|&nbsp;
+									<a href="<c:url value="/admin/sources/reIndex?source=${source.sourceIri}" />">Réindexer la source</a>
+									<!--
+									&nbsp;|&nbsp;
+									<a href="<c:url value="/admin/sources/computeStatistics?source=${source.sourceIri}" />">Recalculer les statistiques de la source</a>
+									-->
+								</li>
 							</c:forEach>
 				    	</ul>
 				    </div>

@@ -1,4 +1,4 @@
-package fr.humanum.openarchaeo.federation;
+package fr.humanum.openarchaeo.federation.repository;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -7,27 +7,32 @@ import java.util.HashMap;
 import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.sparql.SPARQLRepository;
 
+import fr.humanum.openarchaeo.federation.source.FederationSource;
+
 public class RepositorySupplier {
 
-	protected String sparqlServiceUrl; 
-	protected String defaultGraphUri;
+	protected FederationSource source;
 	
-	public RepositorySupplier (String sparqlServiceUrl, String defaultGraphUri){
+	public RepositorySupplier (FederationSource source){
 		super();
-		this.sparqlServiceUrl = sparqlServiceUrl;
-		this.defaultGraphUri = defaultGraphUri;
+		this.source = source;
 	}
 	
-	public Repository getRepository() {	
-		String endpoint = sparqlServiceUrl;
+	public static String constructEndpointUrl(FederationSource source) {
+		String endpoint = source.getEndpoint().stringValue();
 		// add default graph URI parameter if necessary
-		if(this.defaultGraphUri != null) {
+		if(source.getDefaultGraph().isPresent()) {
 			try {
-				endpoint += "?default-graph-uri="+URLEncoder.encode(this.defaultGraphUri, "UTF-8");
+				endpoint += "?default-graph-uri="+URLEncoder.encode(source.getDefaultGraph().get().stringValue(), "UTF-8");
 			} catch (UnsupportedEncodingException e) {
 				throw new RuntimeException(e);
 			}
 		}
+		return endpoint;
+	}
+	
+	public Repository getRepository() {	
+		String endpoint = constructEndpointUrl(this.source);
 		Repository repository = new SPARQLRepository(endpoint);
 		
 		((SPARQLRepository)repository).setAdditionalHttpHeaders(new HashMap<String, String>() {{ 
@@ -38,7 +43,4 @@ public class RepositorySupplier {
 		return repository;
 	}
 
-	public String getSparqlServiceUrl() {
-		return sparqlServiceUrl;
-	}
 }

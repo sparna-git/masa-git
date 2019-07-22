@@ -88,7 +88,7 @@ public class FederationSourceJson  {
 	}
 	
 	public String getTitle(String lang) {
-		List<String> titles = getDctermsValues(DCTERMS.TITLE.getLocalName(), lang);
+		List<String> titles = getValues("dcterms:"+DCTERMS.TITLE.getLocalName(), lang);
 		if(titles != null && titles.size() > 0) {
 			return titles.get(0);
 		} else {
@@ -96,8 +96,8 @@ public class FederationSourceJson  {
 		}
 	}
 	
-	public String getAbstract(String lang) {
-		List<String> abstracts = getDctermsValues(DCTERMS.ABSTRACT.getLocalName(), lang);
+	public String getShortDesc(String lang) {
+		List<String> abstracts = getValues("dcterms:"+DCTERMS.DESCRIPTION.getLocalName(), lang);
 		if(abstracts != null && abstracts.size() > 0) {
 			return abstracts.get(0);
 		} else {
@@ -105,27 +105,87 @@ public class FederationSourceJson  {
 		}
 	}
 	
-	public Map<String, String> getDescriptionInLang(String lang) {
-		TreeMap<String, String> result = new TreeMap<String, String>();
+	public List<String> getSpatial(String lang) {
+		return getValues("dcterms:"+DCTERMS.SPATIAL.getLocalName(), lang);
+	}
+	
+	public List<String> getKeywords(String lang) {
+		return getValues("dcat:keyword", lang);
+	}
+	
+	public String getStartDate(String lang) {
+		List<String> values = getValues("schema:startDate", lang);
+		if(values != null && values.size() > 0) {
+			return values.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	public String getEndDate(String lang) {
+		List<String> values = getValues("schema:endDate", lang);
+		if(values != null && values.size() > 0) {
+			return values.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	public Map<String, List<String>> getDescriptionInLang(String lang) {
+		TreeMap<String, List<String>> result = new TreeMap<String, List<String>>();
 		for (Map.Entry<String, List<LanguageValue>> e : this.description.entrySet()) {
-			if(!e.getKey().equals(DCTERMS.TITLE.getLocalName()) && !e.getKey().equals(DCTERMS.ABSTRACT.getLocalName())) {
-				List<String> lValues = getDctermsValues(e.getKey(), lang);
+			if(
+					!e.getKey().equals("dcterms:"+DCTERMS.TITLE.getLocalName())
+					&&
+					!e.getKey().equals("dcterms:"+DCTERMS.DESCRIPTION.getLocalName())
+					&&
+					!e.getKey().equals("dcterms:"+DCTERMS.SPATIAL.getLocalName())
+					&&
+					!e.getKey().equals("dcat:keyword")
+					&&
+					!e.getKey().equals("dcterms:"+DCTERMS.CONFORMS_TO.getLocalName())
+					&&
+					!e.getKey().equals("dcat:theme")
+					&&
+					!e.getKey().equals("schema:startDate")
+					&&
+					!e.getKey().equals("schema:endDate")
+			) {
+				List<String> lValues = getValues(e.getKey(), lang);
 				if(lValues != null && lValues.size() > 0) {
-					result.put(e.getKey(), lValues.get(0));
+					result.put(e.getKey(), lValues);
 				}
 			}
 		}
 		return result;
 	}
 	
+	public String displayValueList(List<String> values) {
+		return values.stream().map(s -> {
+			if(s.startsWith("http")) {
+				return "<a href=\""+s+"\">"+s+"</a>";
+			} else if(s.startsWith("mailto:")) {
+				return "<a href=\""+s+"\">"+s.substring("mailto:".length())+"</a>";
+			} else {
+				return s;
+			}
+		}).collect(Collectors.joining(", "));
+	}
 	
 	
-	private List<String> getDctermsValues(String dcProperty, String lang) {
-		List<LanguageValue> values = this.description.get(dcProperty);
+	private List<String> getValues(String key, String lang) {
+		List<LanguageValue> values = this.description.get(key);
 		if(values == null) {
 			return null;
 		} else {
-			return values.stream().filter(v -> v.getLanguage() != null && v.getLanguage().equals(lang)).map(v -> v.getValue()).collect(Collectors.toList());
+			return values.stream()
+					.filter(v -> 
+						(v.getLanguage() == null || v.getLanguage().equals(""))
+						||
+						(v.getLanguage() != null && v.getLanguage().equals(lang))
+					)
+					.map(v -> v.getValue())
+					.collect(Collectors.toList());
 		}
 	}
 	

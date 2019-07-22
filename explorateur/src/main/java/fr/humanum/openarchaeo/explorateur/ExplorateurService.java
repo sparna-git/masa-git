@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +20,6 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.sparql.path.PathParser;
-import org.eclipse.rdf4j.query.resultio.sparqlxml.SPARQLResultsXMLWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -40,80 +38,63 @@ public class ExplorateurService {
 	private Logger log= LoggerFactory.getLogger(this.getClass().getName());
 	
 	public static enum View {
-		TABLE(Collections.singletonList(new ExtraPropertyConfig(
-				"<http://www.w3.org/2004/02/skos/core#prefLabel>",
+		TABLE(Collections.singletonList(new SparqlFetchExtraPropertyPostProcessor(
+				PathParser.parse("<http://www.w3.org/2004/02/skos/core#prefLabel>", ModelFactory.createDefaultModel()),
+				"this",
 				"thisLabel",
 				true
 		))),
-		RAWRESPONSE(Collections.singletonList(new ExtraPropertyConfig(
-				"<http://www.w3.org/2004/02/skos/core#prefLabel>",
+		RAWRESPONSE(Collections.singletonList(new SparqlFetchExtraPropertyPostProcessor(
+				PathParser.parse("<http://www.w3.org/2004/02/skos/core#prefLabel>", ModelFactory.createDefaultModel()),
+				"this",
 				"thisLabel",
 				true
 		))),
 		GCHART(null),
 		PIVOT(null),
-		TIMELINE(Arrays.asList(new ExtraPropertyConfig[] { 
-			new ExtraPropertyConfig(
-				"<http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location>/<http://www.w3.org/2003/01/geo/wgs84_pos#lat>",
-				"latitude",
-				true
-			),
-			new ExtraPropertyConfig(
-				"<http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location>/<http://www.w3.org/2003/01/geo/wgs84_pos#long>",
-				"longitude",
-				true
-			),
-			new ExtraPropertyConfig(
-				"<http://www.w3.org/2004/02/skos/core#prefLabel>",
+		TIMELINE(Arrays.asList(new SparqlPostProcessor[] { 
+			new SparqlFetchExtraPropertyPostProcessor(					
+				PathParser.parse("<http://www.w3.org/2004/02/skos/core#prefLabel>", ModelFactory.createDefaultModel()),
+				"this",
 				"thisLabel",
-				true
+				false
 			)
 		})),
-		LEAFLET(Arrays.asList(new ExtraPropertyConfig[] { 
-			new ExtraPropertyConfig(
-				"<http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location>/<http://www.w3.org/2003/01/geo/wgs84_pos#lat>",
+		LEAFLET(Arrays.asList(new SparqlPostProcessor[] { 
+			new SparqlFetchExtraPropertyPostProcessor(
+				PathParser.parse("(<http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location>|(<http://www.ics.forth.gr/isl/CRMsci/O19i_was_object_found_by>/<http://www.ics.forth.gr/isl/CRMsci/S19_Encounter_Event>/<http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location>))/<http://www.w3.org/2003/01/geo/wgs84_pos#lat>", ModelFactory.createDefaultModel()),
+				"this",
 				"latitude",
-				true
+				false
 			),
-			new ExtraPropertyConfig(
-				"<http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location>/<http://www.w3.org/2003/01/geo/wgs84_pos#long>",
+			new SparqlFetchExtraPropertyPostProcessor(
+				PathParser.parse("(<http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location>|(<http://www.ics.forth.gr/isl/CRMsci/O19i_was_object_found_by>/<http://www.ics.forth.gr/isl/CRMsci/S19_Encounter_Event>/<http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location>))/<http://www.w3.org/2003/01/geo/wgs84_pos#long>", ModelFactory.createDefaultModel()),
+				"this",
 				"longitude",
-				true
+				false
 			),
-			new ExtraPropertyConfig(
-				"<http://www.w3.org/2004/02/skos/core#prefLabel>",
-				"thisLabel",
-				true
-			)
+			new SparqlFetchExtraPropertyPostProcessor(
+				PathParser.parse("<http://www.w3.org/2004/02/skos/core#prefLabel>", ModelFactory.createDefaultModel()),
+				"this",
+				"pointLabel",
+				false
+			),
+			new SparqlBindWktPostProcessor("this", "point")
 		}));
 		
-		private List<ExtraPropertyConfig> expansionConfig;
+		private List<SparqlPostProcessor> postProcessors;
 		
-		private View(List<ExtraPropertyConfig> expansionConfig) {
-			this.expansionConfig = expansionConfig;
+		private View(List<SparqlPostProcessor> postProcessors) {
+			this.postProcessors = postProcessors;
 		}
 
-		public List<ExtraPropertyConfig> getExpansionConfig() {
-			return expansionConfig;
-		}
-
-		static class ExtraPropertyConfig {
-			String path;
-			String extraPropertyName;
-			boolean optional;
-			
-			public ExtraPropertyConfig(String path, String extraPropertyName, boolean optional) {
-				super();
-				this.path = path;
-				this.extraPropertyName = extraPropertyName;
-				this.optional = optional;
-			}
+		public List<SparqlPostProcessor> getPostProcessors() {
+			return postProcessors;
 		}
 	}
 	
 	private ExtConfigService extConfigService;
 	private SparqlExpansionConfig expansionConfig;
-	private SparqlFetchExtraProperty sparqlFetchExtraProperty;
 	private FederationService federationService;
 	
 	@Inject
@@ -135,14 +116,6 @@ public class ExplorateurService {
 			// Can be safely ignored since we checked for a required file
 			ignore.printStackTrace();
 		}
-		
-		sparqlFetchExtraProperty = new SparqlFetchExtraProperty();
-	}
-	
-	
-	public void getResult(String queryExpand, OutputStream out) {
-		SPARQLResultsXMLWriter sparqlWriter = new SPARQLResultsXMLWriter(out);
-		this.federationService.query(queryExpand, sparqlWriter);
 	}
 	
 	public String expandQuery(String query) {
@@ -157,15 +130,10 @@ public class ExplorateurService {
 		log.debug("Adding properties to query for view "+view.name()+"...");
 		
 		String result = query;
-		if(view.getExpansionConfig() != null) {			
-			for (View.ExtraPropertyConfig c : view.getExpansionConfig()) {
-				log.debug("Adding property path for variable "+c.extraPropertyName+"...");
-				result = sparqlFetchExtraProperty.fetchExtraProperty(
-					result,
-					PathParser.parse(c.path, ModelFactory.createDefaultModel()),
-					"this",
-					c.extraPropertyName,
-					c.optional);
+		if(view.getPostProcessors() != null) {			
+			for (SparqlPostProcessor pp : view.getPostProcessors()) {
+				log.debug("Applying post-processor : "+pp+"...");
+				result = pp.postProcess(result);
 			}
 		}
 		

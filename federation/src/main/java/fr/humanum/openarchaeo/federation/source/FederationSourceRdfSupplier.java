@@ -28,24 +28,21 @@ import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fr.humanum.openarchaeo.federation.ExtConfigService;
-
 public class FederationSourceRdfSupplier implements Supplier<List<FederationSource>>{
 
 	private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 	
-	private ExtConfigService extConfig;
+	private File sourceDefinitionFile;
 
 
-	public FederationSourceRdfSupplier(ExtConfigService extConfig){
-		this.extConfig=extConfig;
+	public FederationSourceRdfSupplier(File sourceDefinitionFile){
+		this.sourceDefinitionFile=sourceDefinitionFile;
 	}
 
 	private Model getModel() throws FileNotFoundException{
-		File file=extConfig.getSourceFile();
-		InputStream in=new FileInputStream(file);
+		InputStream in=new FileInputStream(sourceDefinitionFile);
 		Model model=ModelFactory.createDefaultModel();
-		model.read(in,null, FileUtils.guessLang(file.getName(), Lang.RDFXML.getName()));
+		model.read(in,null, FileUtils.guessLang(sourceDefinitionFile.getName(), Lang.RDFXML.getName()));
 		return model;
 	}
 
@@ -113,7 +110,7 @@ public class FederationSourceRdfSupplier implements Supplier<List<FederationSour
 				Query dctermsQuery = QueryFactory.create(dctermsQueryString) ;
 				try(QueryExecution dctermsQExec = QueryExecutionFactory.create(dctermsQuery, m)) {
 					ResultSet resultsDcTerms = dctermsQExec.execSelect();
-					Map<IRI, List<org.eclipse.rdf4j.model.Literal>> dcterms = new HashMap<>();
+					Map<IRI, List<org.eclipse.rdf4j.model.Value>> dcterms = new HashMap<>();
 					while (resultsDcTerms.hasNext()) {
 						QuerySolution dcSolution = resultsDcTerms.nextSolution() ;
 						log.debug("  Reading a DC property : "+dcSolution);
@@ -133,7 +130,7 @@ public class FederationSourceRdfSupplier implements Supplier<List<FederationSour
 						if(dcterms.containsKey(dcProperty)) {
 							dcterms.get(dcProperty).add(rdf4jLiteral);
 						} else {
-							dcterms.put(dcProperty, new ArrayList<org.eclipse.rdf4j.model.Literal>(Collections.singletonList(rdf4jLiteral)));
+							dcterms.put(dcProperty, new ArrayList<org.eclipse.rdf4j.model.Value>(Collections.singletonList(rdf4jLiteral)));
 						}
 					}
 					

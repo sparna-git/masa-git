@@ -59,4 +59,16 @@
 		<constructor-arg name="periodoFile" value="#{extConfigService.periodoFile}" />
 	</bean>
 	
+<!-- 	<bean class="fr.humanum.openarchaeo.federation.repository.Rdf4jFederationRepositoryBuilder" id="federationBuilder"> -->
+<!-- 		<constructor-arg name="referentielRepository" value="#{extConfigService.applicationProperties['referentiels.repository.url']}" /> -->
+<!-- 	</bean> -->
+<!-- 
+	<bean class="fr.humanum.openarchaeo.federation.repository.CostfedFederationRepositoryBuilder" id="federationBuilder">
+		<constructor-arg name="propertiesFile" value="#{extConfigService.costfedFile}" />
+		<constructor-arg name="referentielRepository" value="#{extConfigService.applicationProperties['referentiels.repository.url']}" />
+	</bean>
+ -->	
+ 	<bean class="fr.humanum.openarchaeo.federation.repository.SmartFederationRepositoryBuilder" id="federationBuilder">
+		<constructor-arg name="referentielRepository" value="#{extConfigService.applicationProperties['referentiels.repository.url']}" />
+	</bean>
 </beans>

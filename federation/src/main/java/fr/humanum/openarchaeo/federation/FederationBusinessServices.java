@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,16 +16,17 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.Syntax;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
+import org.eclipse.rdf4j.query.TupleQuery;
 import org.eclipse.rdf4j.query.resultio.TupleQueryResultFormat;
 import org.eclipse.rdf4j.query.resultio.TupleQueryResultWriter;
 import org.eclipse.rdf4j.query.resultio.TupleQueryResultWriterFactory;
 import org.eclipse.rdf4j.query.resultio.TupleQueryResultWriterRegistry;
 import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
-import org.eclipse.rdf4j.repository.sail.SailRepository;
-import org.eclipse.rdf4j.sail.federation.Federation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -34,12 +36,15 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.humanum.openarchaeo.Perform;
+import fr.humanum.openarchaeo.federation.costfed.Endpoints;
 import fr.humanum.openarchaeo.federation.index.IndexService;
 import fr.humanum.openarchaeo.federation.index.SearchResult;
 import fr.humanum.openarchaeo.federation.period.PeriodJson;
 import fr.humanum.openarchaeo.federation.period.PeriodServiceIfc;
+import fr.humanum.openarchaeo.federation.repository.FederationRepositoryBuilder;
+import fr.humanum.openarchaeo.federation.repository.QueryPreprocessorIfc;
 import fr.humanum.openarchaeo.federation.source.FederationSource;
-import fr.humanum.openarchaeo.federation.source.FederationSourceRdfSupplier;
+import fr.humanum.openarchaeo.federation.source.FederationSourceRemoteMetadataSupplier;
 
 @Service
 public class FederationBusinessServices {
@@ -50,21 +55,51 @@ public class FederationBusinessServices {
 	private List<FederationSource> federationSources;
 	private IndexService indexService;
 	private PeriodServiceIfc periodsService;
+	private FederationRepositoryBuilder federationBuilder;
+	private QueryPreprocessorIfc queryPreprocessor;
 
 	@Inject
-	public FederationBusinessServices(ExtConfigService extConfigService, IndexService indexService, PeriodServiceIfc periodsService) {
+	public FederationBusinessServices(
+			ExtConfigService extConfigService,
+			IndexService indexService,
+			PeriodServiceIfc periodsService,
+			FederationRepositoryBuilder federationBuilder
+	) {
 		this.extConfigService = extConfigService;
 		this.indexService = indexService;
 		this.periodsService = periodsService;
+		this.federationBuilder = federationBuilder;
 	}
 	
 	@PostConstruct
 	public void init() {
-		FederationSourceRdfSupplier frs = new FederationSourceRdfSupplier(extConfigService);
-		this.federationSources=frs.get();
+		FederationSourceRemoteMetadataSupplier fsrms = new FederationSourceRemoteMetadataSupplier(extConfigService.getSourceFile());
+		this.federationSources=fsrms.get();
 	}
 	
-	public void getResult(String queryString, Repository repository, OutputStream out, String mimeType) throws IOException {
+	public void executeSparql(String query, OutputStream out, String mimeType) throws IOException {
+		log.debug("Executing SPARQL : \n"+query);
+		long start = System.currentTimeMillis();
+		List<FederationSource> sourcesToQuery = this.filterFederationSources(QueryFactory.create(query));
+
+		String queryWithoutFromClauses = this.removeFromClauses(QueryFactory.create(query)).toString(Syntax.syntaxSPARQL_11);
+		log.debug("Query after removing FROM clauses : \n"+queryWithoutFromClauses);
+		
+		Repository federationRepository = this.createFederationRepositoryFromSources(sourcesToQuery, query);	
+		
+		long startExecution = System.currentTimeMillis();
+		this.executeQuery(
+				queryWithoutFromClauses,
+				federationRepository,
+				out,
+				mimeType
+		);
+		log.debug("SPARQL sent to triplestore in "+new DecimalFormat("#.###").format(((float)(System.currentTimeMillis() - startExecution))/1000)+" s");
+		long timeInMillis = System.currentTimeMillis() - start;
+		log.debug("Done executing SPARQL in "+new DecimalFormat("#.###").format((float)timeInMillis/1000)+" s");
+	}
+	
+	private void executeQuery(String queryString, Repository repository, OutputStream out, String mimeType) throws IOException {
 		TupleQueryResultWriterRegistry registry = TupleQueryResultWriterRegistry.getInstance();
 		TupleQueryResultWriterFactory f = registry.get(
 				registry.getFileFormatForMIMEType(mimeType).orElse(TupleQueryResultFormat.SPARQL)
@@ -73,59 +108,24 @@ public class FederationBusinessServices {
 		TupleQueryResultWriter writer = f.getWriter(out);
 		
 		try (RepositoryConnection conn = repository.getConnection()) {
-			Perform.on(conn).query(queryString, writer);
+			TupleQuery q = conn.prepareTupleQuery(queryString);
+			q.evaluate(writer);
 		}
 	}
 	
 
 	/**
-	 * Créé un Repository avec les sources indiquées.
+	 * Créé un Repository avec les sources indiquées, pour la query indiquée
 	 * 
 	 * @param sources
 	 * @return
 	 */
-	public Repository createFederationRepositoryFromSources(List<FederationSource> sources){
+	private Repository createFederationRepositoryFromSources(List<FederationSource> sources, String query){
 		log.debug("Création de la  féderation avec "+sources.size()+" sources");
-		if(sources.size() == 1) {
-			log.debug("Une seule source, création d'un repository simple");
-			return createFederationRepositoryFromSource(sources.get(0));
-		}
-		
-		Federation federation=new Federation();
-		
-		//add repositories in a federation object
-		for (FederationSource aSource : sources) {
-			federation.addMember(createFederationRepositoryFromSource(aSource));
-		}		
-		
-		// all repositories in the federation are distinct
-		// federation.setDistinct(true);
-
-		// our federation will be read-only for sure
-		federation.setReadOnly(true);
-		
-		//create new repository with federation
-		log.debug("Création et initialisation du repository");
-		Repository repository=new SailRepository(federation);
-		repository.initialize();	
-		log.debug("Initialisation du repository avec la fédération terminée");
-		
-		return repository;
-	}
-	
-	/**
-	 * Créé un Repository pour la source indiquée
-	 * 
-	 * @param sources
-	 * @return
-	 */
-	public Repository createFederationRepositoryFromSource(FederationSource source){
-		log.debug("Building repository with endpoint "+source.getEndpoint());
-		RepositorySupplier rs = new RepositorySupplier(
-				source.getEndpoint().stringValue(),
-				source.getDefaultGraph().map(iri -> iri.stringValue()).orElse(null)
+		return this.federationBuilder.buildRepository(
+				sources.stream().map(s -> FederationSource.constructEndpointUrl(s)).collect(Collectors.toList()),
+				query
 		);
-		return rs.getRepository();
 	}
 	
 	/**
@@ -173,7 +173,7 @@ public class FederationBusinessServices {
 		return null;
 	}
 	
-	public Query removeFromClauses(Query q) {
+	private Query removeFromClauses(Query q) {
 		List<String> querySources = q.getNamedGraphURIs();
 		List<String> sourcesToRemove = querySources.stream().filter(s -> { 
 			for (FederationSource aSource : this.federationSources) {
@@ -222,9 +222,11 @@ public class FederationBusinessServices {
 	public List<SearchResult> autocomplete(
 			String key,
 			String indexId,
+			List<String> sources,
 			int limit
 	) throws IOException {		
-		return this.indexService.autocomplete(key, indexId, "fr", limit);
+		sources = (sources != null)?sources.stream().map(s -> s.replaceAll("\\W+", "")).collect(Collectors.toList()):null;
+		return this.indexService.autocomplete(key, indexId, sources, "fr", limit);
 	}
 	
 	public List<SearchResult> list(
@@ -253,7 +255,7 @@ public class FederationBusinessServices {
 	public void reindex(IRI source) throws IOException {
 		// creer un repository pour la source indiquee
 		FederationSource fs = findSource(source.stringValue());
-		Repository r = createFederationRepositoryFromSource(fs);
+		Repository r = FederationSource.createFederationRepositoryFromSource(FederationSource.constructEndpointUrl(fs));
     	
     	this.indexService.reIndexSource(
     			// identifiant de la source
@@ -261,6 +263,12 @@ public class FederationBusinessServices {
     			// repository
     			r
     	);
+	}
+	
+	public void computeStatistics(IRI source) throws IOException {
+//		FederationSource fs = findSource(source.stringValue());
+//		String endpointUrl = RepositorySupplier.constructEndpointUrl(fs);
+//		SummaryBuilder.startBuilder(costfedEndpoints.findEndpointByUrl(endpointUrl), costfedEndpoints);
 	}
 	
 	public List<PeriodJson> getPeriods(String lang) {

@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Literal;
+import org.eclipse.rdf4j.model.Value;
+import org.eclipse.rdf4j.model.vocabulary.DCAT;
+import org.eclipse.rdf4j.model.vocabulary.DCTERMS;
 
 import fr.humanum.openarchaeo.federation.source.FederationSource;
 
@@ -22,10 +25,10 @@ public class FederationSourceJson  {
 	public static FederationSourceJson fromFederationSource(FederationSource originalSource) {
 		// translate DCTerms
 		Map<String, List<LanguageValue>> description = new HashMap<>();
-		for (Map.Entry<IRI, List<Literal>> entry : originalSource.getDcterms().entrySet()) {
+		for (Map.Entry<IRI, List<Value>> entry : originalSource.getDcterms().entrySet()) {
 			description.put(
-					entry.getKey().stringValue().substring(entry.getKey().stringValue().lastIndexOf('/')+1),
-					entry.getValue().stream().map(l -> new LanguageValue(l.getLabel(), l.getLanguage().orElse(null))).collect(Collectors.toList())
+					buildKey(entry.getKey()),
+					entry.getValue().stream().map(l -> new LanguageValue(l.stringValue(), (l instanceof Literal)?((Literal)l).getLanguage().orElse(null):null)).collect(Collectors.toList())
 			);
 		}
 		
@@ -36,6 +39,18 @@ public class FederationSourceJson  {
 				description
 		);
 		return fedJsonOut;
+	}
+	
+	public static String buildKey(IRI propertyIri) {
+		if(propertyIri.stringValue().startsWith(DCTERMS.NAMESPACE)) {
+			return "dcterms:"+propertyIri.stringValue().substring(propertyIri.stringValue().lastIndexOf('/')+1);
+		} else if(propertyIri.stringValue().startsWith(DCAT.NAMESPACE)) {
+			return "dcat:"+propertyIri.stringValue().substring(propertyIri.stringValue().lastIndexOf('#')+1);
+		} else if(propertyIri.stringValue().startsWith("http://schema.org/")) {
+			return "schema:"+propertyIri.stringValue().substring(propertyIri.stringValue().lastIndexOf('/')+1);
+		} else {
+			return propertyIri.stringValue();
+		}
 	}
 	
 	public FederationSourceJson(String sourceString, String endpoint, String defaultGraph, Map<String, List<LanguageValue>> description) {

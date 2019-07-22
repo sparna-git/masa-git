@@ -68,5 +68,20 @@ public class AdminController {
 		return model;
 	}
 
-
+	@RequestMapping(value = "/sources/computeStatistics")
+	public ModelAndView computeStatistics(
+			@RequestParam(value = "source", required = true) String sourceIri,
+			HttpServletRequest request,
+			HttpServletResponse response
+	) throws Exception {
+		log.debug("Compute statistics for source "+sourceIri);
+		long start = System.currentTimeMillis();
+		federationService.computeStatistics(SimpleValueFactory.getInstance().createIRI(sourceIri));
+		long end = System.currentTimeMillis();
+		
+		ModelAndView model=new ModelAndView("redirect:/admin");
+		model.addObject("message", "Calcul des stats effectué en "+Math.ceil((end-start)/1000)+" secondes pour "+sourceIri);
+		
+		return model;
+	}
 }
