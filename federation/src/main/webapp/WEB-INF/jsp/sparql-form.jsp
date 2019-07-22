@@ -35,9 +35,10 @@
 <!-- favicon, if any -->
 <link rel="icon" type="image/png" href="resources/favicon.png" />
 
-<link
-	href='http://cdn.jsdelivr.net/g/yasqe@2.2(yasqe.min.css),yasr@2.4(yasr.min.css)'
-	rel='stylesheet' type='text/css' />
+
+<link href='http://cdn.jsdelivr.net/npm/yasgui-yasqe@2.11.22/dist/yasqe.min.css' rel='stylesheet' type='text/css'/>
+<link href='http://cdn.jsdelivr.net/npm/yasgui-yasr@2.12.19/dist/yasr.min.css' rel='stylesheet' type='text/css'/>
+
 
 <style>
   .yasqe .CodeMirror { height: 420px; }
@@ -106,16 +107,19 @@
 	<script src="<c:url value="/resources/MDB-Free/js/popper.min.js" />"></script>
 	<script src="<c:url value="/resources/MDB-Free/js/bootstrap.min.js" />"></script>
 	
+	<script src="<c:url value="/resources/js/moment.min.js" />"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
 
-	<script src='https://cdn.jsdelivr.net/npm/yasgui-yasr@2.4.15/dist/yasr.bundled.min.js'></script>
-	<script src='https://cdn.jsdelivr.net/npm/yasgui-yasqe@2.2.6/dist/yasqe.bundled.min.js'></script>
+	<script src='https://cdn.jsdelivr.net/npm/yasgui-yasr@2.12.19/dist/yasr.bundled.min.js'></script>
+	<script src='https://cdn.jsdelivr.net/npm/yasgui-yasqe@2.11.22/dist/yasqe.bundled.min.js'></script>
 	<!--  defines timeline plugin -->
 	<script src='<c:url value="/resources/js/timeline.js" />'></script>
 	
 
 	<script type="text/javascript">
 
+		
+	
 		var yasqe = YASQE.fromTextArea(document.getElementById("yasqe"), {
 			sparql : {
 				showQueryButton : true,
@@ -123,13 +127,11 @@
 			}
 		});
 		
-		// YASR.registerOutput("Timeline",timelinePlugin);
-		
+		YASR.registerOutput("timeline",timelinePlugin);
 		var yasr = YASR(document.getElementById("yasr"), {
 			//this way, the URLs in the results are prettified using the defined prefixes in the query
 			getUsedPrefixes : yasqe.getPrefixesFromQuery,
-			// outputPlugins : ["Timeline","error", "rawResponse", "table", "pivot", "leaflet"]
-			outputPlugins : ["error", "rawResponse", "table", "pivot", "leaflet"]
+			outputPlugins: ["error", "boolean", "rawResponse", "table", "pivot", "leaflet", "timeline"]
 		}); 
 		
 		// link yasqe and yasr
