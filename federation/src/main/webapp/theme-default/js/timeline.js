@@ -39,8 +39,8 @@ var timelinePlugin = function(yasr) {
           }
           
           // parse the dates
-          var start =	parseDate(stringFirstDate);
-          var end   =	parseDate(stringSecondDate);
+          var start =	(stringFirstDate !== null)?parseDate(stringFirstDate):null;
+          var end   =	(stringSecondDate !== null)?parseDate(stringSecondDate):null;
           
           // generate a default label if null
           if(label == null) {
@@ -55,7 +55,7 @@ var timelinePlugin = function(yasr) {
                     content: 	'<a href="'+uri+'" target="_blank" style="text-decoration:none; cursor:pointer;" title="'+uri+'">'+label+'</a>', 
                     start: 		start, 
                     end: 		end, 
-                    title: 		stringFirstDate+' / '+stringSecondDate
+                    title: 		label + ' ('+ stringFirstDate+' / '+stringSecondDate+ ')'
                   });
                 } else {
                   itemsList.push({
@@ -63,7 +63,8 @@ var timelinePlugin = function(yasr) {
                     content: 	'<a href="'+uri+'" style="text-decoration:none; cursor:pointer;" target="_blank" title="'+uri+'">'+label+'</a>', 
                     start: 		end, 
                     end: 		start, 
-                    title:		stringSecondDate+' / '+stringFirstDate});
+                    title:		label + ' (' + stringSecondDate+' / '+stringFirstDate + ')'
+                  });
                 }
           }
 
@@ -73,7 +74,7 @@ var timelinePlugin = function(yasr) {
               id: 		i+1, 
               content: 	'<a href="'+uri+'" style="text-decoration:none; cursor:pointer;" target="_blank" title="'+uri+'">'+label+'</a>', 
               start: 	start,
-              title: 	stringFirstDate
+              title: 	label + ' (' + stringFirstDate + ')'
             });
           }
       
