@@ -115,6 +115,13 @@
 			<groupId>com.veritas.fops</groupId>
 		    <artifactId>fedx</artifactId>
 		    <version>5.2.0-SNAPSHOT</version>
+		    <!-- Exclude slf4j to log4j mapping so that it does not interfere with logback -->
+		    <exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 	</dependencies>

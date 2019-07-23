@@ -27,7 +27,7 @@
 	<!-- Logs of SPARQL queries -->
 	<logger name="fr.humanum.openarchaeo.Perform" 	level="INFO" />
 	<!-- Logs during the index process -->
-	<logger name="fr.humanum.openarchaeo.federation.index" 	level="INFO" />
+	<logger name="fr.humanum.openarchaeo.federation.index" 	level="DEBUG" />
 	<logger name="fr.humanum.openarchaeo.federation.index.IndexService" 	level="DEBUG" />
 
 

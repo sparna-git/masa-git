@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import fr.humanum.openarchaeo.OpenArchaeoException;
@@ -11,6 +13,8 @@ import fr.humanum.openarchaeo.OpenArchaeoException;
 @Service("extConfigService")
 public class ExtConfigService {
 
+	private Logger log = LoggerFactory.getLogger(this.getClass().getName()); 
+	
 	public static String APPLICATION_PROPERTIES_FILE 	= "config.properties";
 	
 	private static String EXT_DIRECTORY_PROPERTY 		= "ext.directory.federation";
@@ -44,6 +48,8 @@ public class ExtConfigService {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+		
+		log.info("Loaded external configuration from "+f.getAbsolutePath());
 	}
 	
 	public Properties getApplicationProperties() {
