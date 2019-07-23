@@ -135,6 +135,7 @@ public class LuceneDocumentBuilderFactory {
 			
 			// expand SPARQL on CIDOC-CRM
 			String expandedSparql = this.sparqlExpander.expand(sparql);
+			log.debug("Generated domain/path/range SPARQL query :\n"+expandedSparql);
 			IriFetcher iriFetcher = (fetchIris)?new IriRetriever(new SparqlIriFetcher(expandedSparql), this.referentielHarvester):new SparqlIriFetcher(expandedSparql);
 			
 			LuceneDocumentBuilder b = new LuceneDocumentBuilder(

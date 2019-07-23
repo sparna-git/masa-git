@@ -23,7 +23,7 @@ public abstract class BatchSparqlLabelFetcher implements LabelFetcher {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass().getName()); 
 	
-	protected int batchSize = 400;
+	protected int batchSize = 500;
 	
 	public BatchSparqlLabelFetcher() {
 		super();

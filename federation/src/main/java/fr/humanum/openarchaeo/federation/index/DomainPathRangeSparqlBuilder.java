@@ -40,6 +40,8 @@ public class DomainPathRangeSparqlBuilder {
 		}
 		sb.append("}");
 		
+		log.debug("Generated domain/path/range SPARQL query :\n"+sb.toString());
+		
 		return sb.toString();
 	}
 	

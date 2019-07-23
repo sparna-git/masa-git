@@ -107,7 +107,6 @@
 	<script src="<c:url value="/resources/MDB-Free/js/popper.min.js" />"></script>
 	<script src="<c:url value="/resources/MDB-Free/js/bootstrap.min.js" />"></script>
 	
-	<script src="<c:url value="/resources/js/moment.min.js" />"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
 
 	<script src='https://cdn.jsdelivr.net/npm/yasgui-yasr@2.12.19/dist/yasr.bundled.min.js'></script>
