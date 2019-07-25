@@ -41,7 +41,12 @@ public class SimpleFederationSource implements FederationSource {
 		if(titles != null && titles.size() > 0) {
 			return titles.get(0);
 		} else {
-			return null;
+			List<String> titlesWithoutLanguage = getDctermsValues(DCTERMS.TITLE, null);
+			if(titlesWithoutLanguage != null && titlesWithoutLanguage.size() > 0) {
+				return titlesWithoutLanguage.get(0);
+			} else {
+				return null;
+			}
 		}
 	}
 	
@@ -54,7 +59,19 @@ public class SimpleFederationSource implements FederationSource {
 					.filter(v -> 
 						v instanceof Resource
 						||
-						(v instanceof Literal && ((Literal)v).getLanguage().isPresent() && ((Literal)v).getLanguage().get().equals(lang))
+						(
+								v instanceof Literal
+								&&
+								(
+									(lang == null && !((Literal)v).getLanguage().isPresent()
+									||
+									(
+										(Literal)v).getLanguage().isPresent()
+										&&
+										((Literal)v).getLanguage().get().equals(lang)
+									)
+								)
+						)
 					)
 					.map(v -> v.stringValue())
 					.collect(Collectors.toList());

@@ -1,6 +1,7 @@
 package fr.humanum.openarchaeo.federation.admin;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import fr.humanum.openarchaeo.federation.source.FederationSource;
@@ -8,7 +9,7 @@ import fr.humanum.openarchaeo.federation.source.FederationSource;
 public class AdminData {
 	
 	protected List<FederationSource> federationSources;
-	protected Set<String> indexIds;
+	protected Map<String, String> indexIds;
 	protected Message message;
 
 	public class Message {
@@ -54,11 +55,11 @@ public class AdminData {
 		this.federationSources = federationSources;
 	}
 
-	public Set<String> getIndexIds() {
+	public Map<String, String> getIndexIds() {
 		return indexIds;
 	}
 
-	public void setIndexIds(Set<String> indexIds) {
+	public void setIndexIds(Map<String, String> indexIds) {
 		this.indexIds = indexIds;
 	}
 	

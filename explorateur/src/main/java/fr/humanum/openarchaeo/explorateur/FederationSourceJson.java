@@ -161,6 +161,10 @@ public class FederationSourceJson  {
 	}
 	
 	public String displayValueList(List<String> values) {
+		if(values == null) {
+			return "";
+		}
+		
 		return values.stream().map(s -> {
 			if(s.startsWith("http")) {
 				return "<a href=\""+s+"\">"+s+"</a>";

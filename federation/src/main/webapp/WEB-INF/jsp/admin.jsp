@@ -104,8 +104,8 @@
 				    <h3 class="card-title">Les Index</h3>
 				    <div class="card-text">
 				    	<select id="index" name="index">
-				    		<c:forEach items="${data.indexIds}" var="idx">
-								<option value="${idx}">${idx}</value>
+				    		<c:forEach var="entry" items="${data.indexIds}">
+				    			<option value="${entry.key}">${entry.value}</value>
 							</c:forEach>
 				    	</select>
 				    	<div class="row">
@@ -116,7 +116,11 @@
 				    			<span id="selectedUri"></span>
 				    		</div>
 				    	</div>
-				    		
+				    	<div class="row">
+				    		<div class="col-sm-12">
+					    		Liste des valeurs : <span id="listLink">(sélectionnez un index)</span>		    		
+					    	</div>
+				    	</div>				    		
 				    </div>
 				  </div>
 				</div>
@@ -156,6 +160,10 @@
 			};
 			
 			$("#autocompleteTest").easyAutocomplete(options);
+			
+			$("#index").change(function() {
+				$("#listLink").html("<a href='api/list?index=" + $( "#index option:selected" ).val() + "'>api/list?index="+ $( "#index option:selected" ).val() +"</a>");
+			});
 			 
 		 });
 		

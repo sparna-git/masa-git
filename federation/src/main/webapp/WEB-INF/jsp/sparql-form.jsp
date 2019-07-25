@@ -116,8 +116,6 @@
 	
 
 	<script type="text/javascript">
-
-		
 	
 		var yasqe = YASQE.fromTextArea(document.getElementById("yasqe"), {
 			sparql : {

@@ -2,6 +2,9 @@ package fr.humanum.openarchaeo.federation.admin;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,7 +49,12 @@ public class AdminController {
 		}
 		data.setFederationSources(federationService.getFederationSources());	
 		//get all index fields
-		data.setIndexIds(federationService.getIndexIds());
+		Set<String> indexIds = federationService.getIndexIds();
+		
+		// nicer labels
+		Map<String, String> indexIdsWithLabels = indexIds.stream().collect(Collectors.toMap(s -> s, s -> { return s.replaceAll("httpwwwopenarchaeofrexplorateuronto", "").replaceAll("_", " "); }));		
+		data.setIndexIds(indexIdsWithLabels);
+		
 		ModelAndView model=new ModelAndView("admin", AdminData.class.getName(), data);
 		return model;
 	}
