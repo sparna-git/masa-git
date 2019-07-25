@@ -128,7 +128,8 @@
 		var yasr = YASR(document.getElementById("yasr"), {
 			//this way, the URLs in the results are prettified using the defined prefixes in the query
 			getUsedPrefixes : yasqe.getPrefixesFromQuery,
-			outputPlugins: ["error", "boolean", "rawResponse", "table", "pivot", "leaflet", "timeline"]
+			outputPlugins: ["error", "boolean", "rawResponse", "table", "pivot", "leaflet", "gchart", "timeline"],
+			useGoogleCharts: true
 		}); 
 		
 		// link yasqe and yasr
