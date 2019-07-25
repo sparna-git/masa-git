@@ -118,15 +118,39 @@ public class ApiController {
 			HttpServletResponse response,
 			@RequestParam(value="domain",required=true) String domain,
 			@RequestParam(value="property",required=true) String property,
-			@RequestParam(value="range",required=true) String range
+			@RequestParam(value="range",required=true) String range,
+			@RequestParam(value="sources",required=false) String sources
 	) throws JsonGenerationException, JsonMappingException, IOException {
 		
 		String indexId = (domain+"_"+property+"_"+range).replaceAll("\\W+", "");
 		list(
 			request,
 			response,
-			indexId
+			indexId,
+			sources
 		);
+	}
+	
+	@RequestMapping(value = {"/list"}, params = { "index" }, method=RequestMethod.GET)
+	public void  list(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="index",required=true) String index,
+			@RequestParam(value="sources",required=false) String sources
+	) throws JsonGenerationException, JsonMappingException, IOException {
+		
+		List<String> sourcesList = (sources != null && !sources.isEmpty())?Arrays.asList(sources.split(" ")):null;
+		List<SearchResultJson> results = federationService.list(
+				index,
+				sourcesList
+		)
+		.stream()
+		.map(sr -> SearchResultJson.fromSearchResult(sr))
+		.collect(Collectors.toList());		
+		
+		response.addHeader("Content-Encoding", "UTF-8");	
+		response.setContentType("application/json");		
+		writeJson(results, response.getWriter());
 	}
 	
 	@RequestMapping(value = {"/periods"}, params = { "lang" },method=RequestMethod.GET)
@@ -137,25 +161,6 @@ public class ApiController {
 	) throws JsonGenerationException, JsonMappingException, IOException {
 		
 		List<PeriodJson> results = this.federationService.getPeriods(lang);
-		
-		response.addHeader("Content-Encoding", "UTF-8");	
-		response.setContentType("application/json");		
-		writeJson(results, response.getWriter());
-	}
-	
-	@RequestMapping(value = {"/list"}, params = { "index" }, method=RequestMethod.GET)
-	public void  list(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			@RequestParam(value="index",required=true) String index
-	) throws JsonGenerationException, JsonMappingException, IOException {
-		
-		List<SearchResultJson> results = federationService.list(
-				index
-		)
-		.stream()
-		.map(sr -> SearchResultJson.fromSearchResult(sr))
-		.collect(Collectors.toList());		
 		
 		response.addHeader("Content-Encoding", "UTF-8");	
 		response.setContentType("application/json");		

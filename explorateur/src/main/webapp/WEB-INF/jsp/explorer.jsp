@@ -256,7 +256,7 @@
 				// ici on récupère la requete Sparql grace au premier parametre de la fonction
 				console.log(queryString) ;
 				$('#sparql').val(queryString);
-			}			
+			}
 		  });
 		 
 	 });

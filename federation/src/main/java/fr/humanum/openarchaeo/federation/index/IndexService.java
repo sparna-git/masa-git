@@ -262,12 +262,22 @@ public class IndexService {
      * @return
      * @throws IOException
      */
-    public List<SearchResult> getEntries(String indexId) throws IOException {		
+    public List<SearchResult> getEntries(String indexId, List<String> sources) throws IOException {		
     	List<SearchResult> result = new ArrayList<>();  
     	
     	BooleanQuery.Builder b = new BooleanQuery.Builder();
-    	BooleanQuery query = b.add(new BooleanClause(new TermQuery(new Term(IndexFields.INDEX_FIELD, indexId)), Occur.MUST)).build();
+    	b.add(new BooleanClause(new TermQuery(new Term(IndexFields.INDEX_FIELD, indexId)), Occur.MUST));
     	
+    	if(sources != null && sources.size() > 0) {
+			BooleanQuery.Builder sourcesClauseBuilder = new BooleanQuery.Builder();
+			for (String source : sources) {
+				sourcesClauseBuilder.add(new TermQuery(new Term(IndexFields.SOURCE_FIELD, source)), Occur.SHOULD);
+			}
+			Query sourcesClause = sourcesClauseBuilder.build();
+			b.add(sourcesClause, Occur.MUST);
+		}    	
+    	
+    	BooleanQuery query = b.build();
 		indexSearcher.search(query, new SimpleCollector() {
 
 			@Override
