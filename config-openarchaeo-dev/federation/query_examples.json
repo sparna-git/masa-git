@@ -262,5 +262,44 @@
 			"  wficheweb:isiteAA ?p ?o",
 			"}"
 		]		
+	},
+	{
+		"titles": {
+			"fr": "Afficher une frise chronologique",
+			"en": "Display a timeline"
+		},
+
+		"query": [
+			"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>",
+			"SELECT ?site ?label ?debut ?fin",
+			"WHERE {",
+			"  VALUES (?site ?label ?debut ?fin) {",
+			"    (",
+			"        <http://arsol.univ-tours.fr/Site1>",
+			"        \"Site 1 : dates en format YYYY-MM-DD\"",
+			"        \"-1200-01-01\"^^xsd:date",
+			"        \"-980-01-01\"^^xsd:date",
+			"    )",
+			"    (",
+			"        <http://arsol.univ-tours.fr/Site2>",
+			"        \"Site 2 : dates en format YYYY\"",
+			"        \"-1500\"^^xsd:gYear",
+			"        \"-1049\"^^xsd:gYear",
+			"    )",
+			"    (",
+			"        <http://arsol.univ-tours.fr/Site3>",
+			"        \"Site 3 : dates avant et après JC\"",
+			"        \"-950-01-01\"^^xsd:date",
+			"        \"123-01-01\"^^xsd:date",
+			"    )",
+			"    (",
+			"        <http://arsol.univ-tours.fr/Site4>",
+			"        \"Site 4 : Une seule date connue\"",
+			"        \"-712\"^^xsd:gYear",
+			"        UNDEF",
+			"    )",
+			"  }",
+			"}"
+		]		
 	}
 ]

@@ -36,8 +36,8 @@
 <link rel="stylesheet" href="<c:url value="/resources/codemirror/lib/codemirror.css" />">
 <script src="<c:url value="/resources/codemirror/mode/sparql/sparql.js" />"></script>
 
-<!-- SimSemSearch -->
-<link rel="stylesheet" href="<c:url value="/resources/css/simsemsearch-min.css" />">
+<!-- Sparnatural stylesheet -->
+<link rel="stylesheet" href="<c:url value="/resources/css/sparnatural.css" />">
 
 <!-- favicon, if any -->
 <link rel="icon" type="image/png" href="resources/favicon.png" />
@@ -63,11 +63,11 @@
 				<input type="hidden" value="${sources}" name="sources" id="sources">
 				
 				
-				<div class="card" id="simsemsearch-container">
+				<div class="card" id="sparnatural-container">
 				  <div class="card-body">
 				    <div class="card-text">				    	
-						<div id="simsemsearch"></div>
-						<div id="simsemsearch-control">
+						<div id="sparnatural"></div>
+						<div id="sparnatural-control">
 							<div class="row no-gutters justify-content-end">
 								<div class="col-sm-6">
 									<div class="float-right">
@@ -116,7 +116,7 @@
  	<script src="<c:url value="/resources/js/timeline.js" />"></script>
  	
  	<!-- simsemsearch -->
- 	<script src="<c:url value="/resources/js/simsemsearch-min.js" />"></script>
+ 	<script src="<c:url value="/resources/js/sparnatural.js" />"></script>
 
 	<script type="text/javascript">
 	
@@ -232,9 +232,8 @@
 // 		 );
 
 
-		 $('#simsemsearch').SimSemSearchForm({
+		 $('#sparnatural').Sparnatural({
 			pathSpecSearch: 'resources/config/spec-search.json',
-			pathLanguages: 'resources/config/lang/',
 			language: '${sessionScope['fr.humanum.openarchaeo.SessionData'].userLocale.language}',
 			addDistinct: true,
 			autocomplete : {
