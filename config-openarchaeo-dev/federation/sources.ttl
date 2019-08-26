@@ -45,4 +45,14 @@
             void:sparqlEndpoint <http://localhost:7200/repositories/openarchaeo> ;
             fed-config:sparqlGraph <http://aerba.univ-tours.fr> ;
         ] ;
+        sd:namedGraph [
+            a sd:NamedGraph ;
+            # source IRI
+            sd:name <http://openarchaeo.huma-num.fr/federation/sources/sraidf> ;
+            # source labels
+            dcterms:title "SRA-IDF";
+            # source endpoint and graph
+            void:sparqlEndpoint <http://openarchaeo-graphdb.huma-num.fr/repositories/openarchaeo> ;
+            fed-config:sparqlGraph <https://bibnum-sra-idf.huma-num.fr> ;
+        ] ;
     ] .

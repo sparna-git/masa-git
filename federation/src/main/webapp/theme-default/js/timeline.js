@@ -25,7 +25,7 @@ var timelinePlugin = function(yasr) {
           
           for (var bindingVar in binding) {
                 //check if value is a xsd date
-                if(hasDateDatatype(binding[bindingVar])) {                
+                if(hasDateDatatype(binding[bindingVar]) || hasGYearDatatype(binding[bindingVar])) {                
                     if(stringFirstDate == null) {
                     	stringFirstDate = binding[bindingVar].value;
                     } else {
@@ -81,7 +81,14 @@ var timelinePlugin = function(yasr) {
     }
 
     var items = new vis.DataSet(itemsList);
-    var options = {limitSize : false, showTooltips: true};
+    var options = {
+    		limitSize : false,
+    		showTooltips: true,
+    		tooltip: {
+		      followMouse: true,
+		      overflowMethod: 'cap'
+		    }
+    };
 
     // Create a Timeline
     var timeline = new vis.Timeline(element, items, options);
@@ -90,6 +97,13 @@ var timelinePlugin = function(yasr) {
   
   var parseDate = function(value) {
 	var dateParts = value.match(/(-?\d\d?\d?\d?)-(\d\d?)-(\d\d?)/);
+	
+	if(dateParts == null) {
+		dateParts = value.match(/(-?\d\d?\d?\d?)/);
+		dateParts[2] = "01";
+		dateParts[3] = "01";
+	}
+	
   	dateParts[2] -= 1; //months are zero-based
   	// use 3 variables constructor for proper handling of negative dates
   	// see https://stackoverflow.com/questions/41340836/why-does-date-accept-negative-values
@@ -115,7 +129,7 @@ var timelinePlugin = function(yasr) {
       for (var bindingVar in binding) {
         if (checkedVars.indexOf(bindingVar) === -1 && binding[bindingVar].value) {
           checkedVars.push(bindingVar);
-          if (hasDateDatatype(binding[bindingVar])) {
+          if (hasDateDatatype(binding[bindingVar]) || hasGYearDatatype(binding[bindingVar])) {
         	  dateVars.push(bindingVar);
           }
         }
@@ -132,6 +146,14 @@ var timelinePlugin = function(yasr) {
   
   var hasDateDatatype = function(value) {
     if(value.datatype == 'http://www.w3.org/2001/XMLSchema#date'){
+      return true;
+    }else{
+      return false;
+    }
+  };
+  
+  var hasGYearDatatype = function(value) {
+    if(value.datatype == 'http://www.w3.org/2001/XMLSchema#gYear'){
       return true;
     }else{
       return false;
