@@ -15,6 +15,7 @@ var timelinePlugin = function(yasr) {
     	 return [];
      }
     
+     var dateVars = getDateVariables();
      for (var i = 0; i < bindings.length; i++) {
       
           var binding 	= bindings[i];
@@ -24,8 +25,8 @@ var timelinePlugin = function(yasr) {
           var uri=null; 
           
           for (var bindingVar in binding) {
-                //check if value is a xsd date
-                if(hasDateDatatype(binding[bindingVar]) || hasGYearDatatype(binding[bindingVar])) {                
+                //check if value is a date              
+        	    if(dateVars.indexOf(bindingVar) >= 0) {
                     if(stringFirstDate == null) {
                     	stringFirstDate = binding[bindingVar].value;
                     } else {
@@ -96,12 +97,16 @@ var timelinePlugin = function(yasr) {
   };
   
   var parseDate = function(value) {
-	var dateParts = value.match(/(-?\d\d?\d?\d?)-(\d\d?)-(\d\d?)/);
-	
+	var dateParts = value.match(/(-?\d\d?\d?\d?)-(\d\d?)-(\d\d?)T(\d\d?):(\d\d?):(\d\d?)Z?/);
+
 	if(dateParts == null) {
-		dateParts = value.match(/(-?\d\d?\d?\d?)/);
-		dateParts[2] = "01";
-		dateParts[3] = "01";
+		var dateParts = value.match(/(-?\d\d?\d?\d?)-(\d\d?)-(\d\d?)/);
+		
+		if(dateParts == null) {
+			dateParts = value.match(/(-?\d\d?\d?\d?)/);
+			dateParts[2] = "01";
+			dateParts[3] = "01";
+		}
 	}
 	
   	dateParts[2] -= 1; //months are zero-based
@@ -129,7 +134,7 @@ var timelinePlugin = function(yasr) {
       for (var bindingVar in binding) {
         if (checkedVars.indexOf(bindingVar) === -1 && binding[bindingVar].value) {
           checkedVars.push(bindingVar);
-          if (hasDateDatatype(binding[bindingVar]) || hasGYearDatatype(binding[bindingVar])) {
+          if (hasDateTimeDatatype(binding[bindingVar]) || hasDateDatatype(binding[bindingVar]) || hasGYearDatatype(binding[bindingVar])) {
         	  dateVars.push(bindingVar);
           }
         }
@@ -146,6 +151,14 @@ var timelinePlugin = function(yasr) {
   
   var hasDateDatatype = function(value) {
     if(value.datatype == 'http://www.w3.org/2001/XMLSchema#date'){
+      return true;
+    }else{
+      return false;
+    }
+  };
+  
+  var hasDateTimeDatatype = function(value) {
+    if(value.datatype == 'http://www.w3.org/2001/XMLSchema#dateTime'){
       return true;
     }else{
       return false;

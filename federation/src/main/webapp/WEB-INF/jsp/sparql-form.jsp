@@ -26,11 +26,13 @@
 <link rel="stylesheet" href="<c:url value="/resources/MDB-Free/css/bootstrap.min.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/MDB-Free/css/mdb.min.css" />">
 
-<!-- App-specific CSS -->
-<link rel="stylesheet" href="<c:url value="/resources/css/openarchaeo-federation.css" />" />
-
 <!-- Vis.js -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css">
+
+<!-- App-specific CSS -->
+<link rel="stylesheet" href="<c:url value="/resources/css/openarchaeo-federation.css" />" />
+<!-- Overwrite timeline CSS -->
+<link rel="stylesheet" href="<c:url value="/resources/css/timeline.css" />" />
 
 <!-- favicon, if any -->
 <link rel="icon" type="image/png" href="resources/favicon.png" />
@@ -41,50 +43,7 @@
 
 
 <style>
-  .yasqe .CodeMirror { height: 420px; }
-
-    .vis-timeline {
-      background: #fafcff;
-    }
-
-    .vis-item {
-      box-shadow: 5px 5px 20px rgba(128,128,128, 0.5);
-    }
-
-    .vis-item,
-    .vis-item.vis-line {
-    	background-color:#fff;
-    	border-color:#868da4;
-    	color:#222;
-    }
-    
-    .vis-item a {
-    	color:#222;
-    }
-
-    .vis-item.vis-dot {
-    }
-
-    .vis-item.vis-selected {
-		background-color:#fffef1;
-    }
-
-    .vis-time-axis .vis-text {
-      padding-top: 10px;
-      padding-left: 5px;
-    }
-
-    .vis-time-axis .vis-text.vis-major {
-      font-weight: bold;
-    }
-
-    .vis-time-axis .vis-grid.vis-minor {
-    }
-
-    .vis-time-axis .vis-grid.vis-major {
-
-    }
-  
+  .yasqe .CodeMirror { height: 420px; }  
 </style>
 
 </head>

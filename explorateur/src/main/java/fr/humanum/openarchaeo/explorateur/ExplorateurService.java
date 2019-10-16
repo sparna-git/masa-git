@@ -42,21 +42,45 @@ public class ExplorateurService {
 				PathParser.parse("<http://www.w3.org/2004/02/skos/core#prefLabel>", ModelFactory.createDefaultModel()),
 				"this",
 				"thisLabel",
+				true,
 				true
 		))),
 		RAWRESPONSE(Collections.singletonList(new SparqlFetchExtraPropertyPostProcessor(
 				PathParser.parse("<http://www.w3.org/2004/02/skos/core#prefLabel>", ModelFactory.createDefaultModel()),
 				"this",
 				"thisLabel",
+				true,
 				true
 		))),
 		GCHART(null),
 		PIVOT(null),
 		TIMELINE(Arrays.asList(new SparqlPostProcessor[] { 
+			new SparqlFetchExtraPropertyPostProcessor(
+					PathParser.parse("<http://www.w3.org/2004/02/skos/core#prefLabel>", ModelFactory.createDefaultModel()),
+					"this",
+					"thisLabel",
+					true,
+					true
+			),
 			new SparqlFetchExtraPropertyPostProcessor(					
-				PathParser.parse("<http://www.w3.org/2004/02/skos/core#prefLabel>", ModelFactory.createDefaultModel()),
+				PathParser.parse("<http://www.cidoc-crm.org/cidoc-crm/P8i_witnessed>", ModelFactory.createDefaultModel()),
 				"this",
-				"thisLabel",
+				"event",
+				false,
+				false
+			),
+			new SparqlFetchExtraPropertyPostProcessor(					
+				PathParser.parse("<http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span>/<http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin>", ModelFactory.createDefaultModel()),
+				"event",
+				"begin",
+				true,
+				false
+			),
+			new SparqlFetchExtraPropertyPostProcessor(					
+				PathParser.parse("<http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span>/<http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end>", ModelFactory.createDefaultModel()),
+				"event",
+				"end",
+				true,
 				false
 			)
 		})),
@@ -65,18 +89,21 @@ public class ExplorateurService {
 				PathParser.parse("(<http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location>|(<http://www.ics.forth.gr/isl/CRMsci/O19i_was_object_found_by>/<http://www.ics.forth.gr/isl/CRMsci/S19_Encounter_Event>/<http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location>))/<http://www.w3.org/2003/01/geo/wgs84_pos#lat>", ModelFactory.createDefaultModel()),
 				"this",
 				"latitude",
+				true,
 				false
 			),
 			new SparqlFetchExtraPropertyPostProcessor(
 				PathParser.parse("(<http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location>|(<http://www.ics.forth.gr/isl/CRMsci/O19i_was_object_found_by>/<http://www.ics.forth.gr/isl/CRMsci/S19_Encounter_Event>/<http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location>))/<http://www.w3.org/2003/01/geo/wgs84_pos#long>", ModelFactory.createDefaultModel()),
 				"this",
 				"longitude",
+				true,
 				false
 			),
 			new SparqlFetchExtraPropertyPostProcessor(
 				PathParser.parse("<http://www.w3.org/2004/02/skos/core#prefLabel>", ModelFactory.createDefaultModel()),
 				"this",
 				"pointLabel",
+				true,
 				false
 			),
 			new SparqlBindWktPostProcessor("this", "point")

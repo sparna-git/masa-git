@@ -25,11 +25,13 @@
 <link rel="stylesheet" href="<c:url value="/resources/MDB-Free/css/bootstrap.min.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/MDB-Free/css/mdb.min.css" />">
 
-<!-- App-specific CSS -->
-<link rel="stylesheet" href="<c:url value="/resources/css/openarchaeo-explorateur.css" />" />
-
 <!-- Vis.js -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css">
+
+<!-- App-specific CSS -->
+<link rel="stylesheet" href="<c:url value="/resources/css/openarchaeo-explorateur.css" />" />
+<!-- Overwrite timeline CSS -->
+<link rel="stylesheet" href="<c:url value="/resources/css/timeline.css" />" />
 
 <!-- Codemirror and SPARQL mode -->
 <script src="<c:url value="/resources/codemirror/lib/codemirror.js" />"></script>
@@ -159,6 +161,8 @@
        	yasr = YASR(
        			document.getElementById("yasr"),
        			{ 
+       				// set plugins
+       				"outputPlugins": ["error", "boolean", "rawResponse", "table", "pivot", "leaflet", "gchart", "timeline"],
        				// select the proper output
        				"output": $( "#view option:selected" ).val(),
        				// still allow to switch to other display
