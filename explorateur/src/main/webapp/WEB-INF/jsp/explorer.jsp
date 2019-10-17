@@ -61,9 +61,14 @@
 		<div class="row justify-content-center">
 			<div class="col-sm-10">			
 				<h1><fmt:message key="explore.title" /></h1>
+				<fmt:message key="explore.sources" /> : ${data.sourcesDisplayString}
 			
-				<input type="hidden" value="${sources}" name="sources" id="sources">
-				
+			
+				<div id="hiddenSources">
+					<c:forEach items="${data.sources}" var="source" varStatus="i">
+						<input type="hidden" value="${source.sourceString}" name="source" />
+					</c:forEach>
+				</div>	
 				
 				<div class="card" id="sparnatural-container">
 				  <div class="card-body">
@@ -117,7 +122,7 @@
 	<script src="<c:url value="/resources/MDB-Free/js/bootstrap.min.js" />"></script>
  	<script src="<c:url value="/resources/js/timeline.js" />"></script>
  	
- 	<!-- simsemsearch -->
+ 	<!-- sparnatural -->
  	<script src="<c:url value="/resources/js/sparnatural.js" />"></script>
 
 	<script type="text/javascript">
@@ -196,10 +201,19 @@
 		 var sparql = $('#sparql').val();
 		 onStartExecute();
 		 
+		 var sourcesUrls = [];
+		 $('#hiddenSources input').each(function(){
+			 sourcesUrls.push(encodeURIComponent($(this).val()));
+	     });
+		 
+		 sourceStringParam = sourcesUrls.join("&source=");
+		 
+		 console.log(sourceStringParam);
+		 
 		 $.ajax({
 	         url : 'expand',
 	         type : 'POST', 
-	         data : 'query=' + encodeURIComponent(sparql) + '&sources=${sources}&view='+($( "#view option:selected" ).val()), 
+	         data : 'query=' + encodeURIComponent(sparql) + '&source=' + sourceStringParam + '&view='+($( "#view option:selected" ).val()), 
 	         success: function(response) {
 	        	var query = response.expandQuery;
 	        	onSuccessExpandQuery(query);

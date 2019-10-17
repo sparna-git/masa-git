@@ -13,7 +13,7 @@ public class RepositorySupplier {
 
 	protected FederationSource source;
 	
-	public RepositorySupplier (FederationSource source){
+	public RepositorySupplier (FederationSource source) {
 		super();
 		this.source = source;
 	}

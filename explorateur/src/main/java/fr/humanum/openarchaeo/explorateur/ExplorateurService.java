@@ -167,14 +167,15 @@ public class ExplorateurService {
 		return result;
 	}
 	
-	public String addSourceToQuery(String query, String sourceParam) {
-		if(sourceParam == null || sourceParam.equals("")) {
+	public String addSourcesToQuery(String query, List<String> sources) {
+		if(sources == null || sources.size() == 0) {
 			log.debug("No sources provided, don't add sources to query");
 			return query;
 		}
 		
-		String [] sources=sourceParam.split("[ ]");		
+		// String [] sources=sourceParam.split("[ ]");		
 		Query q=QueryFactory.create(query);
+		
 		for (String string : sources) {
 			log.debug("Adding source "+string+" to query");
 			q.getNamedGraphURIs().add(string);

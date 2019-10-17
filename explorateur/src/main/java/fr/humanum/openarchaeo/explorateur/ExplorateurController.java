@@ -4,9 +4,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -63,6 +65,7 @@ public class ExplorateurController {
 
 		log.debug("Récupération des sources");
 		List<FederationSourceJson> sourcesDefinition = explorateurService.getSources();
+		SessionData.get(request.getSession()).setSources(sourcesDefinition);
 		log.debug("Récupération des sources terminée");
 		
 		ModelAndView model=new ModelAndView("sourcesSelect");
@@ -75,12 +78,27 @@ public class ExplorateurController {
 	public ModelAndView sparql(
 			HttpServletRequest request,
 			HttpServletResponse response,
-			@RequestParam(value="sources",required=true) String sources
-			){
+			@RequestParam(value="source",required=true) List<String> sources
+	) throws Exception {
 
 		ModelAndView model=new ModelAndView("explorer");
-		model.addObject("sources", sources);
-		model.addObject("queries", this.explorateurService.getExampleQueries());
+		
+		// store sources if they are not
+		if(SessionData.get(request.getSession()).getSources() == null) {
+			SessionData.get(request.getSession()).setSources(explorateurService.getSources());
+		}
+
+		List<SourceExplorerDisplay> sourcesDisplay = sources.stream().map(s -> {			
+			// lookup source
+			FederationSourceJson theSource = SessionData.get(request.getSession()).findSourceById(s);			
+			return new SourceExplorerDisplay(s, (theSource != null)?theSource.getTitle("fr"):s);
+		})
+		.collect(Collectors.toList());
+
+		ExplorerDisplayData data = new ExplorerDisplayData();
+		data.setSources(sourcesDisplay);
+		
+		model.addObject("data", data);
 		model.addObject("legalNotice", this.readLegalNotice(SessionData.get(request.getSession()).getUserLocale()));
 		return model;
 	}
@@ -90,7 +108,7 @@ public class ExplorateurController {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value="query",required=true) String query,
-			@RequestParam(value="sources",required=false) String sourceParam,
+			@RequestParam(value="source",required=false) List<String> sources,
 			@RequestParam(value="view",required=true) String view
 	) throws IOException{
 
@@ -100,7 +118,7 @@ public class ExplorateurController {
 		log.debug("Expand query  : 1. add sources, 2. translate to CIDOC-CRM, 3. add extra properties");
 		
 		//ajout de la source à la requete si source != null
-		query=explorateurService.addSourceToQuery(query,sourceParam);
+		query=explorateurService.addSourcesToQuery(query,sources);
 		
 		//Expand query
 		String queryExpand=explorateurService.expandQuery(query);

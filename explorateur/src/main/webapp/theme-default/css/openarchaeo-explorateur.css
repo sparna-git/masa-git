@@ -38,12 +38,8 @@ footer {
 	margin: 1em;
 }
 
-.sourceCardHeader-hovered {
-	background-color: #fbb03c;
-}
-
 .sourceCardHeader-selected {
-	background-color: #f15c26;
+	background-color: #fff2ee;
 	color: black;
 }
 

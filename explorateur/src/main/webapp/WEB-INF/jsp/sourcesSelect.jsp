@@ -56,10 +56,10 @@
 					    			<c:forEach items="${data}" var="source" varStatus="i">
 					    				<div class="col-6">
 						    				<div class="card sourceCard">
-						    				  <div class="card-header sourceCardHeader" id="heading${i.index}" data-uri="${source.sourceString}">
+						    				  <div class="card-header sourceCardHeader" id="heading${i.index}">
 						    				  	<div class="row">
 						    				  		<div class="col-sm-10">
-							    				  		<h4 class="card-title">${source.getTitle(lang)}</h4>
+							    				  		<h4 class="card-title"><input type="checkbox" class="selectSourceCheckbox" data-uri="${source.sourceString}" />&nbsp;${source.getTitle(lang)}</h4>
 							    				  		<p><em>${source.getShortDesc(lang)}</em></p>
 						    				  		</div>
 						    				  	</div>
@@ -86,7 +86,7 @@
 								</div>
 				    		</div>
 				    		<form action="explorer" method="get" style="margin:auto;" name="formsource" id="formsource">
-								<input type="hidden" name="sources" id="sources" />
+				    			<div id="hiddenSources"></div>
 								<button class="btn btn-default" id="submitSources"><fmt:message key="sources.validate" /></button>
 							</form>
 				    </div>
@@ -108,19 +108,30 @@
 			
 			$('#submitSources').attr('disabled', true);
 			
-			$(".sourceCardHeader").hover(function () {
-    		    $(this).toggleClass("sourceCardHeader-hovered");
-    		});
+			// $(".sourceCardHeader").hover(function () {
+    		//    $(this).toggleClass("sourceCardHeader-hovered");
+    		// });
     		
-    		$(".sourceCardHeader").click(function () {
-    			// deleted selected class rom others
-    			$(".sourceCardHeader").removeClass("sourceCardHeader-selected");
-    			// set selected class on this one
-    			$(this).addClass("sourceCardHeader-selected");
-    			// store value in hidden field
-    			$("#sources").val($(this).attr('data-uri'));
+			$(".selectSourceCheckbox").click(function () {
+				if($(this).prop('checked')) {
+    				// set selected class on this one
+    				$(this).closest(".sourceCardHeader").addClass("sourceCardHeader-selected");
+				} else {
+					$(this).closest(".sourceCardHeader").removeClass("sourceCardHeader-selected");
+				}
+				
+				// recompute value of sources
+				$("#hiddenSources").html("")
+				$(".selectSourceCheckbox:checked").each(function( index ) { 
+					$("#hiddenSources").append("<input type='hidden' name='source' value="+$(this).attr('data-uri')+" />");
+				});
+				
     			// enable submit button
-    			$('#submitSources').attr('disabled', false);
+    			if($(".selectSourceCheckbox:checked").length > 0) {
+	    			$('#submitSources').attr('disabled', false);
+    			} else {
+    				$('#submitSources').attr('disabled', true);
+    			}
     		});	
     		
     		$("#submitSources").click(function () {
