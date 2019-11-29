@@ -51,6 +51,10 @@
 <link href='https://cdn.jsdelivr.net/npm/yasgui-yasr@2.12.19/dist/yasr.min.css' rel='stylesheet' type='text/css'/>
 
 
+<!-- datepicker -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chenfengyuan/datepicker@1.0.9/dist/datepicker.min.css">
+
+
 </head>
 <body>
 	<jsp:include page="navbar.jsp">
@@ -121,6 +125,9 @@
 	<script src="<c:url value="/resources/MDB-Free/js/popper.min.js" />"></script>
 	<script src="<c:url value="/resources/MDB-Free/js/bootstrap.min.js" />"></script>
  	<script src="<c:url value="/resources/js/timeline.js" />"></script>
+ 	
+ 	<!-- datepicker -->
+ 	<script src="https://cdn.jsdelivr.net/npm/@chenfengyuan/datepicker@1.0.9/dist/datepicker.min.js"></script>
  	
  	<!-- sparnatural -->
  	<script src="<c:url value="/resources/js/sparnatural.js" />"></script>
