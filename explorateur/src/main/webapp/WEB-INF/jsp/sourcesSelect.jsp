@@ -59,7 +59,7 @@
 						    				  <div class="card-header sourceCardHeader" id="heading${i.index}">
 						    				  	<div class="row">
 						    				  		<div class="col-sm-10">
-							    				  		<h4 class="card-title"><input type="checkbox" class="selectSourceCheckbox" data-uri="${source.sourceString}" />&nbsp;${source.getTitle(lang)}</h4>
+							    				  		<h4 class="card-title"><input type="checkbox" class="selectSourceCheckbox" data-uri="${source.sourceString}" data-endpoint="${source.endpoint}" />&nbsp;${source.getTitle(lang)}</h4>
 							    				  		<p><em>${source.getShortDesc(lang)}</em></p>
 						    				  		</div>
 						    				  	</div>
@@ -85,8 +85,11 @@
 									</c:forEach>
 								</div>
 				    		</div>
+				    		
 				    		<form action="explorer" method="get" style="margin:auto;" name="formsource" id="formsource">
-				    			<div id="hiddenSources"></div>
+				    			<div id="hiddenSources">
+				    				<!-- here be inserted hidden inputs -->
+				    			</div>
 								<button class="btn btn-default" id="submitSources"><fmt:message key="sources.validate" /></button>
 							</form>
 				    </div>
@@ -107,10 +110,6 @@
 		$( document ).ready(function() {
 			
 			$('#submitSources').attr('disabled', true);
-			
-			// $(".sourceCardHeader").hover(function () {
-    		//    $(this).toggleClass("sourceCardHeader-hovered");
-    		// });
     		
 			$(".selectSourceCheckbox").click(function () {
 				if($(this).prop('checked')) {
@@ -126,11 +125,21 @@
 					$("#hiddenSources").append("<input type='hidden' name='source' value="+$(this).attr('data-uri')+" />");
 				});
 				
-    			// enable submit button
+    			// enable submit button if needed
     			if($(".selectSourceCheckbox:checked").length > 0) {
 	    			$('#submitSources').attr('disabled', false);
     			} else {
     				$('#submitSources').attr('disabled', true);
+    			}
+    			
+    			// enable warning on federation if needed
+    			var endpoints = $('.selectSourceCheckbox:checked').map(function() {
+    				return $(this).attr('data-endpoint');
+				}).get();
+    			// keep unique values
+    			endpoints = jQuery.uniqueSort( endpoints );
+    			if(endpoints.length > 1) {
+    				console.log("Warning on federation !");
     			}
     		});	
     		
