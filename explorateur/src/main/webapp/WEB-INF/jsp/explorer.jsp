@@ -257,12 +257,12 @@
 			sendQueryOnFirstClassSelected: true,
 			noTypeCriteriaForObjects: ["http://www.openarchaeo.fr/explorateur/onto#Type", "http://www.openarchaeo.fr/explorateur/onto#Lieu"],
 			autocomplete : {
-				url: function(domain, property, range, key) {
+				autocompleteUrl: function(domain, property, range, key) {
 					return '/federation/api/autocomplete?sources=${sources}&key='+key+'&domain='+encodeURIComponent(domain)+'&property='+encodeURIComponent(property)+'&range='+encodeURIComponent(range) ;
 				}
 			},
 			list : {
-				url: function(domain, property, range) {
+				listUrl: function(domain, property, range) {
 					return '/federation/api/list?sources=${sources}&domain='+encodeURIComponent(domain)+'&property='+encodeURIComponent(property)+'&range='+encodeURIComponent(range) ;
 				}
 			},
