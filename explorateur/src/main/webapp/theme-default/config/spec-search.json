@@ -132,8 +132,7 @@
           "@language" : "fr"
         }
       ],
-      "icon":  "<span style='font-size: 170%;' >&nbsp;<i class='fas fa-home'></i></span>",
-      "highlightedIcon":  "<span style='font-size: 170%;' >&nbsp;<i class='fas fa-home'></i></span>"
+      "faIcon":  "fas fa-home"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#Mur",
@@ -198,6 +197,21 @@
       ],
 	  "icon":  "assets/icons/noir/temps.png",
 	  "highlightedIcon":  "assets/icons/blanc/temps.png"
+    },
+    {
+      "@id" : "http://www.openarchaeo.fr/explorateur/onto#Document",
+      "@type" : "Class",
+      "label": [
+        {
+          "@value" : "Document",
+          "@language" : "en"
+        },
+        {
+          "@value" : "Document",
+          "@language" : "fr"
+        }
+      ],
+      "faIcon":  "fas fa-file"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#Label",
@@ -594,6 +608,94 @@
       }
     },
     {
+      "@id" : "http://www.openarchaeo.fr/explorateur/onto#documente",
+      "@type" : [
+        "ObjectProperty",
+        "AutocompleteProperty"
+      ],
+      "label": [
+        {
+          "@value" : "documents",
+          "@language" : "en"
+        },
+        {
+          "@value" : "documente",
+          "@language" : "fr"
+        }
+      ],
+      "domain": "http://www.openarchaeo.fr/explorateur/onto#Document",
+      "range": {
+        "@type" : "Class",
+        "unionOf" : {
+          "@list" : [ 
+            { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Site"},
+            { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Entite_Archeologique"}, 
+            { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Fait"},
+            { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Sepulture"},
+            { "@id" : "http://www.openarchaeo.fr/explorateur/onto#US"},
+            { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Mobilier"}            
+          ]
+        }
+      }
+    },
+    {
+      "@id" : "http://www.openarchaeo.fr/explorateur/onto#createur",
+      "@type" : [
+        "ObjectProperty",
+        "ListProperty"
+      ],
+      "label": [
+        {
+          "@value" : "has author",
+          "@language" : "en"
+        },
+        {
+          "@value" : "a pour auteur",
+          "@language" : "fr"
+        }
+      ],
+      "domain": "http://www.openarchaeo.fr/explorateur/onto#Document",
+      "range": "http://www.openarchaeo.fr/explorateur/onto#Acteur"
+    },
+    {
+      "@id" : "http://www.openarchaeo.fr/explorateur/onto#a_cree",
+      "@type" : [
+        "ObjectProperty",
+        "AutocompleteProperty"
+      ],
+      "label": [
+        {
+          "@value" : "author of",
+          "@language" : "en"
+        },
+        {
+          "@value" : "auteur de",
+          "@language" : "fr"
+        }
+      ],
+      "domain": "http://www.openarchaeo.fr/explorateur/onto#Acteur",
+      "range": "http://www.openarchaeo.fr/explorateur/onto#Document"
+    },
+    {
+      "@id" : "http://www.openarchaeo.fr/explorateur/onto#date_creation",
+      "@type" : [
+        "ObjectProperty",
+        "TimeDateDayPickerProperty"
+      ],
+      "label": [
+        {
+          "@value" : "created at",
+          "@language" : "en"
+        },
+        {
+          "@value" : "créé à",
+          "@language" : "fr"
+        }
+      ],
+      "domain": "http://www.openarchaeo.fr/explorateur/onto#Document",
+      "range": "http://www.openarchaeo.fr/explorateur/onto#Temps"
+    },
+    {
       "@id" : "http://www.w3.org/2004/02/skos/core#prefLabel",
       "@type" : [
         "ObjectProperty",
@@ -617,6 +719,7 @@
             { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Site"},
             { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Mobilier"},
             { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Sepulture"},
+            { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Mur"},
             { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Entite_Archeologique"}, 
             { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Fait"},
             { "@id" : "http://www.openarchaeo.fr/explorateur/onto#US"}
