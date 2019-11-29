@@ -251,9 +251,11 @@
 
 
 		 $('#sparnatural').Sparnatural({
-			pathSpecSearch: 'resources/config/spec-search.json',
+			config: 'resources/config/spec-search.json',
 			language: '${sessionScope['fr.humanum.openarchaeo.SessionData'].userLocale.language}',
 			addDistinct: true,
+			sendQueryOnFirstClassSelected: true,
+			noTypeCriteriaForObjects: ["http://www.openarchaeo.fr/explorateur/onto#Type", "http://www.openarchaeo.fr/explorateur/onto#Lieu"],
 			autocomplete : {
 				url: function(domain, property, range, key) {
 					return '/federation/api/autocomplete?sources=${sources}&key='+key+'&domain='+encodeURIComponent(domain)+'&property='+encodeURIComponent(property)+'&range='+encodeURIComponent(range) ;

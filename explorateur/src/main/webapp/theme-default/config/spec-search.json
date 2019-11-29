@@ -16,10 +16,6 @@
     "unionOf": {
       "@id": "http://www.w3.org/2002/07/owl#unionOf",
       "@type": "@id"
-    },
-    "widget": {
-      "@id": "http://ontologies.sparna.fr/Sparnatural#widget",
-      "@type": "@id"
     }
   },
   "@graph": [
@@ -40,8 +36,8 @@
           "@language" : "fr"
         }
       ],
-	  "iconPath":  "assets/icons/noir/mobilier.png",
-	  "highlightedIconPath":  "assets/icons/blanc/mobilier.png"
+	  "icon":  "assets/icons/noir/mobilier.png",
+	  "highlightedIcon":  "assets/icons/blanc/mobilier.png"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#Type",
@@ -56,8 +52,8 @@
           "@language" : "fr"
         }
       ],
-	  "iconPath":  "assets/icons/noir/type.png",
-	  "highlightedIconPath":  "assets/icons/blanc/type.png"
+	  "icon":  "assets/icons/noir/type.png",
+	  "highlightedIcon":  "assets/icons/blanc/type.png"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#Site",
@@ -72,8 +68,8 @@
           "@language" : "fr"
         }
       ],
-	  "iconPath":  "assets/icons/noir/site.png",
-	  "highlightedIconPath":  "assets/icons/blanc/site.png"
+	  "icon":  "assets/icons/noir/site.png",
+	  "highlightedIcon":  "assets/icons/blanc/site.png"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#US",
@@ -88,8 +84,8 @@
           "@language" : "fr"
         }
       ],
-	  "iconPath":  "assets/icons/noir/unite_str.png",
-	  "highlightedIconPath":  "assets/icons/blanc/unite_str.png"
+	  "icon":  "assets/icons/noir/unite_str.png",
+	  "highlightedIcon":  "assets/icons/blanc/unite_str.png"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#Fait",
@@ -104,8 +100,8 @@
           "@language" : "fr"
         }
       ],
-	  "iconPath":  "assets/icons/noir/fait.png",
-	  "highlightedIconPath":  "assets/icons/blanc/fait.png"
+	  "icon":  "assets/icons/noir/fait.png",
+	  "highlightedIcon":  "assets/icons/blanc/fait.png"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#Sepulture",
@@ -120,8 +116,8 @@
           "@language" : "fr"
         }
       ],
-	  "iconPath":  "assets/icons/noir/sepulture.png",
-	  "highlightedIconPath":  "assets/icons/blanc/sepulture.png"
+	  "icon":  "assets/icons/noir/sepulture.png",
+	  "highlightedIcon":  "assets/icons/blanc/sepulture.png"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#Entite_Archeologique",
@@ -136,8 +132,8 @@
           "@language" : "fr"
         }
       ],
-      "iconPath":  "<span style='font-size: 170%;' >&nbsp;<i class='fas fa-home'></i></span>",
-      "highlightedIconPath":  "<span style='font-size: 170%;' >&nbsp;<i class='fas fa-home'></i></span>"
+      "icon":  "<span style='font-size: 170%;' >&nbsp;<i class='fas fa-home'></i></span>",
+      "highlightedIcon":  "<span style='font-size: 170%;' >&nbsp;<i class='fas fa-home'></i></span>"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#Mur",
@@ -152,8 +148,8 @@
           "@language" : "fr"
         }
       ],
-    "iconPath":  "assets/icons/noir/construction.png",
-    "highlightedIconPath":  "assets/icons/blanc/construction.png"
+    "icon":  "assets/icons/noir/construction.png",
+    "highlightedIcon":  "assets/icons/blanc/construction.png"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#Acteur",
@@ -168,8 +164,8 @@
           "@language" : "fr"
         }
       ],
-	  "iconPath":  "assets/icons/noir/acteur.png",
-	  "highlightedIconPath":  "assets/icons/blanc/acteur.png"
+	  "icon":  "assets/icons/noir/acteur.png",
+	  "highlightedIcon":  "assets/icons/blanc/acteur.png"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#Lieu",
@@ -184,8 +180,8 @@
           "@language" : "fr"
         }
       ],
-	  "iconPath":  "assets/icons/noir/lieu.png",
-	  "highlightedIconPath":  "assets/icons/blanc/lieu.png"
+	  "icon":  "assets/icons/noir/lieu.png",
+	  "highlightedIcon":  "assets/icons/blanc/lieu.png"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#Temps",
@@ -200,8 +196,8 @@
           "@language" : "fr"
         }
       ],
-	  "iconPath":  "assets/icons/noir/temps.png",
-	  "highlightedIconPath":  "assets/icons/blanc/temps.png"
+	  "icon":  "assets/icons/noir/temps.png",
+	  "highlightedIcon":  "assets/icons/blanc/temps.png"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#Label",
@@ -216,12 +212,15 @@
           "@language" : "fr"
         }
       ],
-	  "iconPath":  "assets/icons/noir/search.png",
-	  "highlightedIconPath":  "assets/icons/blanc/search.png"
+	  "icon":  "assets/icons/noir/search.png",
+	  "highlightedIcon":  "assets/icons/blanc/search.png"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#situe_a",
-      "@type" : "ObjectProperty",
+      "@type" : [
+        "ObjectProperty",
+        "AutocompleteProperty"
+      ],
       "label": [
         {
           "@value" : "located in",
@@ -233,14 +232,14 @@
         }
       ],
       "domain": "http://www.openarchaeo.fr/explorateur/onto#Site",
-      "range": "http://www.openarchaeo.fr/explorateur/onto#Lieu",
-      "widget": {
-        "@type" : "http://ontologies.sparna.fr/Sparnatural#AutocompleteWidget"
-      }
+      "range": "http://www.openarchaeo.fr/explorateur/onto#Lieu"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#de_type",
-      "@type" : "ObjectProperty",
+      "@type" : [
+        "ObjectProperty",
+        "ListWidget"
+      ],
       "label": [
         {
           "@value" : "has type",
@@ -260,14 +259,14 @@
           ]
         }
       },
-      "range": "http://www.openarchaeo.fr/explorateur/onto#Type",
-      "widget": {
-        "@type" : "http://ontologies.sparna.fr/Sparnatural#ListWidget"
-      }
+      "range": "http://www.openarchaeo.fr/explorateur/onto#Type"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#etudie_par",
-      "@type" : "ObjectProperty",
+      "@type" : [
+        "ObjectProperty",
+        "ListWidget"
+      ],
       "label": [
         {
           "@value" : "studied by",
@@ -279,14 +278,14 @@
         }
       ],
       "domain": "http://www.openarchaeo.fr/explorateur/onto#Site",
-      "range": "http://www.openarchaeo.fr/explorateur/onto#Acteur",
-      "widget": {
-        "@type" : "http://ontologies.sparna.fr/Sparnatural#ListWidget"
-      }
+      "range": "http://www.openarchaeo.fr/explorateur/onto#Acteur"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#a_trouve",
-      "@type" : "ObjectProperty",
+      "@type" : [
+        "ObjectProperty",
+        "AutocompleteProperty"
+      ],
       "label": [
         {
           "@value" : "has found",
@@ -309,14 +308,14 @@
             { "@id" : "http://www.openarchaeo.fr/explorateur/onto#US"}
           ]
         }
-      },
-      "widget": {
-        "@type" : "http://ontologies.sparna.fr/Sparnatural#AutocompleteWidget"
       }
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#date_de",
-      "@type" : "ObjectProperty",
+      "@type" : [
+        "ObjectProperty",
+        "TimeDatePickerProperty"
+      ],
       "label": [
         {
           "@value" : "dated from",
@@ -340,14 +339,14 @@
           ]
         }
       },
-      "range": "http://www.openarchaeo.fr/explorateur/onto#Temps",
-      "widget": {
-        "@type" : "http://ontologies.sparna.fr/Sparnatural#TimeWidget"
-      }  
+      "range": "http://www.openarchaeo.fr/explorateur/onto#Temps"  
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#trouve_a",
-      "@type" : "ObjectProperty",
+      "@type" : [
+        "ObjectProperty",
+        "AutocompleteProperty"
+      ],
       "label": [
         {
           "@value" : "found in",
@@ -369,14 +368,14 @@
           ]
         }
       },
-      "range": "http://www.openarchaeo.fr/explorateur/onto#Site",
-      "widget": {
-        "@type" : "http://ontologies.sparna.fr/Sparnatural#AutocompleteWidget"
-      }
+      "range": "http://www.openarchaeo.fr/explorateur/onto#Site"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#fait_partie_de",
-      "@type" : "ObjectProperty",
+      "@type" : [
+        "ObjectProperty",
+        "AutocompleteProperty"
+      ],
       "label": [
         {
           "@value" : "forms part of",
@@ -396,14 +395,14 @@
             { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Sepulture"}
           ]
         }
-      },
-      "widget": {
-        "@type" : "http://ontologies.sparna.fr/Sparnatural#AutocompleteWidget"
       }
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#contient",
-      "@type" : "ObjectProperty",
+      "@type" : [
+        "ObjectProperty",
+        "AutocompleteProperty"
+      ],
       "label": [
         {
           "@value" : "contains",
@@ -424,14 +423,14 @@
           ]
         }
       },
-      "range": "http://www.openarchaeo.fr/explorateur/onto#Mobilier",
-      "widget": {
-        "@type" : "http://ontologies.sparna.fr/Sparnatural#AutocompleteWidget"
-      }
+      "range": "http://www.openarchaeo.fr/explorateur/onto#Mobilier"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#interprete_comme",
-      "@type" : "ObjectProperty",
+      "@type" : [
+        "ObjectProperty",
+        "ListWidget"
+      ],
       "label": [
         {
           "@value" : "interpreted by",
@@ -451,14 +450,14 @@
           ]
         }
       },
-      "range": "http://www.openarchaeo.fr/explorateur/onto#Type",
-      "widget": {
-        "@type" : "http://ontologies.sparna.fr/Sparnatural#ListWidget"
-      }
+      "range": "http://www.openarchaeo.fr/explorateur/onto#Type"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#est_compose_de",
-      "@type" : "ObjectProperty",
+      "@type" : [
+        "ObjectProperty",
+        "AutocompleteProperty"
+      ],
       "label": [
         {
           "@value" : "composed of",
@@ -478,14 +477,14 @@
           ]
         }
       },
-      "range": "http://www.openarchaeo.fr/explorateur/onto#US",
-      "widget": {
-        "@type" : "http://ontologies.sparna.fr/Sparnatural#AutocompleteWidget"
-      }
+      "range": "http://www.openarchaeo.fr/explorateur/onto#US"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#trouve_dans",
-      "@type" : "ObjectProperty",
+      "@type" : [
+        "ObjectProperty",
+        "AutocompleteProperty"
+      ],
       "label": [
         {
           "@value" : "found in",
@@ -506,14 +505,14 @@
             { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Sepulture"}
           ]
         }
-      },
-      "widget": {
-        "@type" : "http://ontologies.sparna.fr/Sparnatural#AutocompleteWidget"
       }
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#utilise_pour",
-      "@type" : "ObjectProperty",
+      "@type" : [
+        "ObjectProperty",
+        "ListWidget"
+      ],
       "label": [
         {
           "@value" : "function is",
@@ -525,14 +524,14 @@
         }
       ],
       "domain": "http://www.openarchaeo.fr/explorateur/onto#Mobilier",
-      "range": "http://www.openarchaeo.fr/explorateur/onto#Type",
-      "widget": {
-        "@type" : "http://ontologies.sparna.fr/Sparnatural#ListWidget"
-      }
+      "range": "http://www.openarchaeo.fr/explorateur/onto#Type"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#fait_en",
-      "@type" : "ObjectProperty",
+      "@type" : [
+        "ObjectProperty",
+        "ListWidget"
+      ],
       "label": [
         {
           "@value" : "consists of",
@@ -544,14 +543,14 @@
         }
       ],
       "domain": "http://www.openarchaeo.fr/explorateur/onto#Mobilier",
-      "range": "http://www.openarchaeo.fr/explorateur/onto#Type",
-      "widget": {
-        "@type" : "http://ontologies.sparna.fr/Sparnatural#ListWidget"
-      }
+      "range": "http://www.openarchaeo.fr/explorateur/onto#Type"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#a_etudie",
-      "@type" : "ObjectProperty",
+      "@type" : [
+        "ObjectProperty",
+        "AutocompleteProperty"
+      ],
       "label": [
         {
           "@value" : "studied",
@@ -563,14 +562,14 @@
         }
       ],
       "domain": "http://www.openarchaeo.fr/explorateur/onto#Acteur",
-      "range": "http://www.openarchaeo.fr/explorateur/onto#Site",
-      "widget": {
-        "@type" : "http://ontologies.sparna.fr/Sparnatural#AutocompleteWidget"
-      }
+      "range": "http://www.openarchaeo.fr/explorateur/onto#Site"
     },
     {
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#entite_archeologique_est_compose_de",
-      "@type" : "ObjectProperty",
+      "@type" : [
+        "ObjectProperty",
+        "AutocompleteProperty"
+      ],
       "label": [
         {
           "@value" : "is composed of",
@@ -591,14 +590,14 @@
             { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Fait"}
           ]
         }
-      },
-      "widget": {
-        "@type" : "http://ontologies.sparna.fr/Sparnatural#AutocompleteWidget"
       }
     },
     {
       "@id" : "http://www.w3.org/2004/02/skos/core#prefLabel",
-      "@type" : "ObjectProperty",
+      "@type" : [
+        "ObjectProperty",
+        "SearchProperty"
+      ],
       "label": [
         {
           "@value" : "text search",
@@ -623,10 +622,7 @@
           ]
         }
       },
-      "range": "http://www.openarchaeo.fr/explorateur/onto#Label",
-      "widget": {
-        "@type" : "http://ontologies.sparna.fr/Sparnatural#SearchWidget"
-      }
+      "range": "http://www.openarchaeo.fr/explorateur/onto#Label"
     }
   ]
 }
