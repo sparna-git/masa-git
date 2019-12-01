@@ -125,6 +125,19 @@
 				  </div>
 				</div>
 				
+				<div class="card adminCard">
+				  <div class="card-body">
+				    <h3 class="card-title">Le modèle de données OpenArchaeo (Shapes SHACL)</h3>
+				    <div class="card-text">
+				    	<ul class="fa-ul">
+				    		<li><i class="fa-li fal fa-angle-right"></i><a href="<c:url value="/resources/shapes/OpenArchaeo-Shapes.xlsx" />">Shapes OpenArchaeo en Excel</a></li>
+				    		<li><i class="fa-li fal fa-angle-right"></i><a href="<c:url value="/resources/shapes/OpenArchaeo-Shapes.ttl" />">Shapes OpenArchaeo en Turtle</a></li>
+				    	</ul>
+				    	A utiliser avec le validateur SHACL Play pour valider un fichier RDF.
+				    </div>
+				  </div>
+				</div>
+				
 				
 			</div>
 		
