@@ -76,9 +76,9 @@
 				
 				<div class="card" id="sparnatural-container">
 				  <div class="card-body">
-				    <div class="card-text">				    	
+				    <div>				    	
 						<div id="sparnatural"></div>
-						<div id="sparnatural-control">
+						<div id="sparnatural-control" class="card-text">
 							<div class="row no-gutters justify-content-end">
 								<div class="col-sm-6">
 									<div class="float-right">

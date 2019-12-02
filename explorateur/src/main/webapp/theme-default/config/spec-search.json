@@ -252,7 +252,7 @@
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#de_type",
       "@type" : [
         "ObjectProperty",
-        "ListWidget"
+        "ListProperty"
       ],
       "label": [
         {
@@ -279,7 +279,7 @@
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#etudie_par",
       "@type" : [
         "ObjectProperty",
-        "ListWidget"
+        "ListProperty"
       ],
       "label": [
         {
@@ -444,7 +444,7 @@
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#interprete_comme",
       "@type" : [
         "ObjectProperty",
-        "ListWidget"
+        "ListProperty"
       ],
       "label": [
         {
@@ -526,7 +526,7 @@
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#utilise_pour",
       "@type" : [
         "ObjectProperty",
-        "ListWidget"
+        "ListProperty"
       ],
       "label": [
         {
@@ -545,7 +545,7 @@
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#fait_en",
       "@type" : [
         "ObjectProperty",
-        "ListWidget"
+        "ListProperty"
       ],
       "label": [
         {
