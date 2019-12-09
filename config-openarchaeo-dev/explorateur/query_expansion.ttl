@@ -160,14 +160,8 @@ crm:E22_Man-Made_Object rdfs:subClassOf :Mobilier .
 
 # date_de
 
-:trouve_dans owl:propertyChainAxiom (
-	crmarchaeo:AP21i_is_contained_in
-) .
-:trouve_dans owl:propertyChainAxiom (
-	crmsci:O19i_was_object_found_by
-	crm:P8_took_place_on_or_within
-) .
-
+:trouve_dans owl:propertyChainAxiom 
+	"crmarchaeo:AP21i_is_contained_in|^crmarchaeo:AP21_contains" .
 
 ##### Acteur et ses propriétés
 

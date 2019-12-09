@@ -274,9 +274,12 @@
 				}
 			},
 			dates : {
-				url: function(domain, property, range) {
+				datesUrl: function(domain, property, range) {
 					return '/federation/api/periods?lang=${sessionScope['fr.humanum.openarchaeo.SessionData'].userLocale.language}' ;
-				}
+				},
+				elementLabel: function(element) {
+					return element.label + ((element.synonyms)?' '+element.synonyms.join(' '):'');
+				},
 			},
 			onQueryUpdated: function(queryString, queryJson) {
 				// ici on récupère la requete Sparql grace au premier parametre de la fonction

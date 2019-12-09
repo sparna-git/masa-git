@@ -30,18 +30,54 @@ footer {
 	text-align: center;
 }
 
+/** Source selection page **/
+
 #sourcesList {
-	margin-top:2em;
 }
 
 .sourceCard {
 	margin: 1em;
 }
 
+.keyword-badge, .spatial-badge {
+	cursor:pointer;
+	font-size:100%;
+	font-weight: normal;
+}
+
+.badge-disabled {
+	background-color: rgb(233, 233, 233);
+	color: #b6b9bb;
+}
+
 .sourceCardHeader-selected {
 	background-color: #fff2ee;
 	color: black;
 }
+
+.inline-list {
+  padding-left: 0px;
+  display: inline;
+  list-style: none;
+}
+
+.inline-list li {
+  display: inline;
+}
+
+.inline-list li:after {
+  content: ", ";
+}
+
+.inline-list li:last-child:after {
+  content: "";
+}
+
+#keywordsFacet, #spatialFacet {
+	line-height: 200%;
+}
+
+/** Explorer page **/
 
 #sparnatural-container {
 	margin-top: 1em;

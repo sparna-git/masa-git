@@ -1,10 +1,11 @@
 package fr.humanum.openarchaeo.explorateur;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -70,6 +73,16 @@ public class ExplorateurController {
 		
 		ModelAndView model=new ModelAndView("sourcesSelect");
 		model.addObject("sourcesDefinition", sourcesDefinition);
+		
+		List<FederationSourceDisplayData> fsdd = sourcesDefinition.stream()
+				.map(s -> new FederationSourceDisplayData(s, SessionData.get(request.getSession()).getUserLocale().getLanguage()))
+				.collect(Collectors.toList());
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PrintWriter pw = new PrintWriter(baos);
+		writeJson(fsdd, pw);
+		pw.flush();
+		model.addObject("sourcesDefinitionJson", baos.toString());
 		model.addObject("legalNotice", this.readLegalNotice(SessionData.get(request.getSession()).getUserLocale()));
 		return model;
 	}
@@ -168,6 +181,13 @@ public class ExplorateurController {
 			e.printStackTrace();
 			return "";
 		}
+	}
+	
+	protected void writeJson(Object o, PrintWriter out) throws JsonGenerationException, JsonMappingException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(Include.NON_NULL);
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
+		mapper.writeValue(out, o);
 	}
 
 }

@@ -5,7 +5,11 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import org.eclipse.rdf4j.model.Value;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.model.vocabulary.DCTERMS;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class FederationSourceJson  {
@@ -14,7 +18,7 @@ public class FederationSourceJson  {
 	protected String endpoint;
 	protected String defaultGraph;
 	
-	protected Map<String, List<LanguageValue>> description;
+	protected Map<String, List<LiteralOrResourceValue>> description;
 	
 	
 	
@@ -22,7 +26,7 @@ public class FederationSourceJson  {
 		super();
 	}
 
-	public FederationSourceJson(String sourceString, String endpoint, String defaultGraph, Map<String, List<LanguageValue>> description) {
+	public FederationSourceJson(String sourceString, String endpoint, String defaultGraph, Map<String, List<LiteralOrResourceValue>> description) {
 		super();
 		this.sourceString = sourceString;
 		this.endpoint = endpoint;
@@ -52,19 +56,33 @@ public class FederationSourceJson  {
 		this.defaultGraph = defaultGraph;
 	}
 	
-	static class LanguageValue {
+	static class LiteralOrResourceValue {
+		@JsonProperty("@language")
 		private String language;
+		@JsonProperty("@value")
 		private String value;
+		@JsonProperty("@type")
+		private String datatype;
+		@JsonProperty("@id")
+		private String id;
 		
-		public LanguageValue() {
+		public LiteralOrResourceValue() {
 			super();
 		}
 		
-		public LanguageValue(String value, String language) {
+		public LiteralOrResourceValue(String value, String language, String datatype) {
 			super();
 			this.language = language;
 			this.value = value;
+			this.datatype = datatype;
 		}
+		
+		public LiteralOrResourceValue(String id) {
+			super();
+			this.id = id;
+		}
+		
+		
 		public String getLanguage() {
 			return language;
 		}
@@ -77,32 +95,34 @@ public class FederationSourceJson  {
 		public void setValue(String value) {
 			this.value = value;
 		}
+		public String getDatatype() {
+			return datatype;
+		}
+		public void setDatatype(String datatype) {
+			this.datatype = datatype;
+		}
+		public String getId() {
+			return id;
+		}
+		public void setId(String id) {
+			this.id = id;
+		}
 	}
 
-	public Map<String, List<LanguageValue>> getDescription() {
+	public Map<String, List<LiteralOrResourceValue>> getDescription() {
 		return description;
 	}
 
-	public void setDescription(Map<String, List<LanguageValue>> description) {
+	public void setDescription(Map<String, List<LiteralOrResourceValue>> description) {
 		this.description = description;
 	}
 	
 	public String getTitle(String lang) {
-		List<String> titles = getValues("dcterms:"+DCTERMS.TITLE.getLocalName(), lang);
-		if(titles != null && titles.size() > 0) {
-			return titles.get(0);
-		} else {
-			return null;
-		}
+		return this.getValue("dcterms:"+DCTERMS.TITLE.getLocalName(), lang);
 	}
 	
 	public String getShortDesc(String lang) {
-		List<String> abstracts = getValues("dcterms:"+DCTERMS.DESCRIPTION.getLocalName(), lang);
-		if(abstracts != null && abstracts.size() > 0) {
-			return abstracts.get(0);
-		} else {
-			return null;
-		}
+		return this.getValue("dcterms:"+DCTERMS.DESCRIPTION.getLocalName(), lang);
 	}
 	
 	public List<String> getSpatial(String lang) {
@@ -114,26 +134,24 @@ public class FederationSourceJson  {
 	}
 	
 	public String getStartDate(String lang) {
-		List<String> values = getValues("schema:startDate", lang);
-		if(values != null && values.size() > 0) {
-			return values.get(0);
-		} else {
-			return null;
-		}
+		return this.getValue("schema:startDate", lang);
 	}
 	
 	public String getEndDate(String lang) {
-		List<String> values = getValues("schema:endDate", lang);
-		if(values != null && values.size() > 0) {
-			return values.get(0);
-		} else {
-			return null;
-		}
+		return this.getValue("schema:endDate", lang);
+	}
+	
+	public Value getStartDateValue(String lang) {
+		return this.getValueAsValue("schema:startDate", lang);
+	}
+	
+	public Value getEndDateValue(String lang) {
+		return this.getValueAsValue("schema:endDate", lang);
 	}
 	
 	public Map<String, List<String>> getDescriptionInLang(String lang) {
 		TreeMap<String, List<String>> result = new TreeMap<String, List<String>>();
-		for (Map.Entry<String, List<LanguageValue>> e : this.description.entrySet()) {
+		for (Map.Entry<String, List<LiteralOrResourceValue>> e : this.description.entrySet()) {
 			if(
 					!e.getKey().equals("dcterms:"+DCTERMS.TITLE.getLocalName())
 					&&
@@ -177,8 +195,8 @@ public class FederationSourceJson  {
 	}
 	
 	
-	private List<String> getValues(String key, String lang) {
-		List<LanguageValue> values = this.description.get(key);
+	public List<String> getValues(String key, String lang) {
+		List<LiteralOrResourceValue> values = this.description.get(key);
 		if(values == null) {
 			return null;
 		} else {
@@ -188,11 +206,60 @@ public class FederationSourceJson  {
 						||
 						(v.getLanguage() != null && v.getLanguage().equals(lang))
 					)
-					.map(v -> v.getValue())
+					.map(v -> (v.getValue() != null)?v.getValue():v.getId())
 					.collect(Collectors.toList());
 		}
 	}
 	
+	public String getValue(String key, String lang) {
+		List<String> values = this.getValues(key, lang);
+		if(values != null && values.size() > 0) {
+			return values.get(0);
+		} else {
+			return null;
+		}		
+	}
 	
+	public List<Value> getValuesAsValues(String key, String lang) {
+		List<LiteralOrResourceValue> values = this.description.get(key);
+		if(values == null) {
+			return null;
+		} else {
+			return values.stream()
+					.filter(v -> 
+						(v.getLanguage() == null || v.getLanguage().equals(""))
+						||
+						(v.getLanguage() != null && v.getLanguage().equals(lang))
+					)
+					.map(v -> {
+						org.eclipse.rdf4j.model.Value rdf4jValue = null;
+						
+						// indicates a Literal
+						if(v.getValue() != null) {
+							if(v.getLanguage() != null && !v.getLanguage().equals("")) {
+								rdf4jValue = SimpleValueFactory.getInstance().createLiteral(v.getValue(), v.getLanguage());
+							} else if(v.getDatatype() != null) {
+								rdf4jValue = SimpleValueFactory.getInstance().createLiteral(v.getValue(), SimpleValueFactory.getInstance().createIRI(v.getDatatype()));
+							} else {
+								rdf4jValue = SimpleValueFactory.getInstance().createLiteral(v.getValue());
+							}
+						} else if(v.getId() != null) {
+							rdf4jValue = SimpleValueFactory.getInstance().createIRI(v.getId());
+						}
+						
+						return rdf4jValue;
+					})
+					.collect(Collectors.toList());
+		}
+	}
+	
+	public Value getValueAsValue(String key, String lang) {
+		List<Value> values = this.getValuesAsValues(key, lang);
+		if(values != null && values.size() > 0) {
+			return values.get(0);
+		} else {
+			return null;
+		}		
+	}
 
 }

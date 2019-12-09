@@ -328,7 +328,7 @@
       "@id" : "http://www.openarchaeo.fr/explorateur/onto#date_de",
       "@type" : [
         "ObjectProperty",
-        "TimeDatePickerProperty"
+        "TimePeriodProperty"
       ],
       "label": [
         {

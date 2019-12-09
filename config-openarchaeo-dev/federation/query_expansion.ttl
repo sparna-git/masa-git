@@ -191,3 +191,27 @@ crm:E21_Person rdfs:subClassOf :Acteur .
 ##### Lieu
 
 crm:E53_Place rdfs:subClassOf :Lieu .
+
+
+##### Document
+
+crm:E31_Document rdfs:subClassOf :Document .
+
+:document owl:propertyChainAxiom (
+	crm:P70_documents
+) .
+
+:createur owl:propertyChainAxiom (
+	crm:P94i_was_created_by
+	crm:P14_carried_out_by
+) .
+
+:a_cree owl:propertyChainAxiom (
+	crm:P14i_performed
+	crm:P94_has_created
+) .
+
+:date_creation owl:propertyChainAxiom (
+	crm:P4_has_time-span
+	crm:P82a_begin_of_the_begin
+) .

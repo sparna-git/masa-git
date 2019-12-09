@@ -11,6 +11,8 @@ import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.vocabulary.DCAT;
 import org.eclipse.rdf4j.model.vocabulary.DCTERMS;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import fr.humanum.openarchaeo.federation.source.FederationSource;
 
 
@@ -20,15 +22,28 @@ public class FederationSourceJson  {
 	protected String endpoint;
 	protected String defaultGraph;
 	
-	protected Map<String, List<LanguageValue>> description;
+	protected Map<String, List<LiteralOrResourceValue>> description;
 	
 	public static FederationSourceJson fromFederationSource(FederationSource originalSource) {
 		// translate DCTerms
-		Map<String, List<LanguageValue>> description = new HashMap<>();
+		Map<String, List<LiteralOrResourceValue>> description = new HashMap<>();
 		for (Map.Entry<IRI, List<Value>> entry : originalSource.getDcterms().entrySet()) {
 			description.put(
 					buildKey(entry.getKey()),
-					entry.getValue().stream().map(l -> new LanguageValue(l.stringValue(), (l instanceof Literal)?((Literal)l).getLanguage().orElse(null):null)).collect(Collectors.toList())
+					entry.getValue().stream()
+					.map(l -> {
+						if(l instanceof Literal) {
+							return new LiteralOrResourceValue(
+							l.stringValue(),
+							((Literal)l).getLanguage().orElse(null),
+							((Literal)l).getDatatype().toString());
+						} else {
+							return new LiteralOrResourceValue(l.stringValue());
+						}
+					}
+							
+					)
+					.collect(Collectors.toList())
 			);
 		}
 		
@@ -53,7 +68,7 @@ public class FederationSourceJson  {
 		}
 	}
 	
-	public FederationSourceJson(String sourceString, String endpoint, String defaultGraph, Map<String, List<LanguageValue>> description) {
+	public FederationSourceJson(String sourceString, String endpoint, String defaultGraph, Map<String, List<LiteralOrResourceValue>> description) {
 		super();
 		this.sourceString = sourceString;
 		this.endpoint = endpoint;
@@ -83,15 +98,29 @@ public class FederationSourceJson  {
 		this.defaultGraph = defaultGraph;
 	}
 	
-	static class LanguageValue {
+	static class LiteralOrResourceValue {
+		@JsonProperty("@language")
 		private String language;
+		@JsonProperty("@value")
 		private String value;
+		@JsonProperty("@type")
+		private String datatype;
+		@JsonProperty("@id")
+		private String id;
 		
-		public LanguageValue(String value, String language) {
+		public LiteralOrResourceValue(String value, String language, String datatype) {
 			super();
 			this.language = language;
 			this.value = value;
+			this.datatype = datatype;
 		}
+		
+		public LiteralOrResourceValue(String id) {
+			super();
+			this.id = id;
+		}
+		
+		
 		public String getLanguage() {
 			return language;
 		}
@@ -104,13 +133,25 @@ public class FederationSourceJson  {
 		public void setValue(String value) {
 			this.value = value;
 		}
+		public String getDatatype() {
+			return datatype;
+		}
+		public void setDatatype(String datatype) {
+			this.datatype = datatype;
+		}
+		public String getId() {
+			return id;
+		}
+		public void setId(String id) {
+			this.id = id;
+		}
 	}
 
-	public Map<String, List<LanguageValue>> getDescription() {
+	public Map<String, List<LiteralOrResourceValue>> getDescription() {
 		return description;
 	}
 
-	public void setDescription(Map<String, List<LanguageValue>> description) {
+	public void setDescription(Map<String, List<LiteralOrResourceValue>> description) {
 		this.description = description;
 	}
 	
