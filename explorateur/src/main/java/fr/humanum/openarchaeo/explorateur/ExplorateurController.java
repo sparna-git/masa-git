@@ -66,10 +66,16 @@ public class ExplorateurController {
 			HttpServletResponse response
 	) throws Exception {
 
-		log.debug("Récupération des sources");
-		List<FederationSourceJson> sourcesDefinition = explorateurService.getSources();
-		SessionData.get(request.getSession()).setSources(sourcesDefinition);
-		log.debug("Récupération des sources terminée");
+		List<FederationSourceJson> sourcesDefinition;
+		if(SessionData.get(request.getSession()).getSources() == null ) {
+			log.debug("Récupération des sources");
+			sourcesDefinition = explorateurService.getSources();
+			SessionData.get(request.getSession()).setSources(sourcesDefinition);
+			log.debug("Récupération des sources terminée");
+		} else {
+			log.debug("Sources déjà en cache.");
+			sourcesDefinition = SessionData.get(request.getSession()).getSources();
+		}
 		
 		ModelAndView model=new ModelAndView("sourcesSelect");
 		model.addObject("sourcesDefinition", sourcesDefinition);
@@ -110,6 +116,7 @@ public class ExplorateurController {
 
 		ExplorerDisplayData data = new ExplorerDisplayData();
 		data.setSources(sourcesDisplay);
+		data.setRequiresFederation(explorateurService.requiresFederation(sources, SessionData.get(request.getSession()).getSources()));
 		
 		model.addObject("data", data);
 		model.addObject("legalNotice", this.readLegalNotice(SessionData.get(request.getSession()).getUserLocale()));

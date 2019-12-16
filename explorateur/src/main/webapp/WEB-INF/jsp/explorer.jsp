@@ -65,7 +65,8 @@
 		<div class="row justify-content-center">
 			<div class="col-sm-10">			
 				<h1><fmt:message key="explore.title" /></h1>
-				<fmt:message key="explore.sources" /> : ${data.sourcesDisplayString}
+				<fmt:message key="explore.sources" /> : ${data.sourcesDisplayString}<c:if test="${data.requiresFederation}">&nbsp;&nbsp;<small style="color:red;"><i class="fal fa-exclamation-triangle"></i>&nbsp;<fmt:message key="explore.sources.federatedWarning" /></small></c:if><br />
+				<a href="<c:url value="/sourcesSelect" />"><small><i class="fal fa-angle-left"></i>&nbsp;<fmt:message key="explore.sources.change" /></small></a>
 			
 			
 				<div id="hiddenSources">
@@ -80,18 +81,25 @@
 						<div id="sparnatural"></div>
 						<div id="sparnatural-control" class="card-text">
 							<div class="row no-gutters justify-content-end">
-								<div class="col-sm-6">
+								<div class="col-4">
 									<div class="float-right">
-										<button type="button" id="run" class="btn btn-primary"><fmt:message key="explore.run" /></button>
+										<button type="button" id="run" class="btn  btn-amber disabled"><fmt:message key="explore.run" /></button>
 										&nbsp;<fmt:message key="explore.andDisplayResultAs" />&nbsp;
 									</div>
 								</div>
-								<div class="col-sm-2">
+								<div class="col-2">
 										<select class="form-control form-control-lg" id="view">
 											<option value="table" selected><fmt:message key="explore.output.table" /></option>
 											<option value="leaflet"><fmt:message key="explore.output.leaflet" /></option>
 											<option value="timeline"><fmt:message key="explore.output.timeline" /></option>
 										</select>
+								</div>
+							</div>
+							<div class="row no-gutters justify-content-end">
+								<div class="col-2">
+									<div class="collapse" id="federationWarning" style="color:red;">
+										<i class="fal fa-exclamation-triangle"></i>&nbsp;<fmt:message key="explore.output.federatedWarning" />
+									</div>
 								</div>
 							</div>
 						</div>
@@ -245,7 +253,19 @@
 		 
 		 // event on the execute button
 		 $( "#run" ).click(function() {
-			 execute();
+			 if(!$(this).hasClass("disabled")) {
+				 execute();
+			 }
+		 });
+		 
+		 // event on the display type select
+		 $( "#view" ).change(function() {
+			 console.log($(this).val());
+			 if( $(this).val() === 'leaflet' || $(this).val() === 'timeline' ) {
+				 $("#federationWarning").addClass("show");
+			 } else {
+				 $("#federationWarning").removeClass("show");
+			 }
 		 });
 		 
 		 // YASR.plugins.table.defaults = { "mergeLabelsWithUris": true };
@@ -285,6 +305,7 @@
 				// ici on récupère la requete Sparql grace au premier parametre de la fonction
 				console.log(queryString) ;
 				$('#sparql').val(queryString);
+				$('#run').removeClass("disabled");
 			}
 		  });
 		 

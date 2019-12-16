@@ -7,6 +7,8 @@ public class ExplorerDisplayData {
 
 	protected List<SourceExplorerDisplay> sources;
 	
+	protected boolean requiresFederation = false;
+	
 	public List<SourceExplorerDisplay> getSources() {
 		return sources;
 	}
@@ -17,5 +19,10 @@ public class ExplorerDisplayData {
 	public String getSourcesDisplayString() {
 		return sources.stream().map(s -> s.getName()).collect(Collectors.joining(", "));
 	}
-	
+	public boolean isRequiresFederation() {
+		return requiresFederation;
+	}
+	public void setRequiresFederation(boolean requiresFederation) {
+		this.requiresFederation = requiresFederation;
+	}
 }

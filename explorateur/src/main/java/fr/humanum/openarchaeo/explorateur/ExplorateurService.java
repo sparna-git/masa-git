@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -190,7 +191,25 @@ public class ExplorateurService {
 		ObjectMapper objectMapper=new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);    
 		return objectMapper.readValue(json , new TypeReference<List<FederationSourceJson>>(){});
-	}	
+	}
+	
+	/**
+	 * Tests if the given source selection requires federated querying, iff the sources selected are targeting different endpoints.
+	 * @param sources
+	 * @param allSources
+	 * @return
+	 */
+	public boolean requiresFederation(List<String> sources, List<FederationSourceJson> allSources) {
+		List<String> distinctEndpoints = sources.stream()
+				.map(s -> allSources.stream()
+						.filter(aSource -> aSource.getSourceString().equals(s))
+						.findFirst().map(aSource -> aSource.getEndpoint()).get()
+				)
+				.distinct()
+				.collect(Collectors.toList());
+		
+		return distinctEndpoints.size() > 1;
+	}
 	
 	/**
 	 * Renvoie les queries d'exemple paramétrées dans l'application.

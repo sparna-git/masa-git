@@ -203,6 +203,20 @@ public class FederationSourceDisplayData {
 		this.source = source;
 	}
 
+	public String getEndpoint() {
+		return endpoint;
+	}
 
+	public void setEndpoint(String endpoint) {
+		this.endpoint = endpoint;
+	}
+
+	public String getDefaultGraph() {
+		return defaultGraph;
+	}
+
+	public void setDefaultGraph(String defaultGraph) {
+		this.defaultGraph = defaultGraph;
+	}
 	
 }

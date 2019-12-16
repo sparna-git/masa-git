@@ -27,9 +27,6 @@
 <link rel="stylesheet" href="<c:url value="/resources/MDB-Free/css/bootstrap.min.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/MDB-Free/css/mdb.min.css" />">
 
-<!-- App-specific CSS -->
-<link rel="stylesheet" href="<c:url value="/resources/css/openarchaeo-explorateur.css" />" />
-
 <!-- Vis.js -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css">
 
@@ -38,6 +35,10 @@
 
 <!-- JQuery UI -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+<!-- App-specific CSS -->
+<link rel="stylesheet" href="<c:url value="/resources/css/openarchaeo-explorateur.css" />" />
 
 <script type="text/javascript">
 	var sources = ${requestScope['sourcesDefinitionJson']};
@@ -62,10 +63,10 @@
 
 {{for items}}
 
-	<div class="col-4">
+	<div class="col-4" id="source{{:#index}}">
 		<div class="card sourceCard">
 		  <div class="card-header sourceCardHeader">
-			  <h4 class="card-title"><input type="checkbox" class="selectSourceCheckbox" data-uri="{{:sourceString}}" data-endpoint="{{:sourceEndpoint}}" />&nbsp;{{:title}}</h4>
+			  <h4 class="card-title"><input type="checkbox" class="selectSourceCheckbox" data-uri="{{:sourceString}}" data-endpoint="{{:endpoint}}" />&nbsp;{{:title}}</h4>
 			  <p><em>{{:shortDesc}}</em></p>
 		  </div> <!-- / .card-header -->
 		  <div class="card-body">
@@ -74,13 +75,23 @@
 				<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.temporal" /> : <fmt:message key="sources.desc.temporal.from" /> {{:startYear}} <fmt:message key="sources.desc.temporal.to" /> {{:endYear}}</li>
 				<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.keywords" /> : <ul class="inline-list">{{for keywords}}<li>{{:}}</li>{{/for}}</ul></li>
 			</ul>
-			<hr />
+			<smaller><a data-toggle="collapse" href="#source{{:#index}}_details"><fmt:message key="sources.desc.details" />&nbsp;<i class="fal fa-angle-down"></i></a></smaller>
+			<div class="collapse" id="source{{:#index}}_details">
+				<ul class="fa-ul">
+					<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.dcat_contactPoint" /> : {{if contact.indexOf('http') == 0 }}<a href="{{:contact}}">{{:contact}}</a>{{else contact.indexOf('mailto') == 0}}<a href="{{:contact}}">{{:contact.substring(7)}}</a>{{else}}{{:contact}}{{/if}}</li>
+					<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.dcterms_publisher" /> : {{if publisher.indexOf('http') == 0 }}<a href="{{:publisher}}">{{:publisher}}</a>{{else}}{{:publisher}}{{/if}}</li>
+					<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.dcterms_issued" /> : {{:issued}}</li>
+					<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.dcterms_modified" /> : {{:modified}}</li>
+					<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.dcterms_source" /> : {{if (source.indexOf('http') == 0 || source.indexOf('mailto') == 0) }}<a href="{{:source}}">{{:source}}</a>{{else}}{{:source}}{{/if}}</li>
+					<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.dcterms_license" /> : {{if (license.indexOf('http') == 0 || license.indexOf('mailto') == 0) }}<a href="{{:license}}">{{:license}}</a>{{else}}{{:license}}{{/if}}</li>
+				</ul>
+			</div>
 		  </div> <!-- / .card-body -->
 		</div> 
 	</div>
 
 {{else}}
-  <div>No matching Datasource !</div>
+  <div class="col-12"><h4><fmt:message key="sources.result.nomatching" /></h4></div>
 {{/for}}
 
 
@@ -102,18 +113,23 @@
 				<div class="card" id="sourcesSelectCard">
 				  <div class="card-body">
 				    <h1 class="card-title"><i class="fal fa-database"></i>&nbsp;&nbsp;<fmt:message key="sources.title" /></h1>
-				    <div class="card-text">
+				    <div class="card-text" id="sourcesCardText">
 				    		<div class="container-fluid">
 				    			<div class="row">
 				    				<div class="col-sm-3">
-				    					<h4><fmt:message key="sources.desc.keywords" /></h4>
+				    					<h4><fmt:message key="sources.facet.search" /></h4>
+				    					<div id="fulltextSearchCriteria">
+				    						<input type="text" name="fullTextSearch" id="fullTextSearch" placeholder="<fmt:message key="sources.facet.search.placeholder" />" />
+				    					</div>
+				    					<br />
+				    					<h4><fmt:message key="sources.facet.keywords" /></h4>
 						    			<div id="keywordsFacet"></div>
 						    			<br />
-						    			<h4><fmt:message key="sources.desc.temporal" /></h4>
+						    			<h4><fmt:message key="sources.facet.temporal" /></h4>
 										<input type="text" id="years" readonly style="" />
 										<div id="slider-range"></div>
 										<br />
-										<h4><fmt:message key="sources.desc.spatial" /></h4>
+										<h4><fmt:message key="sources.facet.spatial" /></h4>
 										<div id="spatialFacet"></div>
 									</div>
 									<div class="col-sm-9">									
@@ -150,18 +166,23 @@
 													</div>
 												</c:forEach>
 											</div>
-											<div class="row no-gutters">
-												<div class="col-4">
-													<form action="explorer" method="get" style="margin:auto;" name="formsource" id="formsource">
-										    			<div id="hiddenSources">
-										    				<!-- here be inserted hidden inputs -->
-										    			</div>
-														<button class="btn btn-default" id="submitSources"><fmt:message key="sources.validate" /></button>
-													</form>
-												</div>
-											</div>
 							    		</div>
-									
+									</div>
+								</div> <!-- / .row -->
+								<!-- In a separate row so that button does not go up when there are no matching results -->
+								<div class="row no-gutters">
+									<div class="col-1 offset-3">
+										<form action="explorer" method="get" style="margin:auto;" name="formsource" id="formsource">
+							    			<div id="hiddenSources">
+							    				<!-- here be inserted hidden inputs -->
+							    			</div>
+											<button class="btn btn-amber" id="submitSources"><fmt:message key="sources.validate" /></button>
+										</form>
+									</div>
+									<div class="col-8">
+										<div class="collapse alert alert-warning alert-dismissible fade" role="alert" id="federationAlert">
+										  <strong>Warning !</strong> Querying all these sources requires federated querying, which may result in poor performance.
+										</div>
 									</div>
 								</div>
 				    		</div>
@@ -223,6 +244,9 @@
 			endpoints = jQuery.uniqueSort( endpoints );
 			if(endpoints.length > 1) {
 				console.log("Warning on federation !");
+				$("#federationAlert").addClass("show");
+			} else {
+				$("#federationAlert").removeClass("show");
 			}
 		});
 	}
@@ -237,6 +261,9 @@
 		// get all selected spatials
 		var spatial = $(".spatial-badge.badge-selected").map(function() {return $(this).attr("data-value"); }).get();
 		
+		// get full text criteria if present
+		var fullTextCriteria = $( "#fullTextSearch" ).val();
+		
 		var searchParameters = {
 	  			  per_page: 1000,
 	  			  sort: 'title_asc',
@@ -244,17 +271,21 @@
 	  				  keywords: keywords,
 	  				  spatial: spatial
 	  			  },
+	  			  query:fullTextCriteria,
 	   			  filter: function(item) {
 	  				    return (
 	  				    		( item.startYear >= min && item.startYear <= max )
 	  				    		||
 	  				    		( item.endYear >= min && item.endYear <= max )
+	  				    		||
+	  				    		// case of selected range inside the range of the item
+	  				    		( item.endYear > max && item.startYear < min )
 	  				    );
 	  				  }
 	  			  };
 		
 		// log the search parameters if needed
-		// console.log(JSON.stringify(searchParameters, null, 2));
+		console.log(JSON.stringify(searchParameters, null, 2));
 		
 		// trigger search
 		var results = itemsjs.search(searchParameters);
@@ -296,11 +327,9 @@
 				
 				// if selected, change the color of the pill
 				if(bucket.selected) {
-					$(this).removeClass("badge-secondary");
-					$(this).addClass("badge-success");
+					$(this).addClass("badge-selected");
 				} else {
-					$(this).removeClass("badge-success");
-					$(this).addClass("badge-secondary");
+					$(this).removeClass("badge-selected");
 				}
 				
 				
@@ -458,6 +487,11 @@
     		    if($("#sources").val().length != 0) {
     		    	$("#formsource").submit();
     		    }
+    		});
+    		
+    		// keyup and not keypress to capture `Delete` key, and not keydown which is fired _before_ the character is inserted
+    		$("#fullTextSearch").keyup(function () {
+    			triggerSearch();
     		});
 				
 	 	}); // end document ready
