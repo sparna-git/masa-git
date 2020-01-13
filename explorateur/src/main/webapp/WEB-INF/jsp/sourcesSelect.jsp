@@ -59,6 +59,13 @@
     </span>
 </script>
 
+<script id="subjectTagTemplate" type="text/x-jsrender">
+	<span class="badge badge-pill {{if selected}}badge-success{{else}}badge-secondary{{/if}} subject-badge" data-value="{{:key}}">
+		<span class="key">{{:key}}</span>
+		(<span class="doc_count">{{:doc_count}}</span>)
+    </span>
+</script>
+
 <script id="sourceTemplate" type="text/x-jsrender">
 
 {{for items}}
@@ -74,16 +81,17 @@
 				<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.spatial" /> : <ul class="inline-list">{{for spatial}}<li>{{:}}</li>{{/for}}</ul></li>
 				<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.temporal" /> : <fmt:message key="sources.desc.temporal.from" /> {{:startYear}} <fmt:message key="sources.desc.temporal.to" /> {{:endYear}}</li>
 				<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.keywords" /> : <ul class="inline-list">{{for keywords}}<li>{{:}}</li>{{/for}}</ul></li>
+				<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.dcterms_subject" /> : <ul class="inline-list">{{for subject}}<li>{{:}}</li>{{/for}}</ul></li>
 			</ul>
 			<smaller><a data-toggle="collapse" href="#source{{:#index}}_details"><fmt:message key="sources.desc.details" />&nbsp;<i class="fal fa-angle-down"></i></a></smaller>
 			<div class="collapse" id="source{{:#index}}_details">
 				<ul class="fa-ul">
-					<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.dcat_contactPoint" /> : {{if contact.indexOf('http') == 0 }}<a href="{{:contact}}">{{:contact}}</a>{{else contact.indexOf('mailto') == 0}}<a href="{{:contact}}">{{:contact.substring(7)}}</a>{{else}}{{:contact}}{{/if}}</li>
-					<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.dcterms_publisher" /> : {{if publisher.indexOf('http') == 0 }}<a href="{{:publisher}}">{{:publisher}}</a>{{else}}{{:publisher}}{{/if}}</li>
+					<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.dcat_contactPoint" /> : {{if contact && (contact.indexOf('http') == 0) }}<a href="{{:contact}}">{{:contact}}</a>{{else contact && (contact.indexOf('mailto') == 0)}}<a href="{{:contact}}">{{:contact.substring(7)}}</a>{{else}}{{:contact}}{{/if}}</li>
+					<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.dcterms_publisher" /> : {{if publisher && (publisher.indexOf('http') == 0) }}<a href="{{:publisher}}">{{:publisher}}</a>{{else}}{{:publisher}}{{/if}}</li>
 					<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.dcterms_issued" /> : {{:issued}}</li>
 					<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.dcterms_modified" /> : {{:modified}}</li>
-					<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.dcterms_source" /> : {{if (source.indexOf('http') == 0 || source.indexOf('mailto') == 0) }}<a href="{{:source}}">{{:source}}</a>{{else}}{{:source}}{{/if}}</li>
-					<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.dcterms_license" /> : {{if (license.indexOf('http') == 0 || license.indexOf('mailto') == 0) }}<a href="{{:license}}">{{:license}}</a>{{else}}{{:license}}{{/if}}</li>
+					<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.dcterms_source" /> : {{if source && (source.indexOf('http') == 0 || source.indexOf('mailto') == 0) }}<a href="{{:source}}">{{:source}}</a>{{else}}{{:source}}{{/if}}</li>
+					<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.dcterms_license" /> : {{if license && (license.indexOf('http') == 0 || license.indexOf('mailto') == 0) }}<a href="{{:license}}">{{:license}}</a>{{else}}{{:license}}{{/if}}</li>
 				</ul>
 			</div>
 		  </div> <!-- / .card-body -->
@@ -131,6 +139,9 @@
 										<br />
 										<h4><fmt:message key="sources.facet.spatial" /></h4>
 										<div id="spatialFacet"></div>
+										<br />
+										<h4><fmt:message key="sources.facet.subject" /></h4>
+										<div id="subjectFacet"></div>
 									</div>
 									<div class="col-sm-9">									
 										<div class="container-fluid" id="sourcesList">
@@ -147,20 +158,7 @@
 									    				  	</div>
 									    				  </div> <!-- / .card-header -->
 														  <div class="card-body">
-												    		<ul class="fa-ul">
-								    				  			<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.spatial" /> : ${source.displayValueList(source.getSpatial(lang))}</li>
-								    				  			<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.temporal" /> : <fmt:message key="sources.desc.temporal.from" /> ${source.getStartDate(lang)} <fmt:message key="sources.desc.temporal.to" /> ${source.getEndDate(lang)}</li>
-								    				  			<li><i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.keywords" /> : ${source.displayValueList(source.getKeywords(lang))}</li>
-								    				  		</ul>
-								    				  		<hr />
-													    	<ul class="fa-ul">
-														    	<c:forEach var="entry" items="${source.getDescriptionInLang(lang)}">
-														    	  	<li>
-														    	  		<i class="fa-li fal fa-angle-right"></i><fmt:message key="sources.desc.${fn:replace(entry.key, ':', '_')}" />&nbsp;:&nbsp;
-														    	  		${source.displayValueList(entry.value)}
-														    	  	</li>
-																</c:forEach>
-															</ul>
+												    		Loading data...
 														  </div> <!-- / .card-body -->
 														</div> 
 													</div>
@@ -260,6 +258,8 @@
 		var keywords = $(".keyword-badge.badge-selected").map(function() {return $(this).attr("data-value"); }).get();
 		// get all selected spatials
 		var spatial = $(".spatial-badge.badge-selected").map(function() {return $(this).attr("data-value"); }).get();
+		// get all selected subjects
+		var subjects = $(".subject-badge.badge-selected").map(function() {return $(this).attr("data-value"); }).get();
 		
 		// get full text criteria if present
 		var fullTextCriteria = $( "#fullTextSearch" ).val();
@@ -269,7 +269,8 @@
 	  			  sort: 'title_asc',
 	  			  filters: {
 	  				  keywords: keywords,
-	  				  spatial: spatial
+	  				  spatial: spatial,
+	  				  subject: subjects
 	  			  },
 	  			  query:fullTextCriteria,
 	   			  filter: function(item) {
@@ -387,6 +388,48 @@
 			}
 		});
 		
+		// update the state of collections
+		$(".subject-badge").each(function() {
+			// finds this collection in aggregation results
+			var bucket = results.data.aggregations.subject.buckets.find(v => v.key == $(this).attr("data-value"));
+			
+			// if not found
+			if (!bucket) {
+				// disable the pill
+				$(this).addClass("badge-disabled");
+				$(this).addClass("disabled");
+				// set count to 0
+				$(".doc_count", this).html("0");
+				// remove click event
+				$(this).unbind("click");
+			} else {
+				// yes, it is found
+				// re-enable the pill
+				$(this).removeClass("badge-disabled");
+				$(this).removeClass("disabled");
+				// sets the count
+				$(".doc_count", this).html( bucket.doc_count );						
+				
+				// if selected, change the color of the pill
+				if(bucket.selected) {
+					$(this).removeClass("badge-secondary");
+					$(this).addClass("badge-success");
+				} else {
+					$(this).removeClass("badge-success");
+					$(this).addClass("badge-secondary");
+				}				
+				
+				// unbund previous existing click event
+				$(this).unbind('click');
+				// register click behavior on keywords pills
+				$(this).click(function() {
+					// set a marker to indicated it is a selected value - will be read when generating query
+					$(this).toggleClass("badge-selected");
+					triggerSearch();
+				});
+			}
+		});
+		
 		
 		
 		var tmpl = $.templates("#sourceTemplate"); // Get compiled template
@@ -443,6 +486,11 @@
 		      title: 'Spatial',
 		      sort: 'term',
 		      order: 'asc'
+		    },
+		    subject: {
+		      title: 'Subject',
+		      sort: 'term',
+		      order: 'asc'
 		    }
 		  }
 		}
@@ -473,7 +521,15 @@
 					return spatialTmpl.render(element);
 				}
 		).join("&nbsp;");
-		$("#spatialFacet").html(spatialHtml);		
+		$("#spatialFacet").html(spatialHtml);	
+		
+		var subjectTmpl = $.templates("#subjectTagTemplate"); // Get compiled template
+		var subjectHtml = results.data.aggregations.subject.buckets.sort((a, b) => a.key.localeCompare(b.key)).map(
+				element => {
+					return subjectTmpl.render(element);
+				}
+		).join("&nbsp;");
+		$("#subjectFacet").html(subjectHtml);
 	
 		// display the result of the empty search
 		displaySearchResult(results);

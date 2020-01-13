@@ -43,7 +43,7 @@ footer {
 	margin: 1em;
 }
 
-.keyword-badge, .spatial-badge {
+.keyword-badge, .spatial-badge, .subject-badge {
 	cursor:pointer;
 	font-size:100%;
 	font-weight: normal;
@@ -51,7 +51,7 @@ footer {
 	color: rgb(116, 115, 115);
 }
 
-.keyword-badge.badge-selected {
+.keyword-badge.badge-selected, .spatial-badge.badge-selected, .subject-badge.badge-selected {
 	cursor:pointer;
 	font-size:100%;
 	font-weight: normal;
@@ -88,7 +88,7 @@ footer {
   content: "";
 }
 
-#keywordsFacet, #spatialFacet {
+#keywordsFacet, #spatialFacet, #subjectFacet {
 	line-height: 200%;
 }
 

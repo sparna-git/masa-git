@@ -37,6 +37,8 @@ public class FederationSourceDisplayData {
 	
 	protected String source;
 	
+	protected List<String> subject;
+	
 	public FederationSourceDisplayData(FederationSourceJson original, String lang) {
 		this.sourceString = original.sourceString;
 		this.endpoint = original.endpoint;
@@ -46,10 +48,14 @@ public class FederationSourceDisplayData {
 		this.shortDesc = original.getShortDesc(lang);
 		this.spatial = original.getSpatial(lang);
 		
-		this.startYear = ((Literal)original.getStartDateValue(lang)).calendarValue().getYear();
+		if(original.getStartDateValue(lang) != null) {
+			this.startYear = ((Literal)original.getStartDateValue(lang)).calendarValue().getYear();
+		}
 		this.startDateDisplay = original.getStartDate(lang);
 		
-		this.endYear = ((Literal)original.getEndDateValue(lang)).calendarValue().getYear();
+		if(original.getEndDateValue(lang) != null) {
+			this.endYear = ((Literal)original.getEndDateValue(lang)).calendarValue().getYear();
+		}
 		this.endDateDisplay = original.getEndDate(lang);
 		
 		this.contact = original.getValue("dcat:"+DCAT.CONTACT_POINT.getLocalName(), lang);
@@ -65,6 +71,8 @@ public class FederationSourceDisplayData {
 		this.publisher = original.getValue("dcterms:"+DCTERMS.PUBLISHER.getLocalName(), lang);
 		
 		this.source = original.getValue("dcterms:"+DCTERMS.SOURCE.getLocalName(), lang);
+		
+		this.subject = original.getLiteralSubject(lang);
 	}
 
 	public String getSourceString() {
@@ -218,5 +226,14 @@ public class FederationSourceDisplayData {
 	public void setDefaultGraph(String defaultGraph) {
 		this.defaultGraph = defaultGraph;
 	}
+
+	public List<String> getSubject() {
+		return subject;
+	}
+
+	public void setSubject(List<String> subject) {
+		this.subject = subject;
+	}
+	
 	
 }

@@ -104,6 +104,7 @@ public class FederationSourceRemoteMetadataSupplier implements Supplier<List<Fed
 					     "PREFIX dcterms: <http://purl.org/dc/terms/> "+"\n"+
 					     "PREFIX dcat: <http://www.w3.org/ns/dcat#> "+"\n"+
 					     "PREFIX schema: <http://schema.org/> "+"\n"+
+					     "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> "+"\n"+
 						 "SELECT ?dcProperty ?dcValue"+"\n"+
 						 "WHERE {"+"\n"+
 						 "   {"+"\n"+
@@ -126,6 +127,11 @@ public class FederationSourceRemoteMetadataSupplier implements Supplier<List<Fed
 						 "     <"+rSource.getURI()+"> dcterms:temporal/schema:endDate ?dcValue . "+"\n"+
 						 "     BIND(schema:endDate AS ?dcProperty) "+"\n"+
 						 "     }"+"\n"+
+						 "     UNION"+"\n"+
+						 "     {"+"\n"+
+						 "     <"+rSource.getURI()+"> dcterms:subject/skos:prefLabel ?dcValue . "+"\n"+
+						 "     BIND(dcterms:subject AS ?dcProperty) "+"\n"+
+						 "     }"+"\n"+
 						 "   }"+"\n"+
 						 "} ORDER BY ?dcProperty ?dcValue";		
 				
@@ -137,17 +143,27 @@ public class FederationSourceRemoteMetadataSupplier implements Supplier<List<Fed
 					readResultSet(resultRemote, metadata);					
 				}
 				
-				// now query for the DCTerms description
+				// now query for the local DCTerms description
 				String localQueryString = 
 						 "PREFIX sd: <http://www.w3.org/ns/sparql-service-description#>"+"\n"+
 					     "PREFIX dcterms: <http://purl.org/dc/terms/> "+"\n"+
 					     "PREFIX dcat: <http://www.w3.org/ns/dcat#> "+"\n"+
 					     "PREFIX schema: <http://schema.org/> "+"\n"+
+					     "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> "+"\n"+
 						 "SELECT ?dcProperty ?dcValue"+"\n"+
 						 "WHERE {"+"\n"+
 						 "   ?graph sd:name <"+rSource.getURI()+"> ."+"\n"+
-						 "   ?graph ?dcProperty ?dcValue . "+"\n"+
-						 "   FILTER(STRSTARTS(STR(?dcProperty), \"http://purl.org/dc/terms/\")||STRSTARTS(STR(?dcProperty), \"http://www.w3.org/ns/dcat#\"))"+"\n"+
+						 "   {"+"\n"+
+						 "   {"+"\n"+
+						 "     ?graph ?dcProperty ?dcValue . "+"\n"+
+						 "     FILTER(STRSTARTS(STR(?dcProperty), \"http://purl.org/dc/terms/\")||STRSTARTS(STR(?dcProperty), \"http://www.w3.org/ns/dcat#\"))"+"\n"+
+						 "   }"+"\n"+
+						 "   UNION"+"\n"+
+						 "   {"+"\n"+
+						 "     ?graph dcterms:subject/skos:prefLabel ?dcValue . "+"\n"+
+						 "     BIND(dcterms:subject AS ?dcProperty) "+"\n"+
+						 "   }"+"\n"+
+						 "   }"+"\n"+
 						 "} ORDER BY ?dcProperty ?dcValue";	
 				
 				log.debug("Will execute local query :\n"+localQueryString);

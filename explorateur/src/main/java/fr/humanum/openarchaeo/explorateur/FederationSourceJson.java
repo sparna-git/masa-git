@@ -129,6 +129,10 @@ public class FederationSourceJson  {
 		return getValues("dcterms:"+DCTERMS.SPATIAL.getLocalName(), lang);
 	}
 	
+	public List<String> getLiteralSubject(String lang) {
+		return getLiteralValues("dcterms:"+DCTERMS.SUBJECT.getLocalName(), lang);
+	}
+	
 	public List<String> getKeywords(String lang) {
 		return getValues("dcat:keyword", lang);
 	}
@@ -207,6 +211,31 @@ public class FederationSourceJson  {
 						(v.getLanguage() != null && v.getLanguage().equals(lang))
 					)
 					.map(v -> (v.getValue() != null)?v.getValue():v.getId())
+					.collect(Collectors.toList());
+		}
+	}
+	
+	/**
+	 * Returns only the literal values for a property
+	 * @param key
+	 * @param lang
+	 * @return
+	 */
+	public List<String> getLiteralValues(String key, String lang) {
+		List<LiteralOrResourceValue> values = this.description.get(key);
+		if(values == null) {
+			return null;
+		} else {
+			return values.stream()
+					.filter(v -> 
+						(v.getLanguage() == null || v.getLanguage().equals(""))
+						||
+						(v.getLanguage() != null && v.getLanguage().equals(lang))
+					)
+					.filter(v -> 
+						v.getValue() != null
+					)
+					.map(v -> v.getValue())
 					.collect(Collectors.toList());
 		}
 	}
