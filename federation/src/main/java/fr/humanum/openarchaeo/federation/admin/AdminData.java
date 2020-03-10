@@ -2,13 +2,12 @@ package fr.humanum.openarchaeo.federation.admin;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import fr.humanum.openarchaeo.federation.source.FederationSource;
 
 public class AdminData {
 	
-	protected List<FederationSource> federationSources;
+	protected List<? extends FederationSource> federationSources;
 	protected Map<String, String> indexIds;
 	protected Message message;
 
@@ -47,11 +46,11 @@ public class AdminData {
 		this.message = message;
 	}
 
-	public List<FederationSource> getFederationSources() {
+	public List<? extends FederationSource> getFederationSources() {
 		return federationSources;
 	}
 
-	public void setFederationSources(List<FederationSource> federationSources) {
+	public void setFederationSources(List<? extends FederationSource> federationSources) {
 		this.federationSources = federationSources;
 	}
 

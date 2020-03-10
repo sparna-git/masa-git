@@ -52,7 +52,7 @@ public class FederationBusinessServices {
 	private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 	
 	private ExtConfigService extConfigService;
-	private List<FederationSource> federationSources;
+	private List<? extends FederationSource> federationSources;
 	private IndexService indexService;
 	private PeriodServiceIfc periodsService;
 	private FederationRepositoryBuilder federationBuilder;
@@ -80,7 +80,7 @@ public class FederationBusinessServices {
 	public void executeSparql(String query, OutputStream out, String mimeType) throws IOException {
 		log.debug("Executing SPARQL : \n"+query);
 		long start = System.currentTimeMillis();
-		List<FederationSource> sourcesToQuery = this.filterFederationSources(QueryFactory.create(query));
+		List<? extends FederationSource> sourcesToQuery = this.filterFederationSources(QueryFactory.create(query));
 
 		String queryWithoutOriginalFromClauses = this.removeFromClauses(QueryFactory.create(query)).toString(Syntax.syntaxSPARQL_11);
 		log.debug("Query after removing FROM clauses : \n"+queryWithoutOriginalFromClauses);
@@ -136,7 +136,7 @@ public class FederationBusinessServices {
 	 * @param sources
 	 * @return
 	 */
-	private Repository createRepositoryFromSources(List<FederationSource> sources, String query){
+	private Repository createRepositoryFromSources(List<? extends FederationSource> sources, String query){
 		log.debug("Création d'un repository "+sources.size()+" sources");
 		return this.federationBuilder.buildRepository(
 				sources,
@@ -144,7 +144,7 @@ public class FederationBusinessServices {
 		);
 	}
 
-	private Query addFromGraphClauses(List<FederationSource> sources, Query query){
+	private Query addFromGraphClauses(List<? extends FederationSource> sources, Query query){
 		for (FederationSource federationSource : sources) {
 			federationSource.getDefaultGraph().ifPresent(i -> { 
 				query.addGraphURI(i.stringValue());
@@ -157,7 +157,7 @@ public class FederationBusinessServices {
 	 * Renvoie toutes les sources paramétrées dans la fédération
 	 * @return
 	 */
-	public List<FederationSource> getFederationSources() {
+	public List<? extends FederationSource> getFederationSources() {
 		return this.federationSources;
 	}
 	
@@ -168,7 +168,7 @@ public class FederationBusinessServices {
 	 * @param q
 	 * @return
 	 */
-	public List<FederationSource> filterFederationSources(Query q) {
+	public List<? extends FederationSource> filterFederationSources(Query q) {
 		// if query does not have FROM clauses, we return all the sources
 		if(q.getNamedGraphURIs() == null || q.getNamedGraphURIs().isEmpty()){
 			log.debug("No named graphs declared, querying all sources");

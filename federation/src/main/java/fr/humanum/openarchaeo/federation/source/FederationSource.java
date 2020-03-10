@@ -40,7 +40,7 @@ public interface FederationSource {
 	public Map<IRI, List<Value>> getDcterms();
 
 	
-	public static boolean areQueryingSameEndpoint(List<FederationSource> sources) {
+	public static boolean areQueryingSameEndpoint(List<? extends FederationSource> sources) {
 		return (sources.stream().map(s -> s.getEndpoint().stringValue()).collect(Collectors.toSet()).size() == 1);
 	}
 }

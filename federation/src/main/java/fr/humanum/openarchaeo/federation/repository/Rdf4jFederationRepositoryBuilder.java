@@ -26,7 +26,7 @@ public class Rdf4jFederationRepositoryBuilder implements FederationRepositoryBui
 
 
 	@Override
-	public Repository buildRepository(List<FederationSource> sources, String query) {
+	public Repository buildRepository(List<? extends FederationSource> sources, String query) {
 		if(sources.size() == 1) {
 			log.debug("Single source, creating a simple Repository");
 			return new RepositorySupplier(sources.get(0)).getRepository();

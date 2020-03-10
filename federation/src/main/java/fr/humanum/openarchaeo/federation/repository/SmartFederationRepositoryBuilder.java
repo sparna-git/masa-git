@@ -36,7 +36,7 @@ public class SmartFederationRepositoryBuilder implements FederationRepositoryBui
 	}
 
 	@Override
-	public Repository buildRepository(List<FederationSource> sources, String query) {
+	public Repository buildRepository(List<? extends FederationSource> sources, String query) {
 		log.debug("Building repository with the following sources :");
 		sources.stream().forEach(e -> log.debug("  "+e));
 		
@@ -66,7 +66,7 @@ public class SmartFederationRepositoryBuilder implements FederationRepositoryBui
 		}
 	}
 	
-	public Repository buildFederationRepository(List<FederationSource> sources) throws FedXException {
+	public Repository buildFederationRepository(List<? extends FederationSource> sources) throws FedXException {
 		List<String> effectiveEndpoints = sources.stream().map(s -> RepositorySupplier.constructEndpointUrl(s)).collect(Collectors.toList());
 		effectiveEndpoints.add(this.referentielRepository);
 		

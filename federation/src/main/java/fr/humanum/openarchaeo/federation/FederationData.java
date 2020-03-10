@@ -10,16 +10,16 @@ public class FederationData {
 	
 	protected List<QueryExample> queries;
 	
-	protected List<FederationSource> federationSources;
+	protected List<? extends FederationSource> federationSources;
 	
 	
 	
 
-	public List<FederationSource> getFederationSources() {
+	public List<? extends FederationSource> getFederationSources() {
 		return federationSources;
 	}
 
-	public void setFederationSources(List<FederationSource> federationSources) {
+	public void setFederationSources(List<? extends FederationSource> federationSources) {
 		this.federationSources = federationSources;
 	}
 

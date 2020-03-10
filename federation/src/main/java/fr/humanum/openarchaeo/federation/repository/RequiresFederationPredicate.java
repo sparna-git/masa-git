@@ -19,9 +19,9 @@ public class RequiresFederationPredicate implements Predicate<RequiresFederation
 	
 	public class QueryOverSources {
 		public String query;
-		public List<FederationSource> sources;
+		public List<? extends FederationSource> sources;
 		
-		public QueryOverSources(String query, List<FederationSource> sources) {
+		public QueryOverSources(String query, List<? extends FederationSource> sources) {
 			super();
 			this.query = query;
 			this.sources = sources;

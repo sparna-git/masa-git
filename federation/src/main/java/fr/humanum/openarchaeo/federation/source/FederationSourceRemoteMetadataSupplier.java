@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
@@ -30,7 +31,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-public class FederationSourceRemoteMetadataSupplier implements Supplier<List<FederationSource>> {
+import fr.humanum.openarchaeo.federation.geonames.SimpleFederationSourceGeonamesExpansion;
+
+public class FederationSourceRemoteMetadataSupplier implements Supplier<List<? extends FederationSource>> {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 	
@@ -49,7 +52,7 @@ public class FederationSourceRemoteMetadataSupplier implements Supplier<List<Fed
 	}
 
 	@Override
-	public List<FederationSource> get() {
+	public List<? extends FederationSource> get() {
 
 		String queryString = "prefix sd: <http://www.w3.org/ns/sparql-service-description#>"+
 				             "prefix void: <http://rdfs.org/ns/void#>"+ 
@@ -65,7 +68,7 @@ public class FederationSourceRemoteMetadataSupplier implements Supplier<List<Fed
 							" }";
 										
 		Query query = QueryFactory.create(queryString) ;
-		List<FederationSource> result = new ArrayList<FederationSource>();
+		List<SimpleFederationSource> result = new ArrayList<SimpleFederationSource>();
 		
 
 		Model m = null;
@@ -176,6 +179,9 @@ public class FederationSourceRemoteMetadataSupplier implements Supplier<List<Fed
 				result.add(sfs);
 			}			
 		}
+		
+		// now expand on dct:spatial using the Geonames API
+		result = result.stream().map(new SimpleFederationSourceGeonamesExpansion()).collect(Collectors.toList());
 		
 		return result;
 	}

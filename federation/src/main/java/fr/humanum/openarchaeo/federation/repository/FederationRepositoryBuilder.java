@@ -8,6 +8,6 @@ import fr.humanum.openarchaeo.federation.source.FederationSource;
 
 public interface FederationRepositoryBuilder {
 
-	public Repository buildRepository(List<FederationSource> sources, String query);
+	public Repository buildRepository(List<? extends FederationSource> sources, String query);
 	
 }
