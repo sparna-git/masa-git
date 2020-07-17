@@ -18,11 +18,12 @@
 @prefix schema: <http://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosthes: <http://purl.org/iso25964/skos-thes#> .
 @prefix skosxl: <http://www.w3.org/2008/05/skos-xl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 oash:Site a sh:NodeShape;
-  rdfs:comment "Il est SOUHAITABLE que les instances de  E27_Site soient des IRIs (pas des nœuds anonymes)"@fr;
+  rdfs:comment "Il est SOUHAITABLE que les instances de E27_Site soient des IRIs (pas des nœuds anonymes)"@fr;
   rdfs:label "E27 Site"@fr;
   sh:nodeKind sh:IRI;
   sh:order 1;
@@ -35,7 +36,7 @@ oash:PreferredIdentifier a sh:NodeShape;
   rdfs:label "E42 Identifier (valeurs de P48_has_preferred_identifier)"@fr;
   sh:nodeKind sh:IRI;
   sh:order 2;
-  sh:property oash:P75;
+  sh:property oash:P85;
   sh:severity sh:Warning;
   sh:targetClass crm:E42_Identifier .
 
@@ -44,7 +45,7 @@ oash:Appellation a sh:NodeShape;
   rdfs:label "E41 Appellation"@fr;
   sh:nodeKind sh:IRI;
   sh:order 3;
-  sh:property oash:P76;
+  sh:property oash:P86;
   sh:severity sh:Warning;
   sh:targetClass crm:E41_Appellation .
 
@@ -61,6 +62,7 @@ oash:Person a sh:NodeShape;
   rdfs:comment "Il est SOUHAITABLE que les instances de E21_Person soient des IRIs (pas des nœuds anonymes)"@fr;
   rdfs:label "E21 Person"@fr;
   sh:nodeKind sh:IRI;
+  sh:order 5;
   sh:property oash:P25, oash:P26, oash:P27, oash:P28, oash:P29;
   sh:severity sh:Warning;
   sh:targetClass crm:E21_Person .
@@ -69,6 +71,7 @@ oash:LegalBody a sh:NodeShape;
   rdfs:comment "Il est SOUHAITABLE que les instances de E40_Legal_Body soient des IRIs (pas des nœuds anonymes)"@fr;
   rdfs:label "E40 Legal Body"@fr;
   sh:nodeKind sh:IRI;
+  sh:order 6;
   sh:property oash:P31, oash:P32, oash:P33;
   sh:severity sh:Warning;
   sh:targetClass crm:E40_Legal_Body .
@@ -77,6 +80,7 @@ oash:BuiltWork a sh:NodeShape;
   rdfs:comment "Il est SOUHAITABLE que les instances de B1_Built_Work soient des IRIs (pas des nœuds anonymes)"@fr;
   rdfs:label "B1 Built Work"@fr;
   sh:nodeKind sh:IRI;
+  sh:order 7;
   sh:property oash:P35, oash:P36, oash:P37, oash:P38, oash:P39, oash:P40;
   sh:severity sh:Warning;
   sh:targetClass crmba:B1_Built_Work .
@@ -85,6 +89,7 @@ oash:ManMadeFeature a sh:NodeShape;
   rdfs:comment "Il est SOUHAITABLE que les instances de E25_Man-Made_Feature soient des IRIs (pas des nœuds anonymes)"@fr;
   rdfs:label "E25 Man-Made Feature"@fr;
   sh:nodeKind sh:IRI;
+  sh:order 8;
   sh:property oash:P42, oash:P43, oash:P44, oash:P45, oash:P46, oash:P47, oash:P48,
     oash:P49, oash:P50;
   sh:severity sh:Warning;
@@ -94,6 +99,7 @@ oash:ManMadeObject a sh:NodeShape;
   rdfs:comment "Il est SOUHAITABLE que les instances de E22_Man-Made_Object soient des IRIs (pas des nœuds anonymes)"@fr;
   rdfs:label "E22 Man-Made Object"@fr;
   sh:nodeKind sh:IRI;
+  sh:order 9;
   sh:property oash:P52, oash:P53, oash:P54, oash:P55, oash:P56, oash:P57, oash:P58,
     oash:P59;
   sh:severity sh:Warning;
@@ -103,15 +109,17 @@ oash:StratigraphicUnit a sh:NodeShape;
   rdfs:comment "Il est SOUHAITABLE que les instances de A8_Stratigraphic_Unit soient des IRIs (pas des nœuds anonymes)"@fr;
   rdfs:label "A8 Stratigraphic Unit"@fr;
   sh:nodeKind sh:IRI;
+  sh:order 10;
   sh:property oash:P61, oash:P62, oash:P63, oash:P64, oash:P65, oash:P66, oash:P67;
   sh:severity sh:Warning;
   sh:targetClass crmarch:A8_Stratigraphic_Unit .
 
 oash:TimeSpanEvent a sh:NodeShape;
-  rdfs:comment "Il est SOUHAITABLE que les instances de E22_Man-Made_Object soient des IRIs (pas des nœuds anonymes)"@fr;
-  rdfs:label "E52 Time-Span (sur un Evènement « historique »)"@fr;
+  rdfs:comment "Il est SOUHAITABLE que les instances de E52_Time-Span soient des IRIs (pas des nœuds anonymes)"@fr;
+  rdfs:label "E52 Time-Span (sur un Evènement « historique »)"@fr;
   sh:nodeKind sh:IRI;
-  sh:property oash:P71, oash:P72, oash:P73;
+  sh:order 11;
+  sh:property oash:P71, oash:P72, oash:P73, oash:P74;
   sh:severity sh:Warning;
   sh:targetClass crm:E52_Time-Span .
 
@@ -119,40 +127,77 @@ oash:Event a sh:NodeShape;
   rdfs:comment "Il est SOUHAITABLE que les instances de E5_Event soient des IRIs (pas des nœuds anonymes)"@fr;
   rdfs:label "E5 Event"@fr;
   sh:nodeKind sh:IRI;
+  sh:order 12;
   sh:property oash:P69, oash:P70;
   sh:severity sh:Warning;
   sh:targetClass crm:E5_Event .
 
-oash:P15 sh:class crm:E42_Identifier;
+oash:Document a sh:NodeShape;
+  rdfs:comment "Il est SOUHAITABLE que les instances de E31_Document soient des IRIs (pas des nœuds anonymes)"@fr;
+  rdfs:label "E31 Document"@fr;
+  sh:nodeKind sh:IRI;
+  sh:order 13;
+  sh:severity sh:Warning;
+  sh:targetClass crm:E31_Document .
+
+oash:DocumentCreation a sh:NodeShape;
+  rdfs:comment "Il est SOUHAITABLE que les instances de E65_Creation soient des IRIs (pas des nœuds anonymes)"@fr;
+  rdfs:label "E65 Creation (d'un Document)"@fr;
+  sh:nodeKind sh:IRI;
+  sh:order 14;
+  sh:property oash:P80, oash:P81, oash:P82;
+  sh:severity sh:Warning;
+  sh:targetClass crm:E65_Creation .
+
+oash:P15 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E42_Identifier;
   sh:description "Les P48_has_preferred_identifier sur les Sites DOIVENT être des E42_Identifier"@fr;
   sh:name "Contraintes de crm:P48_has_preferred_identifier sur un oash:Site"@fr;
   sh:path crm:P48_has_preferred_identifier;
   sh:severity sh:Violation .
 
-oash:P16 sh:class crm:E41_Appellation;
-  sh:description "Le P1_id_identified_by sur un Site DOIT être présent et être un E41_Appellation"@fr;
+oash:P16 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E41_Appellation;
+  sh:description "Le P1_is_identified_by sur un Site DOIT être présent et être un E41_Appellation"@fr;
   sh:minCount 1;
   sh:name "Contraintes de crm:P1_is_identified_by sur un oash:Site"@fr;
   sh:path crm:P1_is_identified_by;
   sh:severity sh:Violation .
 
-oash:P17 sh:description "Le skos:prefLabel sur un Site DOIT être présent"@fr;
+oash:P17 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le skos:prefLabel sur un Site DOIT être présent"@fr;
   sh:minCount 1;
   sh:name "Contraintes de skos:prefLabel sur un oash:Site"@fr;
   sh:nodeKind sh:Literal;
   sh:path skos:prefLabel;
-  sh:severity sh:Violation .
+  sh:severity sh:Violation;
+  sh:uniqueLang true .
 
-oash:P18 sh:class crm:E53_Place;
+oash:P18 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E53_Place;
   sh:description "Les valeurs de P53_has_former_or_current_location des Sites DOIVENT être des URIs Geonames (sans autre précision)"@fr;
   sh:name "Contraintes de crm:P53_has_former_or_current_location sur un oash:Site"@fr;
   sh:path crm:P53_has_former_or_current_location;
   sh:pattern "^http://sws.geonames.org/(.*)";
   sh:severity sh:Violation .
 
-oash:P19 sh:description "Le P87_is_identified_by sur les Places…"@fr .
+oash:P19 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le P87_is_identified_by sur les Places…"@fr .
 
-oash:P21 sh:description "Le P2_has_type sur un évènement de découverte DOIT être présent, unique, et typé avec une et une seule URI des Pactols"@fr;
+oash:P21 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le P2_has_type sur un évènement de découverte DOIT être présent, unique, et typé avec une et une seule URI des Pactols"@fr;
   sh:maxCount 1;
   sh:minCount 1;
   sh:name "Contraintes de crm:P2_has_type sur un oash:EncounterEvent"@fr;
@@ -160,173 +205,236 @@ oash:P21 sh:description "Le P2_has_type sur un évènement de découverte DOIT �
   sh:pattern "^https://ark.frantiq.fr/ark:/26678/(.*)";
   sh:severity sh:Violation .
 
-oash:P22 sh:class crm:E21_Person;
+oash:P22 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E21_Person;
   sh:description "Le P14_carried_out_by sur un Evenement de découverte DOIT être un E21_Person"@fr;
   sh:name "Contraintes de crm:P14_carried_out_by sur un oash:EncounterEvent"@fr;
   sh:path crm:P14_carried_out_by;
   sh:severity sh:Violation .
 
-oash:P23 sh:description "Le O19_has_found_object DOIT être soit un B1_Built_Work, E25_Man-Made_Feature, E22_Man-Made_Object ou A8_Stratigraphic_Unit"@fr;
+oash:P23 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le O19_has_found_object DOIT être soit un B1_Built_Work, E25_Man-Made_Feature, E22_Man-Made_Object ou A8_Stratigraphic_Unit"@fr;
   sh:name "Contraintes de crmsci:O19_has_found_object sur un oash:EncounterEvent"@fr;
-  sh:or _:node1dnvlnii8x4 .
+  sh:or _:node1ec9tg02ex5637 .
 
-_:node1dnvlnii8x4 rdf:first _:node1dnvlnii8x5 .
+_:node1ec9tg02ex5637 rdf:first _:node1ec9tg02ex5638 .
 
-_:node1dnvlnii8x5 sh:class crmba:B1_Built_Work .
+_:node1ec9tg02ex5638 sh:class crmba:B1_Built_Work .
 
-_:node1dnvlnii8x4 rdf:rest _:node1dnvlnii8x6 .
+_:node1ec9tg02ex5637 rdf:rest _:node1ec9tg02ex5639 .
 
-_:node1dnvlnii8x6 rdf:first _:node1dnvlnii8x7 .
+_:node1ec9tg02ex5639 rdf:first _:node1ec9tg02ex5640 .
 
-_:node1dnvlnii8x7 sh:class crm:E25_Man-Made_Feature .
+_:node1ec9tg02ex5640 sh:class crm:E25_Man-Made_Feature .
 
-_:node1dnvlnii8x6 rdf:rest _:node1dnvlnii8x8 .
+_:node1ec9tg02ex5639 rdf:rest _:node1ec9tg02ex5641 .
 
-_:node1dnvlnii8x8 rdf:first _:node1dnvlnii8x9 .
+_:node1ec9tg02ex5641 rdf:first _:node1ec9tg02ex5642 .
 
-_:node1dnvlnii8x9 sh:class crm:E22_Man-Made_Object .
+_:node1ec9tg02ex5642 sh:class crm:E22_Man-Made_Object .
 
-_:node1dnvlnii8x8 rdf:rest _:node1dnvlnii8x10 .
+_:node1ec9tg02ex5641 rdf:rest _:node1ec9tg02ex5643 .
 
-_:node1dnvlnii8x10 rdf:first _:node1dnvlnii8x11 .
+_:node1ec9tg02ex5643 rdf:first _:node1ec9tg02ex5644 .
 
-_:node1dnvlnii8x11 sh:class crmarch:A8_Stratigraphic_Unit .
+_:node1ec9tg02ex5644 sh:class crmarch:A8_Stratigraphic_Unit .
 
-_:node1dnvlnii8x10 rdf:rest rdf:nil .
+_:node1ec9tg02ex5643 rdf:rest rdf:nil .
 
 oash:P23 sh:path crmsci:O19_has_found_object;
   sh:severity sh:Violation .
 
-oash:P25 sh:class crm:E41_Appellation;
+oash:P25 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E41_Appellation;
   sh:description "Le P131_is_identified_by sur une Personne DOIT être un E41_Appellation"@fr;
   sh:name "Contraintes de crm:P131_is_identified_by sur un oash:Person"@fr;
   sh:path crm:P131_is_identified_by;
   sh:severity sh:Violation .
 
-oash:P26 sh:description "Le P14i_performed sur une Personne DOIT être soit un S19_Encoutner_Event soit un E5_Event"@fr;
+oash:P26 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le P14i_performed sur une Personne DOIT être soit un S19_Encoutner_Event soit un E5_Event"@fr;
   sh:name "Contraintes de crm:P14i_performed sur un oash:Person"@fr;
-  sh:or _:node1dnvlnii8x12 .
+  sh:or _:node1ec9tg02ex5645 .
 
-_:node1dnvlnii8x12 rdf:first _:node1dnvlnii8x13 .
+_:node1ec9tg02ex5645 rdf:first _:node1ec9tg02ex5646 .
 
-_:node1dnvlnii8x13 sh:class crmsci:S19_Encounter_Event .
+_:node1ec9tg02ex5646 sh:class crmsci:S19_Encounter_Event .
 
-_:node1dnvlnii8x12 rdf:rest _:node1dnvlnii8x14 .
+_:node1ec9tg02ex5645 rdf:rest _:node1ec9tg02ex5647 .
 
-_:node1dnvlnii8x14 rdf:first _:node1dnvlnii8x15 .
+_:node1ec9tg02ex5647 rdf:first _:node1ec9tg02ex5648 .
 
-_:node1dnvlnii8x15 sh:class crm:E5_Event .
+_:node1ec9tg02ex5648 sh:class crm:E5_Event .
 
-_:node1dnvlnii8x14 rdf:rest rdf:nil .
+_:node1ec9tg02ex5647 rdf:rest rdf:nil .
 
 oash:P26 sh:path crm:P14i_performed;
   sh:severity sh:Violation .
 
-oash:P27 sh:class crm:E42_Identifier;
+oash:P27 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E42_Identifier;
   sh:description "Le P48_has_preferred_identifier sur une Personne DOIT être un E42_Identifier."@fr;
   sh:name "Contraintes de crm:P48_has_preferred_identifier sur un oash:Person"@fr;
   sh:path crm:P48_has_preferred_identifier;
   sh:severity sh:Violation .
 
-oash:P28 sh:class crm:E40_Legal_Body;
+oash:P28 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E40_Legal_Body;
   sh:description "Le P107i_is_current_or_former_member_of DOIT être un E40_Legal_Body"@fr;
   sh:name "Contraintes de crm:P107i_is_current_or_former_member_of sur un oash:Person"@fr;
   sh:path crm:P107i_is_current_or_former_member_of;
   sh:severity sh:Violation .
 
-oash:P29 sh:description "Le skos:prefLabel sur une Personne DOIT être présent"@fr;
+oash:P29 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le skos:prefLabel sur une Personne DOIT être présent"@fr;
   sh:minCount 1;
   sh:name "Contraintes de skos:prefLabel sur un oash:Person"@fr;
   sh:nodeKind sh:Literal;
   sh:path skos:prefLabel;
-  sh:severity sh:Violation .
+  sh:severity sh:Violation;
+  sh:uniqueLang true .
 
-oash:P31 sh:class crm:E41_Appellation;
+oash:P31 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E41_Appellation;
   sh:description "Le P131_is_identified_by sur une Institution DOIT être un E41_Appellation (son nom)"@fr;
   sh:name "Contraintes de crm:P131_is_identified_by sur un oash:LegalBody"@fr;
   sh:path crm:P131_is_identified_by;
   sh:severity sh:Violation .
 
-oash:P32 sh:class crm:E42_Identifier;
+oash:P32 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E42_Identifier;
   sh:description "Le P48_has_preferred_identifier sur une Institution DOIT être un E42_Identifier et DOIT être une URL (l’URL de son site web)"@fr;
   sh:name "Contraintes de crm:P48_has_preferred_identifier sur un oash:LegalBody"@fr;
   sh:path crm:P48_has_preferred_identifier;
   sh:pattern "^https?://(.*)";
   sh:severity sh:Violation .
 
-oash:P33 sh:description "Le skos:prefLabel sur une Institution DOIT être présent"@fr;
+oash:P33 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le skos:prefLabel sur une Institution DOIT être présent"@fr;
   sh:minCount 1;
   sh:name "Contraintes de skos:prefLabel sur un oash:LegalBody"@fr;
   sh:nodeKind sh:Literal;
   sh:path skos:prefLabel;
-  sh:severity sh:Violation .
+  sh:severity sh:Violation;
+  sh:uniqueLang true .
 
-oash:P35 sh:description "Le P3_has_note sur un BuiltWork DOIT être une valeur litérale."@fr;
+oash:P35 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le P3_has_note sur un BuiltWork DOIT être une valeur litérale."@fr;
   sh:name "Contraintes de crm:P3_has_note sur un oash:BuiltWork"@fr;
   sh:nodeKind sh:Literal;
   sh:path crm:P3_has_note;
   sh:severity sh:Violation .
 
-oash:P36 sh:class crm:E42_Identifier;
+oash:P36 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E42_Identifier;
   sh:description "Le P48_has_preferred_identifier sur un BuiltWork DOIT être un E42_Identifier"@fr;
   sh:name "Contraintes de crm:P48_has_preferred_identifier sur un oash:BuiltWork"@fr;
   sh:path crm:P48_has_preferred_identifier;
   sh:severity sh:Violation .
 
-oash:P37 sh:class crmsci:S19_Encounter_Event;
+oash:P37 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crmsci:S19_Encounter_Event;
   sh:description "Le O19i_was_object_found_by sur un BuiltWork DOIT être un S19_Encoutner_Event"@fr;
   sh:name "Contraintes de crmsci:O19i_was_object_found_by sur un oash:BuiltWork"@fr;
   sh:path crmsci:O19i_was_object_found_by;
   sh:severity sh:Violation .
 
-oash:P38 sh:description "Le P101_had_as_general_use sur un BuiltWork DOIT être une URI PACTOLS"@fr;
+oash:P38 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le P101_had_as_general_use sur un BuiltWork DOIT être une URI PACTOLS"@fr;
   sh:name "Contraintes de crm:P101_had_as_general_use sur un oash:BuiltWork"@fr;
   sh:path crm:P101_had_as_general_use;
   sh:pattern "^https://ark.frantiq.fr/ark:/26678/(.*)";
   sh:severity sh:Violation .
 
-oash:P39 sh:class crm:E25_Man-Made_Feature;
+oash:P39 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E25_Man-Made_Feature;
   sh:description "Le P46_is_composed_of sur un BuiltWork DOIT être un E25_Man-Made_Feature"@fr;
   sh:name "Contraintes de crm:P46_is_composed_of sur un oash:BuiltWork"@fr;
   sh:path crm:P46_is_composed_of;
   sh:severity sh:Violation .
 
-oash:P40 sh:description "Le skos:prefLabel sur un BuiltWork DOIT être présent"@fr;
+oash:P40 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le skos:prefLabel sur un BuiltWork DOIT être présent"@fr;
   sh:minCount 1;
   sh:name "Contraintes de skos:prefLabel sur un oash:BuiltWork"@fr;
   sh:nodeKind sh:Literal;
   sh:path skos:prefLabel;
-  sh:severity sh:Violation .
+  sh:severity sh:Violation;
+  sh:uniqueLang true .
 
-oash:P42 sh:description "Le P3_has_note sur un Man-Made Feature DOIT être une valeur litérale."@fr;
+oash:P42 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le P3_has_note sur un Man-Made Feature DOIT être une valeur litérale."@fr;
   sh:name "Contraintes de crm:P3_has_note sur un oash:ManMadeFeature"@fr;
   sh:nodeKind sh:Literal;
   sh:path crm:P3_has_note;
   sh:severity sh:Violation .
 
-oash:P43 sh:class crm:E42_Identifier;
+oash:P43 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E42_Identifier;
   sh:description "Le P48_has_preferred_identifier sur un Man-Made Feature DOIT être un E42_Identifier."@fr;
   sh:name "Contraintes de crm:P48_has_preferred_identifier sur un oash:ManMadeFeature"@fr;
   sh:nodeKind sh:Literal;
   sh:path crm:P48_has_preferred_identifier;
   sh:severity sh:Violation .
 
-oash:P44 sh:description "Le P101_had_as_general_use sur un Man-Made Feature DOIT être une URI PACTOLS"@fr;
+oash:P44 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le P101_had_as_general_use sur un Man-Made Feature DOIT être une URI PACTOLS"@fr;
   sh:name "Contraintes de crm:P101_had_as_general_use sur un oash:ManMadeFeature"@fr;
   sh:path crm:P101_had_as_general_use;
   sh:pattern "^https://ark.frantiq.fr/ark:/26678/(.*)";
   sh:severity sh:Violation .
 
-oash:P45 sh:description "Le P2_has_type sur une Man-Made Feature DOIT être présent, unique et avoir pour valeur soit Feature, Wall ou Burial"@fr;
-  sh:in _:node1dnvlnii8x16 .
+oash:P45 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le P2_has_type sur une Man-Made Feature DOIT être présent, unique et avoir pour valeur soit Feature, Wall ou Burial"@fr;
+  sh:in _:node1ec9tg02ex5649 .
 
-_:node1dnvlnii8x16 rdf:first frantiq:pcrtIxHmbVwDYW;
-  rdf:rest _:node1dnvlnii8x17 .
+_:node1ec9tg02ex5649 rdf:first frantiq:pcrtIxHmbVwDYW;
+  rdf:rest _:node1ec9tg02ex5650 .
 
-_:node1dnvlnii8x17 rdf:first frantiq:pcrt795b632nWw;
-  rdf:rest _:node1dnvlnii8x18 .
+_:node1ec9tg02ex5650 rdf:first frantiq:pcrt795b632nWw;
+  rdf:rest _:node1ec9tg02ex5651 .
 
-_:node1dnvlnii8x18 rdf:first frantiq:crtyuEo4S4GyD;
+_:node1ec9tg02ex5651 rdf:first frantiq:crtyuEo4S4GyD;
   rdf:rest rdf:nil .
 
 oash:P45 sh:maxCount 1;
@@ -335,192 +443,261 @@ oash:P45 sh:maxCount 1;
   sh:path crm:P2_has_type;
   sh:severity sh:Violation .
 
-oash:P46 sh:class crmsci:S19_Encounter_Event;
+oash:P46 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crmsci:S19_Encounter_Event;
   sh:description "Le O19i_was_object_found_by sur un Man-Made Feature DOIT être un S19_Encoutner_Event"@fr;
   sh:name "Contraintes de crmsci:O19i_was_object_found_by sur un oash:ManMadeFeature"@fr;
   sh:path crmsci:O19i_was_object_found_by;
   sh:severity sh:Violation .
 
-oash:P47 sh:class crmba:B1_Built_Work;
+oash:P47 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crmba:B1_Built_Work;
   sh:description "Un P46i_forms_part_of sur un Man-made Feature DOIT être un B1_Built_Work"@fr;
   sh:name "Contraintes de crm:P46i_forms_part_of sur un oash:ManMadeFeature"@fr;
   sh:path crm:P46i_forms_part_of;
   sh:severity sh:Violation .
 
-oash:P48 sh:class crmarch:A8_Stratigraphic_Unit;
+oash:P48 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crmarch:A8_Stratigraphic_Unit;
   sh:description "Un P46_is_composed_of sur un Man-Made Feature DOIT être un A8_Stratigraphic_Unit"@fr;
   sh:name "Contraintes de crm:P46_is_composed_of sur un oash:ManMadeFeature"@fr;
   sh:path crm:P46_is_composed_of;
   sh:severity sh:Violation .
 
-oash:P49 sh:class crm:E22_Man-Made_Object;
+oash:P49 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E22_Man-Made_Object;
   sh:description "Un AP21_contains sur un Man-Made Feature DOIT être un E22_Man-Made_Object"@fr;
   sh:name "Contraintes de crmarch:AP21_contains sur un oash:ManMadeFeature"@fr;
   sh:path crmarch:AP21_contains;
   sh:severity sh:Violation .
 
-oash:P50 sh:description "Le skos:prefLabel sur une Man-Made Feature DOIT être présent"@fr;
+oash:P50 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le skos:prefLabel sur une Man-Made Feature DOIT être présent"@fr;
   sh:minCount 1;
   sh:name "Contraintes de skos:prefLabel sur un oash:ManMadeFeature"@fr;
   sh:nodeKind sh:Literal;
   sh:path skos:prefLabel;
-  sh:severity sh:Violation .
+  sh:severity sh:Violation;
+  sh:uniqueLang true .
 
-oash:P52 sh:description "Le P3_has_note sur un Man-Made Object DOIT être une valeur litérale."@fr;
+oash:P52 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le P3_has_note sur un Man-Made Object DOIT être une valeur litérale."@fr;
   sh:name "Contraintes de crm:P3_has_note sur un oash:ManMadeObject"@fr;
   sh:nodeKind sh:Literal;
   sh:path crm:P3_has_note;
   sh:severity sh:Violation .
 
-oash:P53 sh:class crm:E41_Appellation;
+oash:P53 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E41_Appellation;
   sh:description "Le P1_is_identified_by sur un Man-Made Object DOIT être un E41_Appellation"@fr;
   sh:name "Contraintes de crm:P1_is_identified_by sur un oash:ManMadeObject"@fr;
   sh:path crm:P1_is_identified_by;
   sh:severity sh:Violation .
 
-oash:P54 sh:description "Le P101_had_as_general_use sur un Man-Made Object DOIT être une URI PACTOLS"@fr;
+oash:P54 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le P101_had_as_general_use sur un Man-Made Object DOIT être une URI PACTOLS"@fr;
   sh:name "Contraintes de crm:P101_had_as_general_use sur un oash:ManMadeObject"@fr;
   sh:path crm:P101_had_as_general_use;
   sh:pattern "^https://ark.frantiq.fr/ark:/26678/(.*)";
   sh:severity sh:Violation .
 
-oash:P55 sh:description "Le P45_consists_of sur un Man-Made Object DOIT être une URI des PACTOLS"@fr;
+oash:P55 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le P45_consists_of sur un Man-Made Object DOIT être une URI des PACTOLS"@fr;
   sh:name "Contraintes de crm:P45_consists_of sur un oash:ManMadeObject"@fr;
   sh:path crm:P45_consists_of;
   sh:pattern "^https://ark.frantiq.fr/ark:/26678/(.*)";
   sh:severity sh:Violation .
 
-oash:P56 sh:class crm:E42_Identifier;
+oash:P56 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E42_Identifier;
   sh:description "Le P48_has_preferred_identifier sur un Man-Made Object DOIT être un E42_Identifier"@fr;
   sh:name "Contraintes de crm:P48_has_preferred_identifier sur un oash:ManMadeObject"@fr;
   sh:path crm:P48_has_preferred_identifier;
   sh:severity sh:Violation .
 
-oash:P57 sh:class crmsci:S19_Encounter_Event;
+oash:P57 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crmsci:S19_Encounter_Event;
   sh:description "Le O19i_was_object_found_by sur un Man-Made Object DOIT être un S19_Encoutner_Event"@fr;
   sh:name "Contraintes de crmsci:O19i_was_object_found_by sur un oash:ManMadeObject"@fr;
   sh:path crmsci:O19i_was_object_found_by;
   sh:severity sh:Violation .
 
-oash:P58 sh:description "Le AP21i_is_contained_in sur un Man-Made Object DOIT être soit un A8_Stratigraphic_Unit soit un E25_Man-Made_Feature"@fr;
+oash:P58 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le AP21i_is_contained_in sur un Man-Made Object DOIT être soit un A8_Stratigraphic_Unit soit un E25_Man-Made_Feature"@fr;
   sh:name "Contraintes de crmarch:AP21i_is_contained_in sur un oash:ManMadeObject"@fr;
-  sh:or _:node1dnvlnii8x19 .
+  sh:or _:node1ec9tg02ex5652 .
 
-_:node1dnvlnii8x19 rdf:first _:node1dnvlnii8x20 .
+_:node1ec9tg02ex5652 rdf:first _:node1ec9tg02ex5653 .
 
-_:node1dnvlnii8x20 sh:class crmarch:A8_Stratigraphic_Unit .
+_:node1ec9tg02ex5653 sh:class crmarch:A8_Stratigraphic_Unit .
 
-_:node1dnvlnii8x19 rdf:rest _:node1dnvlnii8x21 .
+_:node1ec9tg02ex5652 rdf:rest _:node1ec9tg02ex5654 .
 
-_:node1dnvlnii8x21 rdf:first _:node1dnvlnii8x22 .
+_:node1ec9tg02ex5654 rdf:first _:node1ec9tg02ex5655 .
 
-_:node1dnvlnii8x22 sh:class crm:E25_Man-Made_Feature .
+_:node1ec9tg02ex5655 sh:class crm:E25_Man-Made_Feature .
 
-_:node1dnvlnii8x21 rdf:rest rdf:nil .
+_:node1ec9tg02ex5654 rdf:rest rdf:nil .
 
 oash:P58 sh:path crmarch:AP21i_is_contained_in;
   sh:severity sh:Violation .
 
-oash:P59 sh:description "Le skos:prefLabel sur un Man-Made Object DOIT être présent"@fr;
+oash:P59 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le skos:prefLabel sur un Man-Made Object DOIT être présent"@fr;
   sh:minCount 1;
   sh:name "Contraintes de skos:prefLabel sur un oash:ManMadeObject"@fr;
   sh:nodeKind sh:Literal;
   sh:path skos:prefLabel;
-  sh:severity sh:Violation .
+  sh:severity sh:Violation;
+  sh:uniqueLang true .
 
-oash:P61 sh:description "Le P3_has_note sur une US DOIT être une valeur litérale."@fr;
+oash:P61 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le P3_has_note sur une US DOIT être une valeur litérale."@fr;
   sh:name "Contraintes de crm:P3_has_note sur un oash:StratigraphicUnit"@fr;
   sh:nodeKind sh:Literal;
   sh:path crm:P3_has_note;
   sh:severity sh:Violation .
 
-oash:P62 sh:class crm:E42_Identifier;
+oash:P62 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E42_Identifier;
   sh:description "Le P48_has_preferred_identifier sur une US DOIT être un E42_Identifier"@fr;
   sh:name "Contraintes de crm:P48_has_preferred_identifier sur un oash:StratigraphicUnit"@fr;
   sh:path crm:P48_has_preferred_identifier;
   sh:severity sh:Violation .
 
-oash:P63 sh:description "Le P101_had_as_general_use sur une US DOIT être une des valeurs…"@fr;
+oash:P63 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le P101_had_as_general_use sur une US DOIT être une des valeurs…"@fr;
   sh:name "Contraintes de crm:P101_had_as_general_use sur un oash:StratigraphicUnit"@fr;
   sh:path crm:P101_had_as_general_use;
   sh:severity sh:Violation .
 
-oash:P64 sh:class crm:E22_Man-Made_Object;
+oash:P64 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E22_Man-Made_Object;
   sh:description "le AP21_contains sur une US DOIT être un E22_Man-Made_Object"@fr;
   sh:name "Contraintes de crmarch:AP21_contains sur un oash:StratigraphicUnit"@fr;
   sh:path crmarch:AP21_contains;
   sh:severity sh:Violation .
 
-oash:P65 sh:class crmsci:S19_Encounter_Event;
+oash:P65 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crmsci:S19_Encounter_Event;
   sh:description "Le O19i_was_object_found_by sur une US DOIT être un S19_Encoutner_Event"@fr;
   sh:name "Contraintes de crmsci:O19i_was_object_found_by sur un oash:StratigraphicUnit"@fr;
   sh:path crmsci:O19i_was_object_found_by;
   sh:severity sh:Violation .
 
-oash:P66 sh:class crm:E25_Man-Made_Feature;
+oash:P66 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E25_Man-Made_Feature;
   sh:description "Le P46i_forms_part_of sur une US DOIT être un E25_Man-Made_Feature"@fr;
   sh:name "Contraintes de crm:P46i_forms_part_of sur un oash:StratigraphicUnit"@fr;
   sh:path crm:P46i_forms_part_of;
   sh:severity sh:Violation .
 
-oash:P67 sh:description "Le skos:prefLabel sur une US Object DOIT être présent"@fr;
+oash:P67 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le skos:prefLabel sur une US Object DOIT être présent"@fr;
   sh:minCount 1;
   sh:name "Contraintes de skos:prefLabel sur un oash:StratigraphicUnit"@fr;
   sh:path skos:prefLabel;
-  sh:severity sh:Violation .
+  sh:severity sh:Violation;
+  sh:uniqueLang true .
 
-oash:P69 sh:description "Le P8_took_place_on_or_within ou son inverse P8i_witnessed sur un EncounterEvent ou un Event DOIT être présent, unique, et être soit un Site Built Work, Man-Made Feature, Stratigraphical Unit ou Man-Made Object"@fr;
+oash:P69 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le P8_took_place_on_or_within ou son inverse P8i_witnessed sur un EncounterEvent ou un Event DOIT être présent, unique, et être soit un Site Built Work, Man-Made Feature, Stratigraphical Unit ou Man-Made Object"@fr;
   sh:maxCount 1;
   sh:minCount 1;
   sh:name "Contraintes de [ sh:alternativePath (crm:P8_took_place_on_or_within [ sh:inversePath crm:P8i_witnessed ]) ] sur un oash:EncounterEvent, oash:Event"@fr;
-  sh:or _:node1dnvlnii8x27 .
+  sh:or _:node1ec9tg02ex5660 .
 
-_:node1dnvlnii8x27 rdf:first _:node1dnvlnii8x28 .
+_:node1ec9tg02ex5660 rdf:first _:node1ec9tg02ex5661 .
 
-_:node1dnvlnii8x28 sh:class crm:E27_Site .
+_:node1ec9tg02ex5661 sh:class crm:E27_Site .
 
-_:node1dnvlnii8x27 rdf:rest _:node1dnvlnii8x29 .
+_:node1ec9tg02ex5660 rdf:rest _:node1ec9tg02ex5662 .
 
-_:node1dnvlnii8x29 rdf:first _:node1dnvlnii8x30 .
+_:node1ec9tg02ex5662 rdf:first _:node1ec9tg02ex5663 .
 
-_:node1dnvlnii8x30 sh:class crmba:B1_Built_Work .
+_:node1ec9tg02ex5663 sh:class crmba:B1_Built_Work .
 
-_:node1dnvlnii8x29 rdf:rest _:node1dnvlnii8x31 .
+_:node1ec9tg02ex5662 rdf:rest _:node1ec9tg02ex5664 .
 
-_:node1dnvlnii8x31 rdf:first _:node1dnvlnii8x32 .
+_:node1ec9tg02ex5664 rdf:first _:node1ec9tg02ex5665 .
 
-_:node1dnvlnii8x32 sh:class crm:E25_Man-Made_Feature .
+_:node1ec9tg02ex5665 sh:class crm:E25_Man-Made_Feature .
 
-_:node1dnvlnii8x31 rdf:rest _:node1dnvlnii8x33 .
+_:node1ec9tg02ex5664 rdf:rest _:node1ec9tg02ex5666 .
 
-_:node1dnvlnii8x33 rdf:first _:node1dnvlnii8x34 .
+_:node1ec9tg02ex5666 rdf:first _:node1ec9tg02ex5667 .
 
-_:node1dnvlnii8x34 sh:class crm:E22_Man-Made_Object .
+_:node1ec9tg02ex5667 sh:class crm:E22_Man-Made_Object .
 
-_:node1dnvlnii8x33 rdf:rest _:node1dnvlnii8x35 .
+_:node1ec9tg02ex5666 rdf:rest _:node1ec9tg02ex5668 .
 
-_:node1dnvlnii8x35 rdf:first _:node1dnvlnii8x36 .
+_:node1ec9tg02ex5668 rdf:first _:node1ec9tg02ex5669 .
 
-_:node1dnvlnii8x36 sh:class crmarch:A8_Stratigraphic_Unit .
+_:node1ec9tg02ex5669 sh:class crmarch:A8_Stratigraphic_Unit .
 
-_:node1dnvlnii8x35 rdf:rest rdf:nil .
+_:node1ec9tg02ex5668 rdf:rest rdf:nil .
 
-oash:P69 sh:path _:node1dnvlnii8x23 .
+oash:P69 sh:path _:node1ec9tg02ex5656 .
 
-_:node1dnvlnii8x23 sh:alternativePath _:node1dnvlnii8x24 .
+_:node1ec9tg02ex5656 sh:alternativePath _:node1ec9tg02ex5657 .
 
-_:node1dnvlnii8x24 rdf:first crm:P8_took_place_on_or_within;
-  rdf:rest _:node1dnvlnii8x25 .
+_:node1ec9tg02ex5657 rdf:first crm:P8_took_place_on_or_within;
+  rdf:rest _:node1ec9tg02ex5658 .
 
-_:node1dnvlnii8x25 rdf:first _:node1dnvlnii8x26 .
+_:node1ec9tg02ex5658 rdf:first _:node1ec9tg02ex5659 .
 
-_:node1dnvlnii8x26 sh:inversePath crm:P8i_witnessed .
+_:node1ec9tg02ex5659 sh:inversePath crm:P8i_witnessed .
 
-_:node1dnvlnii8x25 rdf:rest rdf:nil .
+_:node1ec9tg02ex5658 rdf:rest rdf:nil .
 
 oash:P69 sh:severity sh:Violation .
 
-oash:P70 sh:class crm:E52_Time-Span;
+oash:P70 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E52_Time-Span;
   sh:description "Le P4_has_time-span sur un EncoutnerEvent ou un Event DOIT être présent, unique et être un E52_Time-Span."@fr;
   sh:maxCount 1;
   sh:minCount 1;
@@ -528,7 +705,10 @@ oash:P70 sh:class crm:E52_Time-Span;
   sh:path crm:P4_has_time-span;
   sh:severity sh:Violation .
 
-oash:P71 sh:datatype xsd:dateTime;
+oash:P71 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:datatype xsd:dateTime;
   sh:description "Le P82a_begin_of_the_begin sur un TimeSpan DOIT être unique et avoir le datatype xsd:dateTime"@fr;
   sh:maxCount 1;
   sh:name "Contraintes de crm:P82a_begin_of_the_begin sur un oash:TimeSpanEvent"@fr;
@@ -536,7 +716,10 @@ oash:P71 sh:datatype xsd:dateTime;
   sh:path crm:P82a_begin_of_the_begin;
   sh:severity sh:Violation .
 
-oash:P72 sh:datatype xsd:dateTime;
+oash:P72 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:datatype xsd:dateTime;
   sh:description "Le P82b_end_of_the_end sur un TimeSpan DOIT être unique et avoir le datatype xsd:dateTime"@fr;
   sh:maxCount 1;
   sh:name "Contraintes de crm:P82b_end_of_the_end sur un oash:TimeSpanEvent"@fr;
@@ -544,23 +727,169 @@ oash:P72 sh:datatype xsd:dateTime;
   sh:path crm:P82b_end_of_the_end;
   sh:severity sh:Violation .
 
-oash:P73 sh:description "Le rdfs:label sur un TimeSpan DOIT être présent et unique"@fr;
+oash:P73 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le rdfs:label sur un TimeSpan DOIT être présent et unique"@fr;
   sh:maxCount 1;
   sh:minCount 1;
   sh:name "Contraintes de rdfs:label sur un oash:TimeSpanEvent"@fr;
   sh:path rdfs:label;
   sh:severity sh:Violation .
 
-oash:P75 sh:description "Le rdfs:label sur un Preferred Identifier DOIT être présent"@fr;
+oash:P74 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Un TimeSpan DOIT avoir au moins un P82a_begin_of_the_begin OU un P82b_end_of_the_end"@fr;
+  sh:minCount 1;
+  sh:path _:node1ec9tg02ex5670 .
+
+_:node1ec9tg02ex5670 sh:alternativePath _:node1ec9tg02ex5671 .
+
+_:node1ec9tg02ex5671 rdf:first crm:P82a_begin_of_the_begin;
+  rdf:rest _:node1ec9tg02ex5672 .
+
+_:node1ec9tg02ex5672 rdf:first crm:P82b_end_of_the_end;
+  rdf:rest rdf:nil .
+
+oash:P76 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E41_Appellation;
+  sh:description "Le P1_is_identified_by sur un Document DOIT être présent et être un E41_Appellation"@fr;
+  sh:minCount 1;
+  sh:name "crm:E41_Appellation"@fr;
+  sh:path crm:P1_is_identified_by;
+  sh:severity "1"@fr .
+
+oash:E31_Document sh:property oash:P76, oash:P77, oash:P78, oash:P79 .
+
+oash:P77 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E42_Identifier;
+  sh:description "Les P48_has_preferred_identifier sur les Documents DOIVENT être des E42_Identifier"@fr;
+  sh:name "Contraintes de crm:P48_has_preferred_identifier sur un oash:E31_Document"@fr;
+  sh:path crm:P48_has_preferred_identifier;
+  sh:severity sh:Violation .
+
+oash:P78 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le P2_has_type sur un Document DOIT être une URI PACTOLS et n'apparait qu'une seule fois"@fr;
+  sh:maxCount 1;
+  sh:name "Contraintes de crm:P2_has_type sur un oash:E31_Document"@fr;
+  sh:path crm:P2_has_type;
+  sh:pattern "^https://ark.frantiq.fr/ark:/26678/(.*)";
+  sh:severity sh:Violation .
+
+oash:P79 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le P70_documents sur un Document DOIT avoir au moins une valeur et être soit un Encounter_Event, soit un Site, soit un Built_Work, soit un Man-Made_Feature, soit une Stratigraphic Unit, soit un Man-Made_Object"@fr;
+  sh:minCount 1;
+  sh:or _:node1ec9tg02ex5673 .
+
+_:node1ec9tg02ex5673 rdf:first _:node1ec9tg02ex5674 .
+
+_:node1ec9tg02ex5674 sh:class crmsci:S19_Encounter_Event .
+
+_:node1ec9tg02ex5673 rdf:rest _:node1ec9tg02ex5675 .
+
+_:node1ec9tg02ex5675 rdf:first _:node1ec9tg02ex5676 .
+
+_:node1ec9tg02ex5676 sh:class crm:E27_Site .
+
+_:node1ec9tg02ex5675 rdf:rest _:node1ec9tg02ex5677 .
+
+_:node1ec9tg02ex5677 rdf:first _:node1ec9tg02ex5678 .
+
+_:node1ec9tg02ex5678 sh:class crmba:B1_Built_Work .
+
+_:node1ec9tg02ex5677 rdf:rest _:node1ec9tg02ex5679 .
+
+_:node1ec9tg02ex5679 rdf:first _:node1ec9tg02ex5680 .
+
+_:node1ec9tg02ex5680 sh:class crm:E25_Man-Made_Feature .
+
+_:node1ec9tg02ex5679 rdf:rest _:node1ec9tg02ex5681 .
+
+_:node1ec9tg02ex5681 rdf:first _:node1ec9tg02ex5682 .
+
+_:node1ec9tg02ex5682 sh:class crm:E22_Man-Made_Object .
+
+_:node1ec9tg02ex5681 rdf:rest _:node1ec9tg02ex5683 .
+
+_:node1ec9tg02ex5683 rdf:first _:node1ec9tg02ex5684 .
+
+_:node1ec9tg02ex5684 sh:class crmarch:A8_Stratigraphic_Unit .
+
+_:node1ec9tg02ex5683 rdf:rest rdf:nil .
+
+oash:P79 sh:path crm:P70_documents .
+
+oash:P80 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Une création de document DOIT avoir créer 1 et un seul document"@fr;
+  sh:maxCount 1;
+  sh:minCount 1;
+  sh:or crm:E31_Document;
+  sh:path _:node1ec9tg02ex5685 .
+
+_:node1ec9tg02ex5685 sh:alternativePath _:node1ec9tg02ex5686 .
+
+_:node1ec9tg02ex5686 rdf:first crm:P94_has_created;
+  rdf:rest _:node1ec9tg02ex5687 .
+
+_:node1ec9tg02ex5687 rdf:first _:node1ec9tg02ex5688 .
+
+_:node1ec9tg02ex5688 sh:inversePath crm:P94i_was_created_by .
+
+_:node1ec9tg02ex5687 rdf:rest rdf:nil .
+
+oash:P81 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E21_Person;
+  sh:description "Le P14_carried_out_by sur une création de document DOIT être un E21_Person"@fr;
+  sh:path crm:P14_carried_out_by .
+
+oash:P82 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:class crm:E52_Time-Span;
+  sh:description "Le P4_has_time-span sur un E65_Creation DOIT être unique et être un E52_Time-Span."@fr;
+  sh:maxCount 1;
+  sh:name "Contraintes de crm:P4_has_time-span sur un oash:DocumentCreation"@fr;
+  sh:path crm:P4_has_time-span;
+  sh:severity sh:Violation .
+
+oash:P85 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le rdfs:label sur un Preferred Identifier DOIT être présent"@fr;
   sh:minCount 1;
   sh:name "Contraintes de rdfs:label sur un oash:PreferredIdentifier"@fr;
   sh:nodeKind sh:Literal;
   sh:path rdfs:label;
   sh:severity sh:Violation .
 
-oash:P76 sh:description "Le rdfs:label sur une Appellation DOIT être présent"@fr;
+oash:P86 a skos:Concept;
+  skos:inScheme <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  skos:topConceptOf <http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes>;
+  sh:description "Le rdfs:label sur une Appellation DOIT être présent"@fr;
   sh:minCount 1;
   sh:name "Contraintes de rdfs:label sur un oash:Appellation"@fr;
   sh:nodeKind sh:Literal;
   sh:path rdfs:label;
   sh:severity sh:Violation .
+
+<http://openarchaeo.huma-num.fr/federation/shapes/openarchaeo-shapes> a skos:ConceptScheme;
+  skos:hasTopConcept oash:P15, oash:P16, oash:P17, oash:P18, oash:P19, oash:P21, oash:P22,
+    oash:P23, oash:P25, oash:P26, oash:P27, oash:P28, oash:P29, oash:P31, oash:P32, oash:P33,
+    oash:P35, oash:P36, oash:P37, oash:P38, oash:P39, oash:P40, oash:P42, oash:P43, oash:P44,
+    oash:P45, oash:P46, oash:P47, oash:P48, oash:P49, oash:P50, oash:P52, oash:P53, oash:P54,
+    oash:P55, oash:P56, oash:P57, oash:P58, oash:P59, oash:P61, oash:P62, oash:P63, oash:P64,
+    oash:P65, oash:P66, oash:P67, oash:P69, oash:P70, oash:P71, oash:P72, oash:P73, oash:P74,
+    oash:P76, oash:P77, oash:P78, oash:P79, oash:P80, oash:P81, oash:P82, oash:P85, oash:P86 .
