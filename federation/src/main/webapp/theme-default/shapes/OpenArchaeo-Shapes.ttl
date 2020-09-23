@@ -118,6 +118,7 @@ oash:Document a sh:NodeShape;
   rdfs:label "E31 Document"@fr;
   sh:nodeKind sh:IRI;
   sh:order 12;
+  sh:property oash:P88, oash:P89, oash:P90, oash:P91;
   sh:targetClass crm:E31_Document .
 
 oash:DocumentCreation a sh:NodeShape;
@@ -165,18 +166,18 @@ oash:P19 sh:class crmsci:S19_Encounter_Event;
 oash:P20 sh:class crmsci:S19_Encounter_Event;
   sh:description "Un Site DOIT être lié à au moins un évènement de découverte S19"@fr;
   sh:minCount 1;
-  sh:path _:node1ei92sv7ix789 .
+  sh:path _:node1ei92sv7ix1386 .
 
-_:node1ei92sv7ix789 sh:alternativePath _:node1ei92sv7ix790 .
+_:node1ei92sv7ix1386 sh:alternativePath _:node1ei92sv7ix1387 .
 
-_:node1ei92sv7ix790 rdf:first crm:P8i_witnessed;
-  rdf:rest _:node1ei92sv7ix791 .
+_:node1ei92sv7ix1387 rdf:first crm:P8i_witnessed;
+  rdf:rest _:node1ei92sv7ix1388 .
 
-_:node1ei92sv7ix791 rdf:first _:node1ei92sv7ix792 .
+_:node1ei92sv7ix1388 rdf:first _:node1ei92sv7ix1389 .
 
-_:node1ei92sv7ix792 sh:inversePath crm:P8_took_place_on_or_within .
+_:node1ei92sv7ix1389 sh:inversePath crm:P8_took_place_on_or_within .
 
-_:node1ei92sv7ix791 rdf:rest rdf:nil .
+_:node1ei92sv7ix1388 rdf:rest rdf:nil .
 
 oash:P22 sh:description "Le P2_has_type sur un évènement de découverte DOIT être unique, et typé avec une et une seule URI des Pactols"@fr;
   sh:maxCount 1;
@@ -193,31 +194,31 @@ oash:P23 sh:class crm:E21_Person;
 
 oash:P24 sh:description "Le O19_has_found_object DOIT être soit un B1_Built_Work, E25_Man-Made_Feature, E22_Man-Made_Object ou A2_Stratigraphic_Volume_Unit"@fr;
   sh:name "Contraintes de crmsci:O19_has_found_object sur un oash:EncounterEvent"@fr;
-  sh:or _:node1ei92sv7ix793 .
+  sh:or _:node1ei92sv7ix1390 .
 
-_:node1ei92sv7ix793 rdf:first _:node1ei92sv7ix794 .
+_:node1ei92sv7ix1390 rdf:first _:node1ei92sv7ix1391 .
 
-_:node1ei92sv7ix794 sh:class crmba:B1_Built_Work .
+_:node1ei92sv7ix1391 sh:class crmba:B1_Built_Work .
 
-_:node1ei92sv7ix793 rdf:rest _:node1ei92sv7ix795 .
+_:node1ei92sv7ix1390 rdf:rest _:node1ei92sv7ix1392 .
 
-_:node1ei92sv7ix795 rdf:first _:node1ei92sv7ix796 .
+_:node1ei92sv7ix1392 rdf:first _:node1ei92sv7ix1393 .
 
-_:node1ei92sv7ix796 sh:class crm:E25_Man-Made_Feature .
+_:node1ei92sv7ix1393 sh:class crm:E25_Man-Made_Feature .
 
-_:node1ei92sv7ix795 rdf:rest _:node1ei92sv7ix797 .
+_:node1ei92sv7ix1392 rdf:rest _:node1ei92sv7ix1394 .
 
-_:node1ei92sv7ix797 rdf:first _:node1ei92sv7ix798 .
+_:node1ei92sv7ix1394 rdf:first _:node1ei92sv7ix1395 .
 
-_:node1ei92sv7ix798 sh:class crm:E22_Man-Made_Object .
+_:node1ei92sv7ix1395 sh:class crm:E22_Man-Made_Object .
 
-_:node1ei92sv7ix797 rdf:rest _:node1ei92sv7ix799 .
+_:node1ei92sv7ix1394 rdf:rest _:node1ei92sv7ix1396 .
 
-_:node1ei92sv7ix799 rdf:first _:node1ei92sv7ix800 .
+_:node1ei92sv7ix1396 rdf:first _:node1ei92sv7ix1397 .
 
-_:node1ei92sv7ix800 sh:class crmarch:A2_Stratigraphic_Volume_Unit .
+_:node1ei92sv7ix1397 sh:class crmarch:A2_Stratigraphic_Volume_Unit .
 
-_:node1ei92sv7ix799 rdf:rest rdf:nil .
+_:node1ei92sv7ix1396 rdf:rest rdf:nil .
 
 oash:P24 sh:path crmsci:O19_has_found_object;
   sh:severity sh:Violation .
@@ -228,18 +229,18 @@ oash:P25 sh:class crm:E27_Site;
 
 oash:P26 sh:description "Le P8_took_place_on_or_within ou son inverse DOIT être unique"@fr;
   sh:maxCount 1;
-  sh:path _:node1ei92sv7ix801 .
+  sh:path _:node1ei92sv7ix1398 .
 
-_:node1ei92sv7ix801 sh:alternativePath _:node1ei92sv7ix802 .
+_:node1ei92sv7ix1398 sh:alternativePath _:node1ei92sv7ix1399 .
 
-_:node1ei92sv7ix802 rdf:first crm:P8_took_place_on_or_within;
-  rdf:rest _:node1ei92sv7ix803 .
+_:node1ei92sv7ix1399 rdf:first crm:P8_took_place_on_or_within;
+  rdf:rest _:node1ei92sv7ix1400 .
 
-_:node1ei92sv7ix803 rdf:first _:node1ei92sv7ix804 .
+_:node1ei92sv7ix1400 rdf:first _:node1ei92sv7ix1401 .
 
-_:node1ei92sv7ix804 sh:inversePath crm:P8i_witnessed .
+_:node1ei92sv7ix1401 sh:inversePath crm:P8i_witnessed .
 
-_:node1ei92sv7ix803 rdf:rest rdf:nil .
+_:node1ei92sv7ix1400 rdf:rest rdf:nil .
 
 oash:P27 sh:class crm:E42_Identifier;
   sh:description "Le P48 sur un evènement de découverte doit être unique et être un E42_Identifier"@fr;
@@ -248,37 +249,37 @@ oash:P27 sh:class crm:E42_Identifier;
 
 oash:P29 sh:description "Le P14i_performed sur une Personne DOIT être soit un S19_Encoutner_Event soit un E65_Creation"@fr;
   sh:name "Contraintes de crm:P14i_performed sur un oash:Person"@fr;
-  sh:or _:node1ei92sv7ix805 .
+  sh:or _:node1ei92sv7ix1402 .
 
-_:node1ei92sv7ix805 rdf:first _:node1ei92sv7ix806 .
+_:node1ei92sv7ix1402 rdf:first _:node1ei92sv7ix1403 .
 
-_:node1ei92sv7ix806 sh:class crmsci:S19_Encounter_Event .
+_:node1ei92sv7ix1403 sh:class crmsci:S19_Encounter_Event .
 
-_:node1ei92sv7ix805 rdf:rest _:node1ei92sv7ix807 .
+_:node1ei92sv7ix1402 rdf:rest _:node1ei92sv7ix1404 .
 
-_:node1ei92sv7ix807 rdf:first _:node1ei92sv7ix808 .
+_:node1ei92sv7ix1404 rdf:first _:node1ei92sv7ix1405 .
 
-_:node1ei92sv7ix808 sh:class crm:E65_Creation .
+_:node1ei92sv7ix1405 sh:class crm:E65_Creation .
 
-_:node1ei92sv7ix807 rdf:rest rdf:nil .
+_:node1ei92sv7ix1404 rdf:rest rdf:nil .
 
 oash:P29 sh:path crm:P14i_performed;
   sh:severity sh:Violation .
 
 oash:P30 sh:description "Une Personne DOIT avoir au moins un P14i ou un ^P14"@fr;
   sh:minCount 1;
-  sh:path _:node1ei92sv7ix809 .
+  sh:path _:node1ei92sv7ix1406 .
 
-_:node1ei92sv7ix809 sh:alternativePath _:node1ei92sv7ix810 .
+_:node1ei92sv7ix1406 sh:alternativePath _:node1ei92sv7ix1407 .
 
-_:node1ei92sv7ix810 rdf:first crm:P14i_performed;
-  rdf:rest _:node1ei92sv7ix811 .
+_:node1ei92sv7ix1407 rdf:first crm:P14i_performed;
+  rdf:rest _:node1ei92sv7ix1408 .
 
-_:node1ei92sv7ix811 rdf:first _:node1ei92sv7ix812 .
+_:node1ei92sv7ix1408 rdf:first _:node1ei92sv7ix1409 .
 
-_:node1ei92sv7ix812 sh:inversePath crm:P14_carried_out_by .
+_:node1ei92sv7ix1409 sh:inversePath crm:P14_carried_out_by .
 
-_:node1ei92sv7ix811 rdf:rest rdf:nil .
+_:node1ei92sv7ix1408 rdf:rest rdf:nil .
 
 oash:P31 sh:class crm:E40_Legal_Body;
   sh:description "Le P107i_is_current_or_former_member_of DOIT être un E40_Legal_Body"@fr;
@@ -314,18 +315,18 @@ oash:P35 sh:description "Le skos:prefLabel sur une Institution DOIT être prése
 oash:P36 sh:class crm:E21_Person;
   sh:description "Un LegalBody DOIT être lié à au moins une Personne"@fr;
   sh:minCount 1;
-  sh:path _:node1ei92sv7ix813 .
+  sh:path _:node1ei92sv7ix1410 .
 
-_:node1ei92sv7ix813 sh:alternativePath _:node1ei92sv7ix814 .
+_:node1ei92sv7ix1410 sh:alternativePath _:node1ei92sv7ix1411 .
 
-_:node1ei92sv7ix814 rdf:first crm:P107_has_current_or_former_member;
-  rdf:rest _:node1ei92sv7ix815 .
+_:node1ei92sv7ix1411 rdf:first crm:P107_has_current_or_former_member;
+  rdf:rest _:node1ei92sv7ix1412 .
 
-_:node1ei92sv7ix815 rdf:first _:node1ei92sv7ix816 .
+_:node1ei92sv7ix1412 rdf:first _:node1ei92sv7ix1413 .
 
-_:node1ei92sv7ix816 sh:inversePath crm:P107i_is_current_or_former_member_of .
+_:node1ei92sv7ix1413 sh:inversePath crm:P107i_is_current_or_former_member_of .
 
-_:node1ei92sv7ix815 rdf:rest rdf:nil .
+_:node1ei92sv7ix1412 rdf:rest rdf:nil .
 
 oash:P38 sh:description "Le P3_has_note sur un BuiltWork DOIT être une valeur litérale."@fr;
   sh:name "Contraintes de crm:P3_has_note sur un oash:BuiltWork"@fr;
@@ -350,18 +351,18 @@ oash:P40 sh:class crmsci:S19_Encounter_Event;
 oash:P41 sh:description "Un BuiltWork DOIT être lié à un et un seul O19i ou l'inverse de O19"@fr;
   sh:maxCount 1;
   sh:minCount 1;
-  sh:path _:node1ei92sv7ix817 .
+  sh:path _:node1ei92sv7ix1414 .
 
-_:node1ei92sv7ix817 sh:alternativePath _:node1ei92sv7ix818 .
+_:node1ei92sv7ix1414 sh:alternativePath _:node1ei92sv7ix1415 .
 
-_:node1ei92sv7ix818 rdf:first crmsci:O19i_was_object_found_by;
-  rdf:rest _:node1ei92sv7ix819 .
+_:node1ei92sv7ix1415 rdf:first crmsci:O19i_was_object_found_by;
+  rdf:rest _:node1ei92sv7ix1416 .
 
-_:node1ei92sv7ix819 rdf:first _:node1ei92sv7ix820 .
+_:node1ei92sv7ix1416 rdf:first _:node1ei92sv7ix1417 .
 
-_:node1ei92sv7ix820 sh:inversePath crmsci:O19_has_found_object .
+_:node1ei92sv7ix1417 sh:inversePath crmsci:O19_has_found_object .
 
-_:node1ei92sv7ix819 rdf:rest rdf:nil .
+_:node1ei92sv7ix1416 rdf:rest rdf:nil .
 
 oash:P42 sh:description "Le P101_had_as_general_use sur un BuiltWork DOIT être une URI PACTOLS"@fr;
   sh:maxCount 1;
@@ -373,18 +374,18 @@ oash:P42 sh:description "Le P101_had_as_general_use sur un BuiltWork DOIT être 
 oash:P43 sh:class crm:E25_Man-Made_Feature;
   sh:description "Le P46_is_composed_of ou son inverse sur un BuiltWork DOIT être un E25_Man-Made_Feature"@fr;
   sh:name "Contraintes de [ sh:alternativePath ( crm:P46_is_composed_of [ sh:inversePath crm:P46i_forms_part_of ]) ] sur un oash:BuiltWork"@fr;
-  sh:path _:node1ei92sv7ix821 .
+  sh:path _:node1ei92sv7ix1418 .
 
-_:node1ei92sv7ix821 sh:alternativePath _:node1ei92sv7ix822 .
+_:node1ei92sv7ix1418 sh:alternativePath _:node1ei92sv7ix1419 .
 
-_:node1ei92sv7ix822 rdf:first crm:P46_is_composed_of;
-  rdf:rest _:node1ei92sv7ix823 .
+_:node1ei92sv7ix1419 rdf:first crm:P46_is_composed_of;
+  rdf:rest _:node1ei92sv7ix1420 .
 
-_:node1ei92sv7ix823 rdf:first _:node1ei92sv7ix824 .
+_:node1ei92sv7ix1420 rdf:first _:node1ei92sv7ix1421 .
 
-_:node1ei92sv7ix824 sh:inversePath crm:P46i_forms_part_of .
+_:node1ei92sv7ix1421 sh:inversePath crm:P46i_forms_part_of .
 
-_:node1ei92sv7ix823 rdf:rest rdf:nil .
+_:node1ei92sv7ix1420 rdf:rest rdf:nil .
 
 oash:P43 sh:severity sh:Violation .
 
@@ -419,15 +420,15 @@ oash:P48 sh:description "Le P101_had_as_general_use sur un Man-Made Feature DOIT
   sh:severity sh:Violation .
 
 oash:P49 sh:description "Le P2_has_type sur une Man-Made Feature DOIT être présent, unique et avoir pour valeur soit Feature, Wall ou Burial"@fr;
-  sh:in _:node1ei92sv7ix825 .
+  sh:in _:node1ei92sv7ix1422 .
 
-_:node1ei92sv7ix825 rdf:first frantiq:pcrtIxHmbVwDYW;
-  rdf:rest _:node1ei92sv7ix826 .
+_:node1ei92sv7ix1422 rdf:first frantiq:pcrtIxHmbVwDYW;
+  rdf:rest _:node1ei92sv7ix1423 .
 
-_:node1ei92sv7ix826 rdf:first frantiq:pcrt795b632nWw;
-  rdf:rest _:node1ei92sv7ix827 .
+_:node1ei92sv7ix1423 rdf:first frantiq:pcrt795b632nWw;
+  rdf:rest _:node1ei92sv7ix1424 .
 
-_:node1ei92sv7ix827 rdf:first frantiq:crtyuEo4S4GyD;
+_:node1ei92sv7ix1424 rdf:first frantiq:crtyuEo4S4GyD;
   rdf:rest rdf:nil .
 
 oash:P49 sh:maxCount 1;
@@ -445,34 +446,34 @@ oash:P50 sh:class crmsci:S19_Encounter_Event;
 oash:P51 sh:description "Un Man-Made Feature DOIT être lié à un et un seul O19i ou inverse de O19"@fr;
   sh:maxCount 1;
   sh:minCount 1;
-  sh:path _:node1ei92sv7ix828 .
+  sh:path _:node1ei92sv7ix1425 .
 
-_:node1ei92sv7ix828 sh:alternativePath _:node1ei92sv7ix829 .
+_:node1ei92sv7ix1425 sh:alternativePath _:node1ei92sv7ix1426 .
 
-_:node1ei92sv7ix829 rdf:first crmsci:O19i_was_object_found_by;
-  rdf:rest _:node1ei92sv7ix830 .
+_:node1ei92sv7ix1426 rdf:first crmsci:O19i_was_object_found_by;
+  rdf:rest _:node1ei92sv7ix1427 .
 
-_:node1ei92sv7ix830 rdf:first _:node1ei92sv7ix831 .
+_:node1ei92sv7ix1427 rdf:first _:node1ei92sv7ix1428 .
 
-_:node1ei92sv7ix831 sh:inversePath crmsci:O19_has_found_object .
+_:node1ei92sv7ix1428 sh:inversePath crmsci:O19_has_found_object .
 
-_:node1ei92sv7ix830 rdf:rest rdf:nil .
+_:node1ei92sv7ix1427 rdf:rest rdf:nil .
 
 oash:P52 sh:description "Un P46i_forms_part_of ou son inverse P46 sur un Man-made Feature DOIT être unique"@fr;
   sh:maxCount 1;
   sh:name "Contraintes de [ sh:alternativePath ( crm:P46i_forms_part_of [ sh:inversePath crm:P46_is_composed_of ]) ] sur un oash:ManMadeFeature"@fr;
-  sh:path _:node1ei92sv7ix832 .
+  sh:path _:node1ei92sv7ix1429 .
 
-_:node1ei92sv7ix832 sh:alternativePath _:node1ei92sv7ix833 .
+_:node1ei92sv7ix1429 sh:alternativePath _:node1ei92sv7ix1430 .
 
-_:node1ei92sv7ix833 rdf:first crm:P46i_forms_part_of;
-  rdf:rest _:node1ei92sv7ix834 .
+_:node1ei92sv7ix1430 rdf:first crm:P46i_forms_part_of;
+  rdf:rest _:node1ei92sv7ix1431 .
 
-_:node1ei92sv7ix834 rdf:first _:node1ei92sv7ix835 .
+_:node1ei92sv7ix1431 rdf:first _:node1ei92sv7ix1432 .
 
-_:node1ei92sv7ix835 sh:inversePath crm:P46_is_composed_of .
+_:node1ei92sv7ix1432 sh:inversePath crm:P46_is_composed_of .
 
-_:node1ei92sv7ix834 rdf:rest rdf:nil .
+_:node1ei92sv7ix1431 rdf:rest rdf:nil .
 
 oash:P52 sh:severity sh:Violation .
 
@@ -482,51 +483,51 @@ oash:P53 sh:class crmba:B1_Built_Work;
 
 oash:P54 sh:description "Un P46_is_composed_of sur un Man-Made Feature DOIT être soit un A2_Stratigraphic_Volume_Unit ou un E22_Man-Made_Object"@fr;
   sh:name "Contraintes de crm:P46_is_composed_of sur un oash:ManMadeFeature"@fr;
-  sh:or _:node1ei92sv7ix836 .
+  sh:or _:node1ei92sv7ix1433 .
 
-_:node1ei92sv7ix836 rdf:first _:node1ei92sv7ix837 .
+_:node1ei92sv7ix1433 rdf:first _:node1ei92sv7ix1434 .
 
-_:node1ei92sv7ix837 sh:class crmarch:A2_Stratigraphic_Volume_Unit .
+_:node1ei92sv7ix1434 sh:class crmarch:A2_Stratigraphic_Volume_Unit .
 
-_:node1ei92sv7ix836 rdf:rest _:node1ei92sv7ix838 .
+_:node1ei92sv7ix1433 rdf:rest _:node1ei92sv7ix1435 .
 
-_:node1ei92sv7ix838 rdf:first _:node1ei92sv7ix839 .
+_:node1ei92sv7ix1435 rdf:first _:node1ei92sv7ix1436 .
 
-_:node1ei92sv7ix839 sh:class crm:E22_Man-Made_Object .
+_:node1ei92sv7ix1436 sh:class crm:E22_Man-Made_Object .
 
-_:node1ei92sv7ix838 rdf:rest rdf:nil .
+_:node1ei92sv7ix1435 rdf:rest rdf:nil .
 
 oash:P54 sh:path crm:P46_is_composed_of;
   sh:severity sh:Violation .
 
 oash:P55 sh:description "Un P46_is_composed_of ou son inverse P46i sur un Man-Made Feature DOIT être soit un A2_Stratigraphic_Volume_Unit ou un E22_Man-Made_Object"@fr;
   sh:name "Contraintes de [ sh:alternativePath ( crm:P46_is_composed_of [ sh:inversePath crm:P46i_forms_part_of ]) ] sur un oash:ManMadeFeature"@fr;
-  sh:or _:node1ei92sv7ix844 .
+  sh:or _:node1ei92sv7ix1441 .
 
-_:node1ei92sv7ix844 rdf:first _:node1ei92sv7ix845 .
+_:node1ei92sv7ix1441 rdf:first _:node1ei92sv7ix1442 .
 
-_:node1ei92sv7ix845 sh:class crmarch:A2_Stratigraphic_Volume_Unit .
+_:node1ei92sv7ix1442 sh:class crmarch:A2_Stratigraphic_Volume_Unit .
 
-_:node1ei92sv7ix844 rdf:rest _:node1ei92sv7ix846 .
+_:node1ei92sv7ix1441 rdf:rest _:node1ei92sv7ix1443 .
 
-_:node1ei92sv7ix846 rdf:first _:node1ei92sv7ix847 .
+_:node1ei92sv7ix1443 rdf:first _:node1ei92sv7ix1444 .
 
-_:node1ei92sv7ix847 sh:class crm:E22_Man-Made_Object .
+_:node1ei92sv7ix1444 sh:class crm:E22_Man-Made_Object .
 
-_:node1ei92sv7ix846 rdf:rest rdf:nil .
+_:node1ei92sv7ix1443 rdf:rest rdf:nil .
 
-oash:P55 sh:path _:node1ei92sv7ix840 .
+oash:P55 sh:path _:node1ei92sv7ix1437 .
 
-_:node1ei92sv7ix840 sh:alternativePath _:node1ei92sv7ix841 .
+_:node1ei92sv7ix1437 sh:alternativePath _:node1ei92sv7ix1438 .
 
-_:node1ei92sv7ix841 rdf:first crm:P46_is_composed_of;
-  rdf:rest _:node1ei92sv7ix842 .
+_:node1ei92sv7ix1438 rdf:first crm:P46_is_composed_of;
+  rdf:rest _:node1ei92sv7ix1439 .
 
-_:node1ei92sv7ix842 rdf:first _:node1ei92sv7ix843 .
+_:node1ei92sv7ix1439 rdf:first _:node1ei92sv7ix1440 .
 
-_:node1ei92sv7ix843 sh:inversePath crm:P46i_forms_part_of .
+_:node1ei92sv7ix1440 sh:inversePath crm:P46i_forms_part_of .
 
-_:node1ei92sv7ix842 rdf:rest rdf:nil .
+_:node1ei92sv7ix1439 rdf:rest rdf:nil .
 
 oash:P55 sh:severity sh:Violation .
 
@@ -571,18 +572,18 @@ oash:P62 sh:class crmsci:S19_Encounter_Event;
 
 oash:P63 sh:description "Un Man-Made Object DOIT être lié à un seul O19i ou inverse de O19"@fr;
   sh:maxCount 1;
-  sh:path _:node1ei92sv7ix848 .
+  sh:path _:node1ei92sv7ix1445 .
 
-_:node1ei92sv7ix848 sh:alternativePath _:node1ei92sv7ix849 .
+_:node1ei92sv7ix1445 sh:alternativePath _:node1ei92sv7ix1446 .
 
-_:node1ei92sv7ix849 rdf:first crmsci:O19i_was_object_found_by;
-  rdf:rest _:node1ei92sv7ix850 .
+_:node1ei92sv7ix1446 rdf:first crmsci:O19i_was_object_found_by;
+  rdf:rest _:node1ei92sv7ix1447 .
 
-_:node1ei92sv7ix850 rdf:first _:node1ei92sv7ix851 .
+_:node1ei92sv7ix1447 rdf:first _:node1ei92sv7ix1448 .
 
-_:node1ei92sv7ix851 sh:inversePath crmsci:O19_has_found_object .
+_:node1ei92sv7ix1448 sh:inversePath crmsci:O19_has_found_object .
 
-_:node1ei92sv7ix850 rdf:rest rdf:nil .
+_:node1ei92sv7ix1447 rdf:rest rdf:nil .
 
 oash:P64 sh:class crmarch:A2_Stratigraphic_Volume_Unit;
   sh:description "Le AP21i_is_contained_in sur un Man-Made Object DOIT être une A2_Stratigraphic_Volume_Unit"@fr;
@@ -593,18 +594,18 @@ oash:P64 sh:class crmarch:A2_Stratigraphic_Volume_Unit;
 oash:P65 sh:description "Un Man-Made Object DOIT être lié à au maximum 1 AP21i ou inverse de AP21"@fr;
   sh:maxCount 1;
   sh:name "Contraintes de [ sh:alternativePath ( crmarch:AP21i_is_contained_in [ sh:inversePath crmarch:AP21_contains ]) ] sur un oash:ManMadeObject"@fr;
-  sh:path _:node1ei92sv7ix852 .
+  sh:path _:node1ei92sv7ix1449 .
 
-_:node1ei92sv7ix852 sh:alternativePath _:node1ei92sv7ix853 .
+_:node1ei92sv7ix1449 sh:alternativePath _:node1ei92sv7ix1450 .
 
-_:node1ei92sv7ix853 rdf:first crmarch:AP21i_is_contained_in;
-  rdf:rest _:node1ei92sv7ix854 .
+_:node1ei92sv7ix1450 rdf:first crmarch:AP21i_is_contained_in;
+  rdf:rest _:node1ei92sv7ix1451 .
 
-_:node1ei92sv7ix854 rdf:first _:node1ei92sv7ix855 .
+_:node1ei92sv7ix1451 rdf:first _:node1ei92sv7ix1452 .
 
-_:node1ei92sv7ix855 sh:inversePath crmarch:AP21_contains .
+_:node1ei92sv7ix1452 sh:inversePath crmarch:AP21_contains .
 
-_:node1ei92sv7ix854 rdf:rest rdf:nil .
+_:node1ei92sv7ix1451 rdf:rest rdf:nil .
 
 oash:P65 sh:severity sh:Violation .
 
@@ -614,18 +615,18 @@ oash:P66 sh:class crm:E25_Man-Made_Feature;
 
 oash:P67 sh:description "Un Man-Made Object DOIT être lié à au maximum 1 P46i ou inverse de P46"@fr;
   sh:maxCount 1;
-  sh:path _:node1ei92sv7ix856 .
+  sh:path _:node1ei92sv7ix1453 .
 
-_:node1ei92sv7ix856 sh:alternativePath _:node1ei92sv7ix857 .
+_:node1ei92sv7ix1453 sh:alternativePath _:node1ei92sv7ix1454 .
 
-_:node1ei92sv7ix857 rdf:first crm:P46i_forms_part_of;
-  rdf:rest _:node1ei92sv7ix858 .
+_:node1ei92sv7ix1454 rdf:first crm:P46i_forms_part_of;
+  rdf:rest _:node1ei92sv7ix1455 .
 
-_:node1ei92sv7ix858 rdf:first _:node1ei92sv7ix859 .
+_:node1ei92sv7ix1455 rdf:first _:node1ei92sv7ix1456 .
 
-_:node1ei92sv7ix859 sh:inversePath crm:P46_is_composed_of .
+_:node1ei92sv7ix1456 sh:inversePath crm:P46_is_composed_of .
 
-_:node1ei92sv7ix858 rdf:rest rdf:nil .
+_:node1ei92sv7ix1455 rdf:rest rdf:nil .
 
 oash:P68 sh:description "Le skos:prefLabel sur un Man-Made Object DOIT être présent et unique"@fr;
   sh:maxCount 1;
@@ -650,21 +651,21 @@ oash:P71 sh:class crm:E42_Identifier;
   sh:severity sh:Violation .
 
 oash:P72 sh:description "Le P101_had_as_general_use sur une US DOIT être une valeur PACTOLS connue (Construction, Occupation, Destruction, Abandon, Remblais)"@fr;
-  sh:in _:node1ei92sv7ix860 .
+  sh:in _:node1ei92sv7ix1457 .
 
-_:node1ei92sv7ix860 rdf:first frantiq:pcrtM9HMWQTGJV;
-  rdf:rest _:node1ei92sv7ix861 .
+_:node1ei92sv7ix1457 rdf:first frantiq:pcrtM9HMWQTGJV;
+  rdf:rest _:node1ei92sv7ix1458 .
 
-_:node1ei92sv7ix861 rdf:first frantiq:pcrtUu5zfknZ1x;
-  rdf:rest _:node1ei92sv7ix862 .
+_:node1ei92sv7ix1458 rdf:first frantiq:pcrtUu5zfknZ1x;
+  rdf:rest _:node1ei92sv7ix1459 .
 
-_:node1ei92sv7ix862 rdf:first frantiq:pcrtcWtmlzv64Z;
-  rdf:rest _:node1ei92sv7ix863 .
+_:node1ei92sv7ix1459 rdf:first frantiq:pcrtcWtmlzv64Z;
+  rdf:rest _:node1ei92sv7ix1460 .
 
-_:node1ei92sv7ix863 rdf:first frantiq:pcrt9Xvh4RiNS5;
-  rdf:rest _:node1ei92sv7ix864 .
+_:node1ei92sv7ix1460 rdf:first frantiq:pcrt9Xvh4RiNS5;
+  rdf:rest _:node1ei92sv7ix1461 .
 
-_:node1ei92sv7ix864 rdf:first frantiq:pcrt9M0SrAITut;
+_:node1ei92sv7ix1461 rdf:first frantiq:pcrt9M0SrAITut;
   rdf:rest rdf:nil .
 
 oash:P72 sh:name "Contraintes de crm:P101_had_as_general_use sur un oash:StratigraphicVolumeUnit"@fr;
@@ -686,18 +687,18 @@ oash:P74 sh:class crmsci:S19_Encounter_Event;
 oash:P75 sh:description "Une US DOIT être lié à un et un seul O19i ou inverse de O19 maximum"@fr;
   sh:maxCount 1;
   sh:minCount 1;
-  sh:path _:node1ei92sv7ix865 .
+  sh:path _:node1ei92sv7ix1462 .
 
-_:node1ei92sv7ix865 sh:alternativePath _:node1ei92sv7ix866 .
+_:node1ei92sv7ix1462 sh:alternativePath _:node1ei92sv7ix1463 .
 
-_:node1ei92sv7ix866 rdf:first crmsci:O19i_was_object_found_by;
-  rdf:rest _:node1ei92sv7ix867 .
+_:node1ei92sv7ix1463 rdf:first crmsci:O19i_was_object_found_by;
+  rdf:rest _:node1ei92sv7ix1464 .
 
-_:node1ei92sv7ix867 rdf:first _:node1ei92sv7ix868 .
+_:node1ei92sv7ix1464 rdf:first _:node1ei92sv7ix1465 .
 
-_:node1ei92sv7ix868 sh:inversePath crmsci:O19_has_found_object .
+_:node1ei92sv7ix1465 sh:inversePath crmsci:O19_has_found_object .
 
-_:node1ei92sv7ix867 rdf:rest rdf:nil .
+_:node1ei92sv7ix1464 rdf:rest rdf:nil .
 
 oash:P76 sh:class crm:E25_Man-Made_Feature;
   sh:description "Le P46i_forms_part_of sur une US DOIT être un E25_Man-Made_Feature"@fr;
@@ -707,18 +708,18 @@ oash:P76 sh:class crm:E25_Man-Made_Feature;
 
 oash:P77 sh:description "Le P46i_forms_part_of ou son inverse sur une US DOIT être unique"@fr;
   sh:maxCount 1;
-  sh:path _:node1ei92sv7ix869 .
+  sh:path _:node1ei92sv7ix1466 .
 
-_:node1ei92sv7ix869 sh:alternativePath _:node1ei92sv7ix870 .
+_:node1ei92sv7ix1466 sh:alternativePath _:node1ei92sv7ix1467 .
 
-_:node1ei92sv7ix870 rdf:first crm:P46i_forms_part_of;
-  rdf:rest _:node1ei92sv7ix871 .
+_:node1ei92sv7ix1467 rdf:first crm:P46i_forms_part_of;
+  rdf:rest _:node1ei92sv7ix1468 .
 
-_:node1ei92sv7ix871 rdf:first _:node1ei92sv7ix872 .
+_:node1ei92sv7ix1468 rdf:first _:node1ei92sv7ix1469 .
 
-_:node1ei92sv7ix872 sh:inversePath crm:P46_is_composed_of .
+_:node1ei92sv7ix1469 sh:inversePath crm:P46_is_composed_of .
 
-_:node1ei92sv7ix871 rdf:rest rdf:nil .
+_:node1ei92sv7ix1468 rdf:rest rdf:nil .
 
 oash:P78 sh:description "Le skos:prefLabel sur une US Object DOIT être présent et unique"@fr;
   sh:maxCount 1;
@@ -732,50 +733,50 @@ oash:P80 sh:description "Le P8_took_place_on_or_within ou son inverse P8i_witnes
   sh:maxCount 1;
   sh:minCount 1;
   sh:name "Contraintes de [ sh:alternativePath (crm:P8_took_place_on_or_within [ sh:inversePath crm:P8i_witnessed ]) ] sur un oash:Event"@fr;
-  sh:or _:node1ei92sv7ix877 .
+  sh:or _:node1ei92sv7ix1474 .
 
-_:node1ei92sv7ix877 rdf:first _:node1ei92sv7ix878 .
+_:node1ei92sv7ix1474 rdf:first _:node1ei92sv7ix1475 .
 
-_:node1ei92sv7ix878 sh:class crm:E27_Site .
+_:node1ei92sv7ix1475 sh:class crm:E27_Site .
 
-_:node1ei92sv7ix877 rdf:rest _:node1ei92sv7ix879 .
+_:node1ei92sv7ix1474 rdf:rest _:node1ei92sv7ix1476 .
 
-_:node1ei92sv7ix879 rdf:first _:node1ei92sv7ix880 .
+_:node1ei92sv7ix1476 rdf:first _:node1ei92sv7ix1477 .
 
-_:node1ei92sv7ix880 sh:class crmba:B1_Built_Work .
+_:node1ei92sv7ix1477 sh:class crmba:B1_Built_Work .
 
-_:node1ei92sv7ix879 rdf:rest _:node1ei92sv7ix881 .
+_:node1ei92sv7ix1476 rdf:rest _:node1ei92sv7ix1478 .
 
-_:node1ei92sv7ix881 rdf:first _:node1ei92sv7ix882 .
+_:node1ei92sv7ix1478 rdf:first _:node1ei92sv7ix1479 .
 
-_:node1ei92sv7ix882 sh:class crm:E25_Man-Made_Feature .
+_:node1ei92sv7ix1479 sh:class crm:E25_Man-Made_Feature .
 
-_:node1ei92sv7ix881 rdf:rest _:node1ei92sv7ix883 .
+_:node1ei92sv7ix1478 rdf:rest _:node1ei92sv7ix1480 .
 
-_:node1ei92sv7ix883 rdf:first _:node1ei92sv7ix884 .
+_:node1ei92sv7ix1480 rdf:first _:node1ei92sv7ix1481 .
 
-_:node1ei92sv7ix884 sh:class crm:E22_Man-Made_Object .
+_:node1ei92sv7ix1481 sh:class crm:E22_Man-Made_Object .
 
-_:node1ei92sv7ix883 rdf:rest _:node1ei92sv7ix885 .
+_:node1ei92sv7ix1480 rdf:rest _:node1ei92sv7ix1482 .
 
-_:node1ei92sv7ix885 rdf:first _:node1ei92sv7ix886 .
+_:node1ei92sv7ix1482 rdf:first _:node1ei92sv7ix1483 .
 
-_:node1ei92sv7ix886 sh:class crmarch:A2_Stratigraphic_Volume_Unit .
+_:node1ei92sv7ix1483 sh:class crmarch:A2_Stratigraphic_Volume_Unit .
 
-_:node1ei92sv7ix885 rdf:rest rdf:nil .
+_:node1ei92sv7ix1482 rdf:rest rdf:nil .
 
-oash:P80 sh:path _:node1ei92sv7ix873 .
+oash:P80 sh:path _:node1ei92sv7ix1470 .
 
-_:node1ei92sv7ix873 sh:alternativePath _:node1ei92sv7ix874 .
+_:node1ei92sv7ix1470 sh:alternativePath _:node1ei92sv7ix1471 .
 
-_:node1ei92sv7ix874 rdf:first crm:P8_took_place_on_or_within;
-  rdf:rest _:node1ei92sv7ix875 .
+_:node1ei92sv7ix1471 rdf:first crm:P8_took_place_on_or_within;
+  rdf:rest _:node1ei92sv7ix1472 .
 
-_:node1ei92sv7ix875 rdf:first _:node1ei92sv7ix876 .
+_:node1ei92sv7ix1472 rdf:first _:node1ei92sv7ix1473 .
 
-_:node1ei92sv7ix876 sh:inversePath crm:P8i_witnessed .
+_:node1ei92sv7ix1473 sh:inversePath crm:P8i_witnessed .
 
-_:node1ei92sv7ix875 rdf:rest rdf:nil .
+_:node1ei92sv7ix1472 rdf:rest rdf:nil .
 
 oash:P80 sh:severity sh:Violation .
 
@@ -819,70 +820,68 @@ oash:P85 sh:description "Le skos:prefLabel sur un TimeSpan DOIT être présent e
 
 oash:P86 sh:description "Un TimeSpan DOIT avoir au moins un P82a_begin_of_the_begin OU un P82b_end_of_the_end"@fr;
   sh:minCount 1;
-  sh:path _:node1ei92sv7ix887 .
+  sh:path _:node1ei92sv7ix1484 .
 
-_:node1ei92sv7ix887 sh:alternativePath _:node1ei92sv7ix888 .
+_:node1ei92sv7ix1484 sh:alternativePath _:node1ei92sv7ix1485 .
 
-_:node1ei92sv7ix888 rdf:first crm:P82a_begin_of_the_begin;
-  rdf:rest _:node1ei92sv7ix889 .
+_:node1ei92sv7ix1485 rdf:first crm:P82a_begin_of_the_begin;
+  rdf:rest _:node1ei92sv7ix1486 .
 
-_:node1ei92sv7ix889 rdf:first crm:P82b_end_of_the_end;
+_:node1ei92sv7ix1486 rdf:first crm:P82b_end_of_the_end;
   rdf:rest rdf:nil .
 
 oash:P88 sh:description "Le P2_has_type sur un Document DOIT être une URI PACTOLS"@fr;
-  sh:name "Contraintes de crm:P2_has_type sur un oash:E31_Document"@fr;
+  sh:name "Contraintes de crm:P2_has_type sur un oash:Document"@fr;
   sh:path crm:P2_has_type;
   sh:pattern "^https://ark.frantiq.fr/ark:/26678/(.*)";
   sh:severity sh:Violation .
 
-oash:E31_Document sh:property oash:P88, oash:P89, oash:P90, oash:P91 .
-
 oash:P89 sh:description "Le P70_documents sur un Document DOIT avoir au moins une valeur et être soit un Encounter_Event, soit un Site, soit un Built_Work, soit un Man-Made_Feature, soit une Stratigraphic Volume Unit, soit un Man-Made_Object"@fr;
   sh:minCount 1;
-  sh:or _:node1ei92sv7ix890 .
+  sh:or _:node1ei92sv7ix1487 .
 
-_:node1ei92sv7ix890 rdf:first _:node1ei92sv7ix891 .
+_:node1ei92sv7ix1487 rdf:first _:node1ei92sv7ix1488 .
 
-_:node1ei92sv7ix891 sh:class crmsci:S19_Encounter_Event .
+_:node1ei92sv7ix1488 sh:class crmsci:S19_Encounter_Event .
 
-_:node1ei92sv7ix890 rdf:rest _:node1ei92sv7ix892 .
+_:node1ei92sv7ix1487 rdf:rest _:node1ei92sv7ix1489 .
 
-_:node1ei92sv7ix892 rdf:first _:node1ei92sv7ix893 .
+_:node1ei92sv7ix1489 rdf:first _:node1ei92sv7ix1490 .
 
-_:node1ei92sv7ix893 sh:class crm:E27_Site .
+_:node1ei92sv7ix1490 sh:class crm:E27_Site .
 
-_:node1ei92sv7ix892 rdf:rest _:node1ei92sv7ix894 .
+_:node1ei92sv7ix1489 rdf:rest _:node1ei92sv7ix1491 .
 
-_:node1ei92sv7ix894 rdf:first _:node1ei92sv7ix895 .
+_:node1ei92sv7ix1491 rdf:first _:node1ei92sv7ix1492 .
 
-_:node1ei92sv7ix895 sh:class crmba:B1_Built_Work .
+_:node1ei92sv7ix1492 sh:class crmba:B1_Built_Work .
 
-_:node1ei92sv7ix894 rdf:rest _:node1ei92sv7ix896 .
+_:node1ei92sv7ix1491 rdf:rest _:node1ei92sv7ix1493 .
 
-_:node1ei92sv7ix896 rdf:first _:node1ei92sv7ix897 .
+_:node1ei92sv7ix1493 rdf:first _:node1ei92sv7ix1494 .
 
-_:node1ei92sv7ix897 sh:class crm:E25_Man-Made_Feature .
+_:node1ei92sv7ix1494 sh:class crm:E25_Man-Made_Feature .
 
-_:node1ei92sv7ix896 rdf:rest _:node1ei92sv7ix898 .
+_:node1ei92sv7ix1493 rdf:rest _:node1ei92sv7ix1495 .
 
-_:node1ei92sv7ix898 rdf:first _:node1ei92sv7ix899 .
+_:node1ei92sv7ix1495 rdf:first _:node1ei92sv7ix1496 .
 
-_:node1ei92sv7ix899 sh:class crm:E22_Man-Made_Object .
+_:node1ei92sv7ix1496 sh:class crm:E22_Man-Made_Object .
 
-_:node1ei92sv7ix898 rdf:rest _:node1ei92sv7ix900 .
+_:node1ei92sv7ix1495 rdf:rest _:node1ei92sv7ix1497 .
 
-_:node1ei92sv7ix900 rdf:first _:node1ei92sv7ix901 .
+_:node1ei92sv7ix1497 rdf:first _:node1ei92sv7ix1498 .
 
-_:node1ei92sv7ix901 sh:class crmarch:A2_Stratigraphic_Volume_Unit .
+_:node1ei92sv7ix1498 sh:class crmarch:A2_Stratigraphic_Volume_Unit .
 
-_:node1ei92sv7ix900 rdf:rest rdf:nil .
+_:node1ei92sv7ix1497 rdf:rest rdf:nil .
 
 oash:P89 sh:path crm:P70_documents .
 
 oash:P90 sh:description "Le skos:prefLabel sur un Document DOIT être présent et unique"@fr;
   sh:maxCount 1;
   sh:minCount 1;
-  sh:name "Contraintes de skos:prefLabel sur un oash:E31_Document"@fr;
+  sh:name "Contraintes de skos:prefLabel sur un oash:Document"@fr;
   sh:path skos:prefLabel;
   sh:severity sh:Violation .
 
@@ -893,18 +892,18 @@ oash:P91 sh:class crm:E65_Creation;
 oash:P92 sh:class crm:E31_Document;
   sh:description "Une création de document DOIT avoir créé au moins 1 document"@fr;
   sh:minCount 1;
-  sh:path _:node1ei92sv7ix902 .
+  sh:path _:node1ei92sv7ix1499 .
 
-_:node1ei92sv7ix902 sh:alternativePath _:node1ei92sv7ix903 .
+_:node1ei92sv7ix1499 sh:alternativePath _:node1ei92sv7ix1500 .
 
-_:node1ei92sv7ix903 rdf:first crm:P94_has_created;
-  rdf:rest _:node1ei92sv7ix904 .
+_:node1ei92sv7ix1500 rdf:first crm:P94_has_created;
+  rdf:rest _:node1ei92sv7ix1501 .
 
-_:node1ei92sv7ix904 rdf:first _:node1ei92sv7ix905 .
+_:node1ei92sv7ix1501 rdf:first _:node1ei92sv7ix1502 .
 
-_:node1ei92sv7ix905 sh:inversePath crm:P94i_was_created_by .
+_:node1ei92sv7ix1502 sh:inversePath crm:P94i_was_created_by .
 
-_:node1ei92sv7ix904 rdf:rest rdf:nil .
+_:node1ei92sv7ix1501 rdf:rest rdf:nil .
 
 oash:P93 sh:class crm:E31_Document;
   sh:description <http://www.cidoc-crm.org/cidoc-crm/P94_has_created\u0020DOIT\u0020n'apparaitre\u0020qu'une\u0020seule\u0020fois\u0020et\u0020être\u0020un\u0020crm:E31_Document>;
