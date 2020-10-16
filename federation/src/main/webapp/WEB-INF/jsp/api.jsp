@@ -66,14 +66,15 @@
 		    	<h2>List API</h2>
 		    	<h3>domain / property / range variant</h3>
 				<ul class="fa-ul">
-					<li><i class="fa-li fal fa-angle-right"></i><code>/api/list?domain=...&property=...&range=...[&sources=...]</code></li>
-					<li>Example : <i class="fa-li fal fa-angle-right"></i><a href="<c:url value="/api/list?domain=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23Mobilier&property=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23trouve_dans&range=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23Site" />">/api/list?domain=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23Mobilier&property=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23trouve_dans&range=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23Site</a></li>
+					<li><i class="fa-li fal fa-angle-right"></i><code>/api/list?domain=...&property=...&range=...&lang=...[&sources=...]</code></li>
+					<li>Example : <i class="fa-li fal fa-angle-right"></i><a href="<c:url value="/api/list?domain=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23Mobilier&property=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23trouve_dans&range=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23Site&lang=fr" />">/api/list?domain=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23Mobilier&property=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23trouve_dans&range=http%3A%2F%2Fwww.openarchaeo.fr%2Fexplorateur%2Fonto%23Site&lang=fr</a></li>
 		    	</ul>
 				<h3>index variant</h3>
 				<ul class="fa-ul">
-					<li><i class="fa-li fal fa-angle-right"></i><code>/api/list?index=...[&sources=...]</code></li>
-					<li>Example : <i class="fa-li fal fa-angle-right"></i><a href="<c:url value="/api/list?index=httpwwwopenarchaeofrexplorateurontoMobilier_httpwwwopenarchaeofrexplorateurontotrouve_a_httpwwwopenarchaeofrexplorateurontoSite" />">/api/list?index=httpwwwopenarchaeofrexplorateurontoMobilier_httpwwwopenarchaeofrexplorateurontotrouve_a_httpwwwopenarchaeofrexplorateurontoSite</a></li>
-					<li>Example with sources : <i class="fa-li fal fa-angle-right"></i><a href="<c:url value="/api/list?index=httpwwwopenarchaeofrexplorateurontoMobilier_httpwwwopenarchaeofrexplorateurontotrouve_a_httpwwwopenarchaeofrexplorateurontoSite&sources=http%3A%2F%2Fopenarchaeo.huma-num.fr%2Ffederation%2Fsources%2Farsol" />">/api/list?index=httpwwwopenarchaeofrexplorateurontoMobilier_httpwwwopenarchaeofrexplorateurontotrouve_a_httpwwwopenarchaeofrexplorateurontoSite&sources=http%3A%2F%2Fopenarchaeo.huma-num.fr%2Ffederation%2Fsources%2Farsol</a></li>
+					<li><i class="fa-li fal fa-angle-right"></i><code>/api/list?index=...&lang=...[&sources=...]</code></li>
+					<li>Example : <i class="fa-li fal fa-angle-right"></i><a href="<c:url value="/api/list?index=httpwwwopenarchaeofrexplorateurontoMobilier_httpwwwopenarchaeofrexplorateurontotrouve_a_httpwwwopenarchaeofrexplorateurontoSite&lang=fr" />">/api/list?index=httpwwwopenarchaeofrexplorateurontoMobilier_httpwwwopenarchaeofrexplorateurontotrouve_a_httpwwwopenarchaeofrexplorateurontoSite&lang=fr</a></li>
+					<li>Example on referential : <i class="fa-li fal fa-angle-right"></i><a href="<c:url value="/api/list?index=httpwwwopenarchaeofrexplorateurontoMobilier_httpwwwopenarchaeofrexplorateurontofait_en_httpwwwopenarchaeofrexplorateurontoType&lang=fr" />">/api/list?index=httpwwwopenarchaeofrexplorateurontoMobilier_httpwwwopenarchaeofrexplorateurontofait_en_httpwwwopenarchaeofrexplorateurontoType&lang=fr</a></li>
+					<li>Example with sources : <i class="fa-li fal fa-angle-right"></i><a href="<c:url value="/api/list?index=httpwwwopenarchaeofrexplorateurontoMobilier_httpwwwopenarchaeofrexplorateurontotrouve_a_httpwwwopenarchaeofrexplorateurontoSite&sources=http%3A%2F%2Fopenarchaeo.huma-num.fr%2Ffederation%2Fsources%2Farsol" />">/api/list?index=httpwwwopenarchaeofrexplorateurontoMobilier_httpwwwopenarchaeofrexplorateurontotrouve_a_httpwwwopenarchaeofrexplorateurontoSite&sources=http%3A%2F%2Fopenarchaeo.huma-num.fr%2Ffederation%2Fsources%2Farsol&lang=fr</a></li>
 		    	</ul>
 		    	<h2>Periods API</h2>
 				<ul class="fa-ul">

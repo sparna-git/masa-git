@@ -175,7 +175,7 @@
 			$("#autocompleteTest").easyAutocomplete(options);
 			
 			$("#index").change(function() {
-				$("#listLink").html("<a href='api/list?index=" + $( "#index option:selected" ).val() + "'>api/list?index="+ $( "#index option:selected" ).val() +"</a>");
+				$("#listLink").html("<a href='api/list?index=" + $( "#index option:selected" ).val() + "&lang=fr'>api/list?index="+ $( "#index option:selected" ).val() +"&lang=fr</a>");
 			});
 			 
 		 });

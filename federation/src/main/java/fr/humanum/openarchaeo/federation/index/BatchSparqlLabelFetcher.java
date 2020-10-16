@@ -35,12 +35,13 @@ public abstract class BatchSparqlLabelFetcher implements LabelFetcher {
 	}
 
 	@Override
-	public int fetchLabels(List<IRI> iris, Repository repository, LabelEntryHandler handler) {		
+	public int fetchLabels(List<IRI> iris, Repository repository, LabelEntryHandler handler) {
+		log.debug("fetch labels in batch for a total of "+iris.size()+" iris");
 		int count = 0;
 		List<IRI> remainingEntries = new ArrayList<>(iris);
 		while(remainingEntries.size() > batchSize) {
 			List<IRI> currentBatch = remainingEntries.subList(0, batchSize);
-			processBatch(currentBatch, repository, handler);
+			count += processBatch(currentBatch, repository, handler);
 			remainingEntries.removeAll(currentBatch);
 		}
 		// process last batch
@@ -51,6 +52,7 @@ public abstract class BatchSparqlLabelFetcher implements LabelFetcher {
 	}
 
 	private int processBatch(List<IRI> iris, Repository repository, LabelEntryHandler handler) {
+		log.debug("Processing a batch to fetch labels of size "+iris.size());
 		class CountTupleQueryResultHandler extends AbstractTupleQueryResultHandler {
 			int count = 0;
 			
@@ -64,6 +66,8 @@ public abstract class BatchSparqlLabelFetcher implements LabelFetcher {
 		CountTupleQueryResultHandler counterHandler = new CountTupleQueryResultHandler();
 		
 		String sparql = generateSparqlFetch(iris);
+		
+		log.debug("Reading batch labels with following SPARQL:\n"+sparql);
 		
 		try(RepositoryConnection c = repository.getConnection()) {
 			Perform.on(c).query(sparql, counterHandler);

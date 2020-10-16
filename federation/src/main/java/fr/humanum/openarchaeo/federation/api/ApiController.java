@@ -119,6 +119,7 @@ public class ApiController {
 			@RequestParam(value="domain",required=true) String domain,
 			@RequestParam(value="property",required=true) String property,
 			@RequestParam(value="range",required=true) String range,
+			@RequestParam(value="lang",required=true) String lang,
 			@RequestParam(value="sources",required=false) String sources
 	) throws JsonGenerationException, JsonMappingException, IOException {
 		
@@ -127,6 +128,7 @@ public class ApiController {
 			request,
 			response,
 			indexId,
+			lang,
 			sources
 		);
 	}
@@ -136,12 +138,14 @@ public class ApiController {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value="index",required=true) String index,
-			@RequestParam(value="sources",required=false) String sources
+			@RequestParam(value="lang",required=true) String lang,
+			@RequestParam(value="sources",required=false) String sources			
 	) throws JsonGenerationException, JsonMappingException, IOException {
 		
 		List<String> sourcesList = (sources != null && !sources.isEmpty())?Arrays.asList(sources.split(" ")):null;
 		List<SearchResultJson> results = federationService.list(
 				index,
+				lang,
 				sourcesList
 		)
 		.stream()

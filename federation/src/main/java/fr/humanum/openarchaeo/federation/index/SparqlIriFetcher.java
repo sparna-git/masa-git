@@ -10,6 +10,8 @@ import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQueryResultHandlerException;
 import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import fr.humanum.openarchaeo.Perform;
 
@@ -20,6 +22,8 @@ import fr.humanum.openarchaeo.Perform;
  */
 public class SparqlIriFetcher implements IriFetcher {
 
+	private Logger log = LoggerFactory.getLogger(this.getClass().getName()); 
+	
 	protected String sparql;
 	
 	public SparqlIriFetcher(String sparql) {
@@ -31,6 +35,7 @@ public class SparqlIriFetcher implements IriFetcher {
 	public List<IRI> fetchIrisToIndex(Repository repository) {
 		List<IRI> result = new ArrayList<>();
 		
+		log.debug("Fetching IRIs with SPARQL:\n"+this.sparql);
 		try(RepositoryConnection c = repository.getConnection()) {
 			Perform.on(c).query(this.sparql, new AbstractTupleQueryResultHandler() {
 				@Override

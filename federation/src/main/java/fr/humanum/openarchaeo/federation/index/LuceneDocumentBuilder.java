@@ -41,6 +41,9 @@ public class LuceneDocumentBuilder {
 		// retrieve the list of IRIs
         List<IRI> iris = this.iriFetcher.fetchIrisToIndex(repository);
         log.info("Fetched "+iris.size()+" iris to be indexed");
+        if(iris.size() > 3) {
+        	log.info("First ones are "+iris.get(0)+" "+iris.get(1)+" "+iris.get(2));
+        }
         if(iris.size() == 0) {
         	log.warn("No IRIs found to be indexed in index "+indexId);
         }

@@ -256,10 +256,11 @@ public class FederationBusinessServices {
 	
 	public List<SearchResult> list(
 			String indexId,
+			String lang,
 			List<String> sources
 	) throws IOException {
 		sources = (sources != null)?sources.stream().map(s -> s.replaceAll("\\W+", "")).collect(Collectors.toList()):null;
-		List<SearchResult> result = this.indexService.getEntries(indexId, sources);
+		List<SearchResult> result = this.indexService.getEntries(indexId, lang, sources);
 		// sort the list alphabetically
 		Collections.sort(result, new Comparator<SearchResult>() {
 

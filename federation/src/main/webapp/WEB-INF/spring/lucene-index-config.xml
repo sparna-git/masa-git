@@ -70,14 +70,14 @@
 		<constructor-arg name="spec" value="oa:Site oa:de_type oa:Type" />
 		<constructor-arg name="fetchIris" value="false" />
 		<constructor-arg name="ignoreRange" value="true" />
-		<constructor-arg name="labelFetcher" ref="skosLabelFetcher" />
+		<constructor-arg name="labelFetcher" ref="referentielLabelFetcher" />
 	</bean>
 	<!-- de_type Entite_Archeologique Type -->
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
 		<constructor-arg name="spec" value="oa:Entite_Archeologique oa:de_type oa:Type" />
 		<constructor-arg name="fetchIris" value="false" />
 		<constructor-arg name="ignoreRange" value="true" />
-		<constructor-arg name="labelFetcher" ref="skosLabelFetcher" />
+		<constructor-arg name="labelFetcher" ref="referentielLabelFetcher" />
 	</bean>
 	<!-- etudie_par Site Acteur -->	
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
@@ -138,13 +138,13 @@
 		<constructor-arg name="spec" value="oa:US oa:interprete_comme oa:Type" />
 		<constructor-arg name="fetchIris" value="false" />
 		<constructor-arg name="ignoreRange" value="true" />
-		<constructor-arg name="labelFetcher" ref="skosLabelFetcher" />
+		<constructor-arg name="labelFetcher" ref="referentielLabelFetcher" />
 	</bean>
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
 		<constructor-arg name="spec" value="oa:Fait oa:interprete_comme oa:Type" />
 		<constructor-arg name="fetchIris" value="false" />
 		<constructor-arg name="ignoreRange" value="true" />
-		<constructor-arg name="labelFetcher" ref="skosLabelFetcher" />
+		<constructor-arg name="labelFetcher" ref="referentielLabelFetcher" />
 	</bean>
 	<!-- est_compose_de -->
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
@@ -176,16 +176,16 @@
 	<!-- utilise_pour -->
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
 		<constructor-arg name="spec" value="oa:Mobilier oa:utilise_pour oa:Type" />
-		<constructor-arg name="fetchIris" value="false" />
+		<constructor-arg name="fetchIris" value="true" />
 		<constructor-arg name="ignoreRange" value="true" />
-		<constructor-arg name="labelFetcher" ref="skosLabelFetcher" />
+		<constructor-arg name="labelFetcher" ref="referentielLabelFetcher" />
 	</bean>
 	<!-- fait_en -->
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">
 		<constructor-arg name="spec" value="oa:Mobilier oa:fait_en oa:Type" />
-		<constructor-arg name="fetchIris" value="false" />
+		<constructor-arg name="fetchIris" value="true" />
 		<constructor-arg name="ignoreRange" value="true" />
-		<constructor-arg name="labelFetcher" ref="skosLabelFetcher" />
+		<constructor-arg name="labelFetcher" ref="referentielLabelFetcher" />
 	</bean>
 	<!-- a_etudie -->
 	<bean class="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilder" factory-bean="luceneDocumentBuilderFactory" factory-method="newLuceneDocumentBuilder">

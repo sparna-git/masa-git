@@ -276,6 +276,13 @@
 // 			}	 
 // 		 );
 
+		 // rebuild source string
+		 var sourcesUrls = [];
+		 $('#hiddenSources input').each(function(){
+			 sourcesUrls.push(encodeURIComponent($(this).val()));
+	     });
+		 
+		 var sources = sourcesUrls.join(" ");
 
 		 $('#sparnatural').Sparnatural({
 			config: 'resources/config/spec-search.json',
@@ -285,12 +292,12 @@
 			noTypeCriteriaForObjects: ["http://www.openarchaeo.fr/explorateur/onto#Type", "http://www.openarchaeo.fr/explorateur/onto#Lieu"],
 			autocomplete : {
 				autocompleteUrl: function(domain, property, range, key) {
-					return '/federation/api/autocomplete?sources=${sources}&key='+key+'&domain='+encodeURIComponent(domain)+'&property='+encodeURIComponent(property)+'&range='+encodeURIComponent(range) ;
+					return '/federation/api/autocomplete?sources='+sources+'&key='+key+'&domain='+encodeURIComponent(domain)+'&property='+encodeURIComponent(property)+'&range='+encodeURIComponent(range) ;
 				}
 			},
 			list : {
 				listUrl: function(domain, property, range) {
-					return '/federation/api/list?sources=${sources}&domain='+encodeURIComponent(domain)+'&property='+encodeURIComponent(property)+'&range='+encodeURIComponent(range) ;
+					return '/federation/api/list?lang=${sessionScope['fr.humanum.openarchaeo.SessionData'].userLocale.language}&sources='+sources+'&domain='+encodeURIComponent(domain)+'&property='+encodeURIComponent(property)+'&range='+encodeURIComponent(range) ;
 				}
 			},
 			dates : {
