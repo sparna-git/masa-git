@@ -1,7 +1,6 @@
 package fr.humanum.openarchaeo.federation.index;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.io.StringReader;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -10,14 +9,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.Tokenizer;
-import org.apache.lucene.analysis.core.KeywordTokenizer;
 import org.apache.lucene.analysis.core.LowerCaseFilter;
 import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilter;
-import org.apache.lucene.analysis.ngram.EdgeNGramTokenFilter;
-import org.apache.lucene.analysis.shingle.ShingleFilter;
 import org.apache.lucene.analysis.standard.StandardFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
@@ -35,12 +30,12 @@ import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.BoostQuery;
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.SimpleCollector;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.repository.Repository;
@@ -78,6 +73,11 @@ public class IndexService {
 	private final String directoryPath;
 	
 	/**
+	 * Lucene Directory
+	 */
+	private Directory indexDirectory;
+	
+	/**
 	 * Lucene index reader
 	 */
 	private DirectoryReader indexReader;
@@ -86,6 +86,11 @@ public class IndexService {
 	 * Lucene index searcher
 	 */
 	private IndexSearcher indexSearcher;
+	
+	/**
+	 * Lucene index writer
+	 */	
+	private IndexWriter indexWriter;
 	
 	private List<LuceneDocumentBuilder> documentBuilders;
 	
@@ -101,6 +106,14 @@ public class IndexService {
 		this.directoryPath = directoryPath;
 		
 		this.documentBuilders = documentBuilders;
+		
+		// init the indexWriter before opening the reader
+		Analyzer analyzer = new OpenArchaeoIndexAnalyzer();
+		this.indexDirectory = FSDirectory.open(Paths.get(directoryPath));
+		IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
+    	// createOrAppend mode so that we can update document
+    	iwc.setOpenMode(OpenMode.CREATE_OR_APPEND);
+		this.indexWriter = new IndexWriter(this.indexDirectory, iwc);
 		
 		// open the reader/searcher a first time
 		this.refreshReader();
@@ -118,75 +131,41 @@ public class IndexService {
 				return new TokenStreamComponents(source, result);
 			}			
         });
+		
+		
 	}
 	
     public void reIndexSource(String sourceId, Repository repository)
     throws CorruptIndexException, IOException {
-
-    	// use a custom analyzer so we can do EdgeNGramFiltering for autocomplete
-    	Analyzer analyzer = new Analyzer() {
-
-			@Override
-			protected TokenStreamComponents createComponents(String fieldName) {				
-				if(fieldName.equals(IndexFields.LABEL_FIELD)) {
-				    Tokenizer source = new StandardTokenizer();
-				    TokenStream result = new StandardFilter(source);
-				    // lowercasing
-				    result = new LowerCaseFilter(result);
-				    // remove accents
-				    result = new ASCIIFoldingFilter(result);
-				    // reconcatenate tokens together to be able to do autocompletion on multiple words (2 or 3 words max)
-				    ShingleFilter sf = new ShingleFilter(result, 2, 3);
-				    // still output single words
-				    sf.setOutputUnigrams(true);
-				    // here is the magic for autocomplete : edgeNGrams starting at 3 letters
-				    result = new EdgeNGramTokenFilter(result, 3, 20);
-				    return new TokenStreamComponents(source, result);
-				} else {
-					// everything else is keyword, indexed as is
-					Tokenizer source = new KeywordTokenizer();
-				    return new TokenStreamComponents(source);
-				}
-			}
-            
-        };
-        
-    	IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
-    	// createOrAppend mode so that we can update document
-    	iwc.setOpenMode(OpenMode.CREATE_OR_APPEND);
+        	
+    	// Delete all documents from that source from the index
+    	log.info("Deleting existing index entries from source '"+sourceId+"' ...");
+    	Query sourceClause = new TermQuery(new Term(IndexFields.SOURCE_FIELD, sourceId));
+    	this.indexWriter.deleteDocuments(sourceClause);
     	
-        // make sure the writer is closed even in case of Exception
-        try(IndexWriter writer = new IndexWriter(FSDirectory.open(Paths.get(directoryPath)), iwc)) {
-        	
-        	// Delete all documents from that source from the index
-        	log.info("Deleting existing index entries from source '"+sourceId+"' ...");
-        	Query sourceClause = new TermQuery(new Term(IndexFields.SOURCE_FIELD, sourceId));
-        	writer.deleteDocuments(sourceClause);
-        	
-        	// for each builder...
-            for (LuceneDocumentBuilder aBuilder : documentBuilders) {
-    			// build the lucene document for the provided source ID and repository
-            	aBuilder.buildLuceneDocuments(sourceId, repository, new LuceneDocumentHandler() {
-    				@Override
-    				public void handleDocument(Document doc) {
-    					// handle the produced Lucene document
-    					try {
-    						// will add the document if the same PK does not already exists
-    						writer.updateDocument(new Term(IndexFields.PRIMARY_KEY_FIELD, doc.getField(IndexFields.PRIMARY_KEY_FIELD).stringValue()), doc);
-    					} catch (IOException e) {
-    						e.printStackTrace();
-    					}
-    				}
-    			});
-    		}
-            
-            // commit writer
-            writer.commit();
-            // clean index etc - this is a costly operation
-            writer.forceMerge(1);
-            // re-open the searchers, otherwise they will not be synched with the updates
-            this.refreshReader();
-        }
+    	// for each builder...
+        for (LuceneDocumentBuilder aBuilder : documentBuilders) {
+			// build the lucene document for the provided source ID and repository
+        	aBuilder.buildLuceneDocuments(sourceId, repository, new LuceneDocumentHandler() {
+				@Override
+				public void handleDocument(Document doc) {
+					// handle the produced Lucene document
+					try {
+						// will add the document if the same PK does not already exists
+						indexWriter.updateDocument(new Term(IndexFields.PRIMARY_KEY_FIELD, doc.getField(IndexFields.PRIMARY_KEY_FIELD).stringValue()), doc);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
+        
+        // commit writer
+        this.indexWriter.commit();
+        // clean index etc - this is a costly operation
+        this.indexWriter.forceMerge(1);
+        // re-open the searchers, otherwise they will not be synched with the updates
+        this.refreshReader();
         
     }
     
@@ -207,15 +186,22 @@ public class IndexService {
         		
         		// if a new one was created, keep it
         		this.indexReader = newReader;
+        		
+        		
             	// initialize a new searcher from the reader
-            	this.indexSearcher = new IndexSearcher(indexReader);
+            	this.indexSearcher = new IndexSearcher(this.indexReader);
         	}
         } else {
         	// case where the reader/searcher was not already created
         	try {
         		log.info("Opening new reader / searcher");
-	        	this.indexReader = DirectoryReader.open(FSDirectory.open(Paths.get(directoryPath)));
-	        	this.indexSearcher = new IndexSearcher(indexReader);
+	        	// this.indexReader = DirectoryReader.open(FSDirectory.open(Paths.get(directoryPath)));
+        		// this keeps indexReader and indexWriter in synch
+        		// see https://stackoverflow.com/questions/34251372/why-does-lucene-directoryreader-not-see-any-changes-made-by-indexwriter-if-opene
+        		this.indexReader = DirectoryReader.open(this.indexWriter, true, true);
+        		this.indexSearcher = new IndexSearcher(indexReader);
+        		
+        		
         	} catch (Exception e) {
     			log.warn("Lucene index directory does not exist (message : "+e.getMessage()+"). Index a source to be able to search the index.");
     		}
@@ -262,23 +248,37 @@ public class IndexService {
      * @return
      * @throws IOException
      */
-    public List<SearchResult> getEntries(String indexId, List<String> sources) throws IOException {		
+    public List<SearchResult> getEntries(String indexId, String lang, List<String> sources) throws IOException {		
     	List<SearchResult> result = new ArrayList<>();  
     	
     	BooleanQuery.Builder b = new BooleanQuery.Builder();
-    	b.add(new BooleanClause(new TermQuery(new Term(IndexFields.INDEX_FIELD, indexId)), Occur.MUST));
     	
+    	// index clause
+    	BooleanClause indexClause = new BooleanClause(new TermQuery(new Term(IndexFields.INDEX_FIELD, indexId)), Occur.MUST);
+    	b.add(indexClause);
+    	
+    	// lang clause
+    	if(lang != null) {
+    		b.add(new BooleanClause(new TermQuery(new Term(IndexFields.LANG_FIELD, lang)), Occur.MUST));
+    	}
+    	
+    	// sources clause
+    	Query sourcesClause = null;
     	if(sources != null && sources.size() > 0) {
 			BooleanQuery.Builder sourcesClauseBuilder = new BooleanQuery.Builder();
 			for (String source : sources) {
 				sourcesClauseBuilder.add(new TermQuery(new Term(IndexFields.SOURCE_FIELD, source)), Occur.SHOULD);
 			}
-			Query sourcesClause = sourcesClauseBuilder.build();
-			b.add(sourcesClause, Occur.MUST);
-		}    	
+			sourcesClause = sourcesClauseBuilder.build();
+		}  
+    	if(sourcesClause != null) {
+    		b.add(sourcesClause, Occur.MUST);
+    	}
     	
     	BooleanQuery query = b.build();
-		indexSearcher.search(query, new SimpleCollector() {
+    	log.debug("Lucene query : '"+query.toString()+"'");
+    	
+    	SimpleCollector collector = new SimpleCollector() {
 
 			@Override
 			public void collect(int i) throws IOException {
@@ -295,7 +295,29 @@ public class IndexService {
 				return false;
 			}
 			
-		});
+		};
+    	
+		indexSearcher.search(query, collector);
+		
+		// try without the language criteria
+		if(result.size() == 0) {
+			log.debug("No results found for list, try relaxing the lang clause");
+	    	b = new BooleanQuery.Builder();
+	    	
+	    	// index clause
+	    	b.add(indexClause);
+	    	
+	    	// no lang clause
+	    	
+	    	// sources clause
+	    	if(sourcesClause != null) {
+	    		b.add(sourcesClause, Occur.MUST);
+	    	}   	
+	    	
+	    	query = b.build();
+	    	log.debug("Lucene query : '"+query.toString()+"'");
+	    	indexSearcher.search(query, collector);
+		}
 
         return result;
     }
