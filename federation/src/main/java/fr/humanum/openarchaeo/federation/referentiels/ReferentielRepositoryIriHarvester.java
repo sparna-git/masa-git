@@ -1,6 +1,7 @@
 package fr.humanum.openarchaeo.federation.referentiels;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.model.vocabulary.DCTERMS;
+import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.rdf4j.query.AbstractTupleQueryResultHandler;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQueryResultHandlerException;
@@ -20,6 +22,8 @@ import org.eclipse.rdf4j.query.Update;
 import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.eclipse.rdf4j.repository.http.HTTPRepository;
+import org.eclipse.rdf4j.rio.RDFFormat;
+import org.eclipse.rdf4j.rio.Rio;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +61,7 @@ public class ReferentielRepositoryIriHarvester implements IriHarvester {
 	public void harvest(List<IRI> iris) {
 		log.debug("Harvesting "+iris.size()+" IRIs...");
 		
-		List<IRI> graphIris = iris.stream().map(i -> generateGraphIri(frantiqIri(i))).collect(Collectors.toList());
+		List<IRI> graphIris = iris.stream().map(i -> generateGraphIri(i)).collect(Collectors.toList());
 		
 		try(RepositoryConnection c = this.referentialRepository.getConnection()) {
 			log.debug("Fetching graphs that require an update...");
@@ -88,9 +92,16 @@ public class ReferentielRepositoryIriHarvester implements IriHarvester {
 						drop.execute();					
 						
 						log.debug("Loading IRI : '"+anIri.toString()+"'...");
-						String loadString = buildLoadIriSparql(anIri, graphIri);
-						Update load = c.prepareUpdate(loadString);
-						load.execute();
+						// manually fetch IRI content
+						try {
+							c.add(new URL(anIri.toString()), RDF.NAMESPACE, null, graphIri);
+						} catch (Exception e) {
+							c.add(new URL(anIri.toString()), RDF.NAMESPACE, Rio.getParserFormatForFileName(anIri.toString()).orElse(RDFFormat.RDFXML), graphIri);
+						}
+						
+						// String loadString = buildLoadIriSparql(anIri, graphIri);
+						// Update load = c.prepareUpdate(loadString);
+						// load.execute();
 						
 						log.debug("Registering creation date and source iri...");
 						SimpleValueFactory vf = SimpleValueFactory.getInstance();
@@ -150,13 +161,13 @@ public class ReferentielRepositoryIriHarvester implements IriHarvester {
 		}
 	}
 	
-	private IRI frantiqIri(IRI originalIri) {
-		return SimpleValueFactory.getInstance().createIRI(
-				(originalIri.toString().contains("ark.frantiq.fr"))?
-						"https://pactols.frantiq.fr/opentheso/webresources/rest/skos/ark:"+originalIri.toString().substring(originalIri.toString().indexOf("ark:")+4)
-						:originalIri.toString()
-		);
-	}
+//	private IRI frantiqIri(IRI originalIri) {
+//		return SimpleValueFactory.getInstance().createIRI(
+//				(originalIri.toString().contains("ark.frantiq.fr"))?
+//						"https://pactols.frantiq.fr/opentheso/webresources/rest/skos/ark:"+originalIri.toString().substring(originalIri.toString().indexOf("ark:")+4)
+//						:originalIri.toString()
+//		);
+//	}
 	
 	private List<IRI> followLinks(List<IRI> startIris) {		
 		if(this.followPath != null && !this.followPath.isEmpty()) {
@@ -164,7 +175,7 @@ public class ReferentielRepositoryIriHarvester implements IriHarvester {
 			List<IRI> targets = new ArrayList<IRI>();
 			try(RepositoryConnection c = this.referentialRepository.getConnection()) {
 				String followSparql = this.buildFollowLinksSparql(startIris, this.followPath);
-				log.debug("Using SPARQL :\n"+followSparql);
+				// log.trace("Using SPARQL :\n"+followSparql);
 				Perform.on(c).query(followSparql, new AbstractTupleQueryResultHandler() {
 					@Override
 					public void handleSolution(BindingSet bindingSet) throws TupleQueryResultHandlerException {
