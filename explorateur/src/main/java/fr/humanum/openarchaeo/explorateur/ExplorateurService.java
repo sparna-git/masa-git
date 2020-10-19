@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
@@ -152,7 +153,7 @@ public class ExplorateurService {
 		String result = expander.expand(query);
 		log.debug("Expanded query to : \n"+result+"...");
 		return result;
-	}
+	}	
 	
 	public String addPropertiesToQuery(String query, View view) {
 		log.debug("Adding properties to query for view "+view.name()+"...");

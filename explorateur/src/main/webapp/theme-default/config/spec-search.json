@@ -764,7 +764,8 @@
             { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Mur"},
             { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Entite_Archeologique"}, 
             { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Fait"},
-            { "@id" : "http://www.openarchaeo.fr/explorateur/onto#US"}
+            { "@id" : "http://www.openarchaeo.fr/explorateur/onto#US"},
+            { "@id" : "http://www.openarchaeo.fr/explorateur/onto#Document"}
           ]
         }
       },

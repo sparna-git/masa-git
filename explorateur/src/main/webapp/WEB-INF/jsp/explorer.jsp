@@ -286,6 +286,7 @@
 
 		 $('#sparnatural').Sparnatural({
 			config: 'resources/config/spec-search.json',
+			// config: 'sparnatural-config.json',
 			language: '${sessionScope['fr.humanum.openarchaeo.SessionData'].userLocale.language}',
 			addDistinct: true,
 			sendQueryOnFirstClassSelected: true,
