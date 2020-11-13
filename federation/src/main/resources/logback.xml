@@ -28,7 +28,8 @@
 	<logger name="fr.humanum.openarchaeo.Perform" 	level="INFO" />
 	<!-- Logs during the index process -->
 	<logger name="fr.humanum.openarchaeo.federation.index" 	level="INFO" />
-	<logger name="fr.humanum.openarchaeo.federation.index.SkosLabelFetcher" 		level="DEBUG" />
+	<logger name="fr.humanum.openarchaeo.federation.index.BatchSparqlLabelFetcher"		level="DEBUG" />
+	<logger name="fr.humanum.openarchaeo.federation.index.SkosLabelFetcher" 			level="DEBUG" />
 	<logger name="fr.humanum.openarchaeo.federation.index.SparqlIriFetcher" 			level="DEBUG" />
 	<logger name="fr.humanum.openarchaeo.federation.index.LuceneDocumentBuilderFactory" level="DEBUG" />
 	<logger name="fr.humanum.openarchaeo.federation.index.IndexService" 				level="DEBUG" />

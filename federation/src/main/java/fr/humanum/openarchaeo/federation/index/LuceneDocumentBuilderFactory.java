@@ -83,9 +83,9 @@ public class LuceneDocumentBuilderFactory {
 		return newLuceneDocumentBuilder(strings[0], strings[1], strings[2], this.defaultLabelFetcher);
 	}
 	
-	public LuceneDocumentBuilder newLuceneDocumentBuilder(String spec, boolean fetchIris, boolean ignoreRange, LabelFetcher labelFetcher) {
+	public LuceneDocumentBuilder newLuceneDocumentBuilder(String spec, boolean fetchIris, boolean ignoreRange, boolean autoFixGeonamesUris, LabelFetcher labelFetcher) {
 		String[] strings = spec.split(" ");
-		return newLuceneDocumentBuilder(strings[0], strings[1], strings[2], labelFetcher, fetchIris, ignoreRange);
+		return newLuceneDocumentBuilder(strings[0], strings[1], strings[2], labelFetcher, fetchIris, ignoreRange, autoFixGeonamesUris);
 	}
 	
 	public LuceneDocumentBuilder newLuceneDocumentBuilder(
@@ -100,6 +100,7 @@ public class LuceneDocumentBuilderFactory {
 				range,
 				labelFetcher,
 				false,
+				false,
 				false
 		);
 	}
@@ -110,7 +111,8 @@ public class LuceneDocumentBuilderFactory {
 			String range,
 			LabelFetcher labelFetcher,
 			boolean fetchIris,
-			boolean ignoreRange
+			boolean ignoreRange,
+			boolean autoFixGeonamesUris
 		) {
 			log.debug("Creating a LuceneDocumentBuilder for domain : "+domain+", path : "+path+", range : "+range+" and labelFetcher : "+labelFetcher.getClass().getSimpleName());
 			
@@ -122,13 +124,15 @@ public class LuceneDocumentBuilderFactory {
 			if(ignoreRange) {
 				builder = new DomainPathRangeSparqlBuilder(
 						factory.createIRI(expandedDomain),
-						expandedPath
+						expandedPath,
+						autoFixGeonamesUris
 				);
 			} else {
 				builder = new DomainPathRangeSparqlBuilder(
 						factory.createIRI(expandedDomain),
 						expandedPath,
-						factory.createIRI(expandedRange)
+						factory.createIRI(expandedRange),
+						autoFixGeonamesUris
 				);
 			}
 			String sparql = builder.generateSparql();

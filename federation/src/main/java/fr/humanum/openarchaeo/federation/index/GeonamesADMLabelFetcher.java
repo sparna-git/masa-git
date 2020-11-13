@@ -39,12 +39,13 @@ public class GeonamesADMLabelFetcher extends BatchSparqlLabelFetcher implements 
 		sb.append("    BIND(CONCAT(?countryLabel, ?adm1Label, ?adm2Label, ?adm3Label, ?adm4Label) AS ?label)"+"\n");
 		sb.append("    VALUES ?iri {");
 		for (IRI iri : iris) {
-			sb.append("<"+iri.stringValue()+"> ");
+			// sb.append("<"+ReferentielRepositoryIriHarvester.toGeonamesHttpsIri(iri)+"> ");
+			sb.append("<"+iri+"> ");
 		}
 		sb.append("}"+"\n");
 		sb.append("  }"+"\n"); // end SERVICE clause
 		sb.append("}"+"\n");
-		
+
 		return sb.toString();
 	}
 

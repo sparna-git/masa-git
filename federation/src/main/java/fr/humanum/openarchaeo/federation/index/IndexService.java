@@ -152,6 +152,7 @@ public class IndexService {
 					// handle the produced Lucene document
 					try {
 						// will add the document if the same PK does not already exists
+						// log.debug("Inserting Lucene document :"+doc.toString());
 						indexWriter.updateDocument(new Term(IndexFields.PRIMARY_KEY_FIELD, doc.getField(IndexFields.PRIMARY_KEY_FIELD).stringValue()), doc);
 					} catch (IOException e) {
 						e.printStackTrace();

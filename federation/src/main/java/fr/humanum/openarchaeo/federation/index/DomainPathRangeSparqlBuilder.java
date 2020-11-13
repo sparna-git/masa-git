@@ -11,11 +11,13 @@ public class DomainPathRangeSparqlBuilder {
 	protected IRI domain;
 	protected String path;
 	protected IRI range;
+	protected boolean autoFixGeonamesUris = false;
 	
-	public DomainPathRangeSparqlBuilder(IRI domain, String path, IRI range) {
+	public DomainPathRangeSparqlBuilder(IRI domain, String path, IRI range, boolean autoFixGeonamesUris) {
 		this.domain = domain;
 		this.path = path;
 		this.range = range;
+		this.autoFixGeonamesUris = autoFixGeonamesUris;
 	}
 	
 	/**
@@ -23,14 +25,20 @@ public class DomainPathRangeSparqlBuilder {
 	 * @param domain
 	 * @param path
 	 */
-	public DomainPathRangeSparqlBuilder(IRI domain, String path) {
+	public DomainPathRangeSparqlBuilder(IRI domain, String path, boolean autoFixGeonamesUris) {
 		this.domain = domain;
 		this.path = path;
+		this.autoFixGeonamesUris = autoFixGeonamesUris;
 	}
 
 	public String generateSparql() {
 		StringBuffer sb = new StringBuffer();
 		
+//		if(this.autoFixGeonamesUris) {
+//			sb.append("SELECT DISTINCT ( IF( STRSTARTS(STR(?this), 'http://sws.geonames.org/'), IRI(CONCAT('https://sws.geonames.org/', STRAFTER(STR(?this), 'http://sws.geonames.org/'), '/')), ?this) AS ?fixedThis)"+"\n");
+//		} else {
+//			sb.append("SELECT DISTINCT ?this"+"\n");
+//		}
 		sb.append("SELECT DISTINCT ?this"+"\n");
 		sb.append("WHERE {"+"\n");
 		sb.append("  ?something a <"+domain.stringValue()+"> ."+"\n");
