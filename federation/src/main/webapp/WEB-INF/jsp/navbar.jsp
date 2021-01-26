@@ -9,10 +9,10 @@
 <fmt:setBundle basename="fr.humanum.openarchaeo.federation.i18n.OpenArchaeo"/>
 
 <!--Navbar-->
-<nav class="navbar navbar-expand-lg navbar-light bg-red" id="globalnav">
+<nav class="navbar navbar-expand-lg navbar-light" id="globalnav">
 
     <!-- Navbar brand -->
-    <a class="navbar-brand" href="<c:url value="/" />"><i class="fal fa-home"></i>&nbsp;<fmt:message key="navbar.brand" /></a>
+    <a class="navbar-brand" href="/explorateur/home"><fmt:message key="navbar.brand" /></a>
 
     <!-- Collapse button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"

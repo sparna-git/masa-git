@@ -12,7 +12,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-blue" id="globalnav">
 
     <!-- Navbar brand -->
-    <a class="navbar-brand" href="<c:url value="/home" />"><i class="fal fa-home"></i>&nbsp;<fmt:message key="navbar.brand" /></a>
+    <a class="navbar-brand" href="<c:url value="/home" />"><fmt:message key="navbar.brand" /></a>
 
     <!-- Collapse button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
